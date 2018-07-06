@@ -1,6 +1,9 @@
   Rails.application.routes.draw do
 
-  # devise url
+  # root
+  # root to: 'articles#index'
+
+  # devise
   devise_for :admins, controllers: {
   sessions:      'admins/sessions',
   passwords:     'admins/passwords',
@@ -17,7 +20,7 @@
     get '/logout', to: 'devise/sessions#destroy', as: 'logout'
   end
 
-  # admins url
+  # admins
   get 'admins', to: 'admins#index', as: 'admins'
 
   get 'admins/:id', to: 'admins#show', as: 'admin'
@@ -32,7 +35,7 @@
 
   get 'admins/:id/update', to: 'admins#update', as: 'admins_update'
 
-  # users url
+  # users
   get 'users', to: 'users#index', as: 'users'
 
   get 'users/:id', to: 'users#show', as: 'user'

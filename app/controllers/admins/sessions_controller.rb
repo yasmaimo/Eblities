@@ -9,9 +9,19 @@ class Admins::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    if admin = Admin.find_by(email: params[:admin][:email])
+      if admin.is_deleted == true
+        redirect_to new_admin_session_path
+        flash[:failed] = "停止中の管理者アカウントです。アカウントを復旧するにはメイン管理者に連絡を取ってください。"
+      else
+        super
+      end
+    else
+      redirect_to new_admin_session_path
+      flash[:failed] = "入力内容を確認してください。"
+    end
+  end
 
   # DELETE /resource/sign_out
   # def destroy
