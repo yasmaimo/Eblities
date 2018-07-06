@@ -1,0 +1,19 @@
+# production: &production
+#   twitter:
+#     key: xxxxxxxxxxx
+#     secret: XXXXXXXXXXXXXXXXXXXXXXXXX
+#   facebook:
+#     key: xxxxxxxxxxx
+#     secret: XXXXXXXXXXXXXXXXXXXXXXXXX
+#   google:
+#     key: xxxxxxxxxxx
+#     secret: XXXXXXXXXXXXXXXXXXXXXXXXX
+
+# development: &development
+#   <<: *production
+#   facebook:
+#     key: xxxxxxxxxxx
+#     secret: XXXXXXXXXXXXXXXXXXXXXXXXX
+
+# test:
+#   <<: *development
