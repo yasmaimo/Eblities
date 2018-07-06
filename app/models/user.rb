@@ -62,13 +62,12 @@ class User < ApplicationRecord
   end
 
   # Association
-  # has_many :social_profiles # order belongs_to user
-  # has_many :relationships # taggings has_many users
-  # has_many :articles # taggings belongs_to user
-  # has_many :drafts # taggings has_many users
-  # has_many :comments, dependent: :destroy # taggings has_many users
-  # has_many :favorites, dependent: :destroy # taggings has_many users
-  # has_many :keeps, dependent: :destroy # taggings has_many users
+  # has_many :social_profiles # social_profiles belongs_to user
+  # has_many :relationships # relationships belongs_to user
+  # has_many :articles # articles belongs_to user
+  # has_many :comments, dependent: :destroy # comments belongs_to user
+  # has_many :favorites, dependent: :destroy # favorites belongs_to user
+  # has_many :keeps, dependent: :destroy # keeps has_many users
   # has_many :taggings, dependent: :destroy # taggings has_many users
 
 end
