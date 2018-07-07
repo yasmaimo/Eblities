@@ -1,0 +1,2 @@
+class SocialProfile < ApplicationRecord
+end

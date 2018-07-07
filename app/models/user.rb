@@ -21,19 +21,20 @@ class User < ApplicationRecord
     					message: "半角の英語とアンダースコア _ のみ使用できます" }
 
   validates :introduction,
-  	length: { maximum: 150 }
+  	length: { maximum: 150,
+              message: "自己紹介は最大150文字まで入力できます" }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email,
   	presence: true,
   	uniqueness: true,
     format: { with: VALID_EMAIL_REGEX,
-      				message: "記入内容を確認して下さい" }
+      				message: "メールアドレスの記入内容を確認して下さい" }
 
-  validates :member_status,
+  validates :status,
   	presence: true,
-    format: { with: /\A\d\z/, # 0 => 入会、1 => 退会済み、2 => 強制退会
-      				message: "半角数字で入力して下さい。" }
+    format: { with: /\A\d[0-2]\z/,
+      				message: "無効な入力です" }
 
   # Validatoin on create
   validates :password,
@@ -62,12 +63,12 @@ class User < ApplicationRecord
   end
 
   # Association
-  # has_many :social_profiles # social_profiles belongs_to user
-  # has_many :relationships # relationships belongs_to user
-  # has_many :articles # articles belongs_to user
-  # has_many :comments, dependent: :destroy # comments belongs_to user
-  # has_many :favorites, dependent: :destroy # favorites belongs_to user
-  # has_many :keeps, dependent: :destroy # keeps has_many users
-  # has_many :taggings, dependent: :destroy # taggings has_many users
+  has_many :social_profiles
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :articles
+  has_many :comments
+  has_many :favorites
+  has_many :keeps
+  has_many :taggings
 
 end
