@@ -1,7 +1,7 @@
   Rails.application.routes.draw do
 
   # root
-  # root to: 'articles#index'
+  root to: 'articles#index'
 
   # devise
   devise_for :admins, controllers: {
@@ -21,9 +21,7 @@
   end
 
   # admins
-  get 'admins', to: 'admins#index', as: 'admins'
-
-  get 'admins/:id', to: 'admins#show', as: 'admin'
+  resources :admins, only: [ :index, :create, :edit, :show, :update]
 
   get 'admins/:id/password', to: 'admins#password', as: 'admin_password_setting'
 
@@ -33,12 +31,8 @@
 
   get 'admins/:id/two_factor_authentication_setting', to: 'admins#two_factor_authentication_setting', as: 'admins_two_factor_authentication_setting'
 
-  get 'admins/:id/update', to: 'admins#update', as: 'admins_update'
-
   # users
-  get 'users', to: 'users#index', as: 'users'
-
-  get 'users/:id', to: 'users#show', as: 'user'
+  resources :users, only: [ :index, :create, :edit, :show, :update]
 
   get 'users/:id/account', to: 'users#account', as: 'user_account'
 
@@ -52,6 +46,37 @@
 
   get 'users/:id/unsubscribe_confirm', to: 'users#unsubscribe_confirm', as: 'users_unsubscribe_confirm'
 
-  post 'users/:id/update', to: 'users#update', as: 'users_update'
+  # articles
+  resources :articles do
+    resources :comments, only: [ :index, :create, :show, :update, :destroy]
+    resource :images, only: [:create, :destroy]
+    resource :favorites, only: [:create, :destroy]
+  end
+
+  get 'articles/user_timeline', to: 'articles#user_timeline', as: 'user_timeline'
+
+  get 'articles/tag_timeline', to: 'articles#tag_timeline', as: 'tag_timeline'
+
+  get 'articles/confirm', to: 'articles#confirm', as: 'confirm_article'
+
+  get 'articles/:id/edit_confirm', to: 'articles#edit_confirm', as: 'confirm_edit_article'
+
+  # drafts
+  resources :drafts
+
+  get 'drafts/confirm', to: 'drafts#confirm', as: 'confirm_draft'
+
+  # keeps
+  resources :keeps, only: [ :index, :create, :update, :destroy]
+
+  # tags
+  resources :tags, only: [ :index, :create, :show, :update]
+
+  # contacts
+  resources :contacts, only: [ :index, :create, :new, :show, :update]
+
+  get 'contacts/confirm', to: 'contacts#confirm', as: 'confirm_contact'
+
+  get 'contacts/sent', to: 'contacts#sent', as: 'sent_contact'
 
 end
