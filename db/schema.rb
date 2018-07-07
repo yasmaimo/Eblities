@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180707004545) do
+ActiveRecord::Schema.define(version: 20180707033541) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -38,6 +38,111 @@ ActiveRecord::Schema.define(version: 20180707004545) do
     t.index ["is_main_administer"], name: "index_admins_on_is_main_administer"
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
     t.index ["user_name"], name: "index_admins_on_user_name"
+  end
+
+  create_table "articles", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "title"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["body"], name: "index_articles_on_body"
+    t.index ["title"], name: "index_articles_on_title"
+    t.index ["user_id"], name: "index_articles_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "article_id"
+    t.integer "user_id"
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_comments_on_article_id"
+    t.index ["comment"], name: "index_comments_on_comment"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "email", null: false
+    t.text "contact", null: false
+    t.string "status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact"], name: "index_contacts_on_contact"
+    t.index ["email"], name: "index_contacts_on_email"
+    t.index ["status"], name: "index_contacts_on_status"
+    t.index ["title"], name: "index_contacts_on_title"
+  end
+
+  create_table "drafts", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "title"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["body"], name: "index_drafts_on_body"
+    t.index ["title"], name: "index_drafts_on_title"
+    t.index ["user_id"], name: "index_drafts_on_user_id"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "article_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_favorites_on_article_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.integer "article_id"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_images_on_article_id"
+    t.index ["image"], name: "index_images_on_image"
+  end
+
+  create_table "keeps", force: :cascade do |t|
+    t.integer "article_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_keeps_on_article_id"
+    t.index ["user_id"], name: "index_keeps_on_user_id"
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "following_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["follower_id", "following_id"], name: "index_relationships_on_follower_id_and_following_id", unique: true
+    t.index ["follower_id"], name: "index_relationships_on_follower_id"
+    t.index ["following_id"], name: "index_relationships_on_following_id"
+  end
+
+  create_table "social_profiles", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "provider", null: false
+    t.string "uid", null: false
+    t.string "access_token"
+    t.string "access_secret"
+    t.string "name"
+    t.string "nickname"
+    t.string "email"
+    t.string "url"
+    t.string "image_url"
+    t.string "description"
+    t.text "other"
+    t.text "credentials"
+    t.text "raw_info"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider"], name: "index_social_profiles_on_provider"
+    t.index ["uid"], name: "index_social_profiles_on_uid"
+    t.index ["user_id"], name: "index_social_profiles_on_user_id"
   end
 
   create_table "taggings", force: :cascade do |t|
