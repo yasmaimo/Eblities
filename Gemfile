@@ -57,6 +57,10 @@ gem 'font-awesome-rails'
 # 初期データ投入用
 gem 'seed-fu', '~> 2.3'
 
+# 記事投稿用
+gem 'summernote-rails', '~> 0.8.10.0'
+gem 'simple_form', '~> 3.5.1'
+
 # メールの送信確認 使用未定
 # gem 'letter-opener'
 # gem 'mailcatcher'

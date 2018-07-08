@@ -15,6 +15,11 @@
  */
 @import "bootstrap";
 @import "font-awesome";
+@import "summernote-bs4";
+@import "summernote-custom-theme";
+@import "summernote-custom-theme.min";
+
+@import "articles";
 
 @font-face{
   font-family: "makinas";
@@ -23,7 +28,7 @@
 
 @font-face{
   font-family: "mplus-1p-regular";
-  src: font-url('mplus-1p-regular.otf') format('truetype');
+  src: font-url('mplus-1p-regular.ttf') format('truetype');
 }
 
 /*@mixin box_sizing {

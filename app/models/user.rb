@@ -67,10 +67,7 @@ class User < ApplicationRecord
   # Association
   has_many :social_profiles
   has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
-  has_many :articles, through: :comments,
-                      through: :favorites,
-                      through: :keeps,
-                      through: :taggings
+  has_many :articles, through: :comments
   has_many :comments
   has_many :favorites
   has_many :keeps
