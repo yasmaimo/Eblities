@@ -17,6 +17,15 @@ body {
   position: fixed;
 }
 
+.right-sidebar {
+  margin-top: 47px;
+  min-width:320px;
+}
+
+.right-sidebar-link {
+  line-height: 48px;
+}
+
 .ranking-table {
   white-space: nowrap;
 }
@@ -55,4 +64,8 @@ footer {
 
 .category {
   height: 15px;
+}
+
+.blank-margin {
+  margin-top: 47px;
 }

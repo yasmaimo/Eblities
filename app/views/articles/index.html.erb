@@ -2,63 +2,59 @@
 	<div class="row justify-content-center">
 
 		<div class="left-sidebar col-lg-2 d-none d-lg-block">
-
 			<div class="list-group left-sidebar-link">
+
 				<%= link_to articles_path do %>
 					<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
-						<%= fa_icon("book", text: "") %>
-						最新記事
+						<%= fa_icon("book", text: "最新記事") %>
 					</span>
 				<% end %>
 
 				<%= link_to user_timeline_path do %>
 					<span class="list-group-item list-group-item-action nav-font mb-2">
-						<%= fa_icon("users", text: "") %>
-						タイムライン
+						<%= fa_icon("users", text: "タイムライン") %>
 					</span>
 				<% end %>
 
 				<%= link_to tag_timeline_path do %>
 					<span class="list-group-item list-group-item-action nav-font" >
-						<%= fa_icon("tags", text: "") %>
-						タグ
+						<%= fa_icon("tags", text: "タグ") %>
 					</span>
 				<% end %>
 
 			</div>
-
 		</div>
 
+		<div class="col-lg-6 col-md-7 col-sm-10">
 
-		<div class=" col-lg-6 col-md-7 col-sm-10">
-
-			<p class="d-lg-block d-none" style="margin-top: 47px;"></p>
+			<p class="d-lg-block d-none blank-margin"></p>
 
 			<ul class="nav nav-tabs mt-2 d-lg-none">
+
 			  <li class="nav-item">
 					<%= link_to articles_path do %>
 						<span class="nav-link active nav-font bg-danger text-white">
-							<%= fa_icon("book", text: "") %>
-							最新記事
+							<%= fa_icon("book", text: "最新記事") %>
 						</span>
 					<% end %>
 			  </li>
+
 			  <li class="nav-item mx-1">
 					<%= link_to user_timeline_path do %>
 						<span class="nav-link nav-font text-secondary border">
-							<%= fa_icon("users", text: "") %>
-							タイムライン
+							<%= fa_icon("users", text: "タイムライン") %>
 						</span>
 					<% end %>
 			  </li>
+
 			  <li class="nav-item">
 					<%= link_to tag_timeline_path do %>
 						<span class="nav-link nav-font text-secondary border">
-							<%= fa_icon("tags", text: "") %>
-							タグ
+							<%= fa_icon("tags", text: "タグ") %>
 						</span>
 					<% end %>
 			  </li>
+
 			</ul>
 
 		  <table class="table bg-white">
@@ -89,10 +85,10 @@
 		                <div class="col-6 small text-secondary text-right align-self-center">
 		                	<span class="mx-1">3days ago</span><br>
 		                	<a href="#" class="mx-1">
-		                		<%= fa_icon("star", text: "") %>100
+		                		<%= fa_icon("star", text: "100") %>
 		                	</a>
 		                	<a href="#" class="mx-1">
-		                		<%= fa_icon("folder-open", text: "") %>100
+		                		<%= fa_icon("folder-open", text: "100") %>
 		                	</a>
 		                </div>
 
@@ -102,7 +98,6 @@
 		            <div class="card-body">
 
 	                <div class="row">
-	                  <!-- タイトル -->
 	                  <div class="col-12">
 	                    <a href="#" class="font-weight-bold text-dark">
 	                      WAVファイルのサンプリングレートについて
@@ -136,7 +131,7 @@
 	                </div>
 
 		            </div>
-		          </div><!-- cardの閉じタグ -->
+		          </div>
 		        </td>
 		      </tr><!-- eachを終了 -->
 
@@ -145,7 +140,7 @@
 
 	  </div>
 
-	  <div class="col-lg-3 col-md-4 col-sm-10"  style="margin-top: 47px; min-width:320px;">
+	  <div class="col-lg-3 col-md-4 col-sm-10 right-sidebar">
 
 				<table class="table bg-white">
 				  <thead>
@@ -158,11 +153,11 @@
 				      <td>
 				      	<span class="mr-1 font-weight-bold">2</span>
 				      	<a href="#" class="mx-1"><img src="https://placehold.jp/40x40.png" class="rounded"></a>
-				      	<a href="#" class="small">Mark_sdfhh_12355</a>
+				      	<a href="#" class="small">Markasdfhha12355</a>
 				      </td>
 				      <td class="text-right">
 				      	<span class="font-weight-bold">1024</span><br>
-				      	<span class="small">
+				      	<span class="small text-secondary">
 				      		AP
 				      	</span>
 				      </td>
@@ -183,10 +178,12 @@
 				    </tr>
 				  </thead>
 				  <tbody>
-				    <tr class="">
-				      <td style="line-height: 48px;">
+				    <tr>
+				      <td class="right-sidebar-link">
 				      	<span class="mr-1 font-weight-bold">2</span>
-				      	<a href="#" class="badge badge-secondary">イラス音響技術相対性理論</a>
+				      	<a href="#" class="badge badge-secondary">
+				      	タグの名前を入れるよタグの名
+				      	</a>
 				      </td>
 				      <td class="text-right">
 				      	<span class="font-weight-bold">1024</span><br>
