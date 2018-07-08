@@ -1,2 +1,137 @@
-<h1>Articles#show</h1>
-<p>Find me in app/views/articles/show.html.erb</p>
+<div class="container-fluid">
+	<div class="row justify-content-center">
+
+		<div class="col-lg-8 col-md-10 col-sm-10">
+
+			<p class="blank-margin"></p>
+
+		  <table class="table bg-white">
+			  <thead class="">
+			    <tr>
+			    	<th>
+				    	<div class="row">
+				    		<div class="col-7">
+				    			<span>最新の記事</span>
+				    		</div>
+				    	</div>
+			    	</th>
+			    </tr>
+			  </thead>
+
+		    <tbody>
+		      <tr><!-- ここでeach -->
+		        <td>
+		          <div class="card">
+		            <div class="card-header">
+		              <div class="row">
+
+		                <div class="col-6 ranking-table">
+		                	<img src="https://placehold.jp/40x40.png" class="rounded">
+		                	<a href="#" class="text-secondary">Mark_sdfhh_12355</a>
+		                </div>
+
+		                <div class="col-6 small text-secondary text-right align-self-center">
+		                	<span class="mx-1">3days ago</span><br>
+		                	<a href="#" class="mx-1">
+		                		<%= fa_icon("star", text: "100") %>
+		                	</a>
+		                	<a href="#" class="mx-1">
+		                		<%= fa_icon("folder-open", text: "100") %>
+		                	</a>
+		                </div>
+
+		              </div>
+		            </div>
+
+		            <div class="card-body">
+
+	                <div class="row">
+	                  <div class="col-12">
+	                    <a href="#" class="font-weight-bold text-dark">
+	                      WAVファイルのサンプリングレートについて
+	                    </a>
+	                  </div>
+
+	                  <div class="col-sm-12">
+	                    <span class="small text-secondary">
+	                      おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。
+	                    </span>
+	                  </div>
+
+	                </div>
+
+		            </div>
+		          </div>
+		        </td>
+		      </tr><!-- eachを終了 -->
+
+		    </tbody>
+		  </table>
+
+	  </div>
+
+	  <div class="col-lg-3 col-md-10 col-sm-10 right-sidebar">
+
+				<table class="table bg-white">
+				  <thead>
+				    <tr>
+				      <th colspan="2">人気ユーザー</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr class="">
+				      <td>
+				      	<span class="mr-1 font-weight-bold">2</span>
+				      	<a href="#" class="mx-1"><img src="https://placehold.jp/40x40.png" class="rounded"></a>
+				      	<a href="#" class="small">Markasdfhha12355</a>
+				      </td>
+				      <td class="text-right">
+				      	<span class="font-weight-bold">1024</span><br>
+				      	<span class="small text-secondary">
+				      		AP
+				      	</span>
+				      </td>
+				    </tr>
+				    <tr>
+
+				    </tr>
+				    <tr>
+
+				    </tr>
+				  </tbody>
+				</table>
+
+				<table class="table bg-white">
+				  <thead>
+				    <tr>
+				      <th colspan="2">人気タグ</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+				      <td class="right-sidebar-link">
+				      	<span class="mr-1 font-weight-bold">2</span>
+				      	<a href="#" class="badge badge-secondary">
+				      	タグの名前を入れるよタグの名
+				      	</a>
+				      </td>
+				      <td class="text-right">
+				      	<span class="font-weight-bold">1024</span><br>
+				      	<span class="small text-secondary">
+				      		posts
+				      	</span>
+				      </td>
+				    </tr>
+				    <tr>
+
+				    </tr>
+				    <tr>
+
+				    </tr>
+				  </tbody>
+				</table>
+
+		</div>
+
+	</div>
+</div>
