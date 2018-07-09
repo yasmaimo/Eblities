@@ -29,6 +29,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @user = User.find(@article.user_id)
     @user.id = @article.user_id
+    @comment = Comment.new
   end
 
   def edit_confirm
