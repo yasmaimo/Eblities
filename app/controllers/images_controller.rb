@@ -1,5 +1,11 @@
 class ImagesController < ApplicationController
   def create
+  	@image = Image.new(image_params)
+  	@image.save
+
+  	respond_to do |format|
+  		format.json { render :json => { url: Refile.attachment_url(@image, :image)}}
+  	end
   end
 
   def destroy

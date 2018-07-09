@@ -60,13 +60,15 @@ gem 'seed-fu', '~> 2.3'
 # 記事投稿用
 gem 'summernote-rails', '~> 0.8.10.0'
 gem 'simple_form', '~> 3.5.1'
+gem 'bootsnap', '>= 1.1.0', require: false
+gem 'carrierwave'
 
 # メールの送信確認 使用未定
 # gem 'letter-opener'
 # gem 'mailcatcher'
 
 # メッセージ日本語化 使用未定
-# gem 'rails-i18n'
+gem 'rails-i18n'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

@@ -17,8 +17,8 @@
 @import "font-awesome";
 @import "summernote-bs4";
 @import "summernote-custom-theme";
-@import "summernote-custom-theme.min";
-
+@import "scaffolds";
+@import "posts";
 @import "articles";
 
 @font-face{
@@ -30,9 +30,3 @@
   font-family: "mplus-1p-regular";
   src: font-url('mplus-1p-regular.ttf') format('truetype');
 }
-
-/*@mixin box_sizing {
-  -moz-box-sizing:    border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing:         border-box;
-}*/

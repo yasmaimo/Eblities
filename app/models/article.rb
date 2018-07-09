@@ -12,7 +12,7 @@ class Article < ApplicationRecord
               message: "本文は最大10000文字まで入力できます" }
 
   # Association
-	belongs_to :user
+	# belongs_to :user
 	has_many :comments, dependent: :destroy
   has_many :images, dependent: :destroy
   has_many :favorites, dependent: :destroy
