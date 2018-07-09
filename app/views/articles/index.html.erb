@@ -57,83 +57,87 @@
 
 			</ul>
 
-		  <table class="table bg-white">
-			  <thead class="">
-			    <tr>
-			    	<th>
-				    	<div class="row">
-				    		<div class="col-7">
-				    			<span>最新の記事</span>
-				    		</div>
-				    	</div>
-			    	</th>
-			    </tr>
-			  </thead>
+			<% if Article.exists? %>
 
-		    <tbody>
-		      <tr><!-- ここでeach -->
-		        <td>
-		          <div class="card">
-		            <div class="card-header">
-		              <div class="row">
+			  <table class="table bg-white">
+				  <thead class="">
+				    <tr>
+				    	<th>
+					    	<div class="row">
+					    		<div class="col-7">
+					    			<span>最新の記事</span>
+					    		</div>
+					    	</div>
+				    	</th>
+				    </tr>
+				  </thead>
 
-		                <div class="col-6 ranking-table">
-		                	<img src="https://placehold.jp/40x40.png" class="rounded">
-		                	<a href="#" class="text-secondary">Mark_sdfhh_12355</a>
-		                </div>
+			    <tbody>
 
-		                <div class="col-6 small text-secondary text-right align-self-center">
-		                	<span class="mx-1">3days ago</span><br>
-		                	<a href="#" class="mx-1">
-		                		<%= fa_icon("star", text: "100") %>
-		                	</a>
-		                	<a href="#" class="mx-1">
-		                		<%= fa_icon("folder-open", text: "100") %>
-		                	</a>
-		                </div>
+			    	<% @articles.each do |article| %>
 
-		              </div>
-		            </div>
+				      <tr><!-- ここでeach -->
+				        <td>
+				          <div class="card">
+				            <div class="card-header">
+				              <div class="row">
 
-		            <div class="card-body">
+				                <div class="col-6 ranking-table">
+				                	<img src="https://placehold.jp/40x40.png" class="rounded">
+				                	<span class="text-secondary">
 
-	                <div class="row">
-	                  <div class="col-12">
-	                    <a href="#" class="font-weight-bold text-dark">
-	                      WAVファイルのサンプリングレートについて
-	                    </a>
-	                  </div>
+				                	</span>
+				                </div>
 
-	                  <div class="d-none d-xl-block col-sm-12 text-truncate" style="max-width: 530px;">
-	                    <span class="small text-secondary">
-	                      おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。
-	                    </span>
-	                  </div>
+				                <div class="col-6 small text-secondary text-right align-self-center">
+				                	<span class="mx-1" >
+				                		<%= article.created_at.strftime('%Y/%m/%d') %>
+				                	</span><br>
 
-	                  <div class="d-none d-lg-block d-xl-none col-sm-12 text-truncate" style="max-width: 440px;">
-	                    <span class="small text-secondary">
-	                      おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。
-	                    </span>
-	                  </div>
+				                	<span class="mx-1">
+				                		<%= fa_icon("thumbs-up") %><%= article.favorites.count %>
+				                	</span>
 
-	                  <div class="d-none d-sm-block d-lg-none col-sm-12 text-truncate" style="max-width: 400px;">
-	                    <span class="small text-secondary">
-	                      おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。
-	                    </span>
-	                  </div>
+				                	<span class="mx-1">
+				                		<%= fa_icon("comments") %><%= article.comments.count %>
+				                	</span>
 
-	                  <div class="d-sm-none col-sm-12 text-truncate" style="max-width: 320px;">
-	                    <span class="small text-secondary">
-	                      おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。
-	                    </span>
-	                  </div>
+				                </div>
 
-	                </div>
+				              </div>
+				            </div>
 
-		            </div>
-		          </div>
-		        </td>
-		      </tr><!-- eachを終了 -->
+				            <div class="card-body">
+
+			                <div class="row">
+			                  <div class="col-12">
+			                  	<span class="font-weight-bold text-dark">
+			                  		<%= link_to article.title, article_path(article) %>
+			                  	</span>
+			                  </div>
+
+			                </div>
+
+				            </div>
+				          </div>
+				        </td>
+				      </tr><!-- eachを終了 -->
+
+				    <% end %>
+
+			    <% else %>
+
+					  <table class="table bg-white">
+						  <thead>
+						    <tr>
+						    	<th class="text-center">
+					    			<span>記事がありません</span>
+						    	</th>
+						    </tr>
+						  </thead>
+						</table>
+
+			    <% end %>
 
 		    </tbody>
 		  </table>

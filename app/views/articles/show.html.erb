@@ -1,22 +1,83 @@
 <div class="container-fluid">
 	<div class="row justify-content-center">
 
-		<div class="col-lg-8 col-md-10 col-sm-10">
+		<div class="left-sidebar col-lg-1 d-none d-lg-block">
+			<div class="list-group left-sidebar-link">
+
+
+				<!-- イイねしたかどうか -->
+				<% if @article.favorited_by?(current_user) %>
+
+					<p class="text-secondary text-center mb-2">
+						<%= @article.favorites.count %>
+					</p>
+
+					<%= link_to article_favorites_path(@article),style: "text-decoration: none;" , method: :delete do %>
+
+						<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
+							<%= fa_icon("thumbs-up 2x") %>
+						</span>
+
+					<% end %>
+
+				<% else %>
+
+					<p class="text-secondary text-center mb-2">
+						<%= @article.favorites.count %>
+					</p>
+
+					<%= link_to article_favorites_path(@article),style: "text-decoration: none;" , method: :post do %>
+
+						<span class="list-group-item list-group-item-action nav-font mb-2">
+							<%= fa_icon("thumbs-up 2x") %>
+						</span>
+
+					<% end %>
+
+				<% end %>
+
+
+				<!-- キープしたかどうか -->
+				<% if @article.kept_by?(current_user) %>
+
+					<%= link_to keep_path(article_id: @article.id),style: "text-decoration: none;" , method: :delete do %>
+
+						<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
+							<%= fa_icon("folder-open 2x") %>
+						</span>
+
+					<% end %>
+
+				<% else %>
+
+					<%= link_to keeps_path,style: "text-decoration: none;" , method: :post do %>
+
+						<span class="list-group-item list-group-item-action nav-font mb-2">
+							<%= fa_icon("folder-open 2x") %>
+						</span>
+
+					<% end %>
+
+				<% end %>
+
+				<%= link_to tag_timeline_path do %>
+					<span class="list-group-item list-group-item-action nav-font mb-2" >
+						<%= fa_icon("twitter 2x") %>
+					</span>
+				<% end %>
+
+				<%= link_to tag_timeline_path do %>
+					<span class="list-group-item list-group-item-action nav-font" >
+						<%= fa_icon("facebook 2x") %>
+					</span>
+				<% end %>
+
+			</div>
+		</div>
+
+		<div class="col-lg-7 col-md-10 col-sm-10">
 
 			<p class="blank-margin"></p>
-
-		  <table class="table bg-white">
-			  <thead class="">
-			    <tr>
-			    	<th>
-				    	<div class="row">
-				    		<div class="col-7">
-				    			<span>最新の記事</span>
-				    		</div>
-				    	</div>
-			    	</th>
-			    </tr>
-			  </thead>
 
 		    <tbody>
 		      <tr><!-- ここでeach -->
@@ -27,17 +88,24 @@
 
 		                <div class="col-6 ranking-table">
 		                	<img src="https://placehold.jp/40x40.png" class="rounded">
-		                	<a href="#" class="text-secondary">Mark_sdfhh_12355</a>
+		                	<span class="text-secondary">
+		                		<%= link_to @user.user_name, user_path(@user) %>
+		                	</span>
 		                </div>
 
 		                <div class="col-6 small text-secondary text-right align-self-center">
-		                	<span class="mx-1">3days ago</span><br>
-		                	<a href="#" class="mx-1">
-		                		<%= fa_icon("star", text: "100") %>
-		                	</a>
-		                	<a href="#" class="mx-1">
-		                		<%= fa_icon("folder-open", text: "100") %>
-		                	</a>
+		                	<span class="mx-1" >
+		                		<%= @article.created_at.strftime('%Y/%m/%d') %>
+		                	</span><br>
+
+		                	<span class="mx-1">
+		                		<%= fa_icon("folder-open") %><%= @article.keeps.count %>
+		                	</span>
+
+		                	<span class="mx-1">
+		                		<%= fa_icon("comments") %><%= @article.comments.count %>
+		                	</span>
+
 		                </div>
 
 		              </div>
@@ -47,20 +115,83 @@
 
 	                <div class="row">
 	                  <div class="col-12">
-	                    <a href="#" class="font-weight-bold text-dark">
-	                      WAVファイルのサンプリングレートについて
-	                    </a>
+	                  	<h2 class="font-weight-bold text-dark mt-1">
+	                  		<%= @article.title %>
+	                  	</h2>
 	                  </div>
-
-	                  <div class="col-sm-12">
-	                    <span class="small text-secondary">
-	                      おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。
-	                    </span>
-	                  </div>
-
 	                </div>
-
 		            </div>
+
+								<div class="d-lg-none d-sm-block">
+									<!-- イイねしたかどうか -->
+									<div class="row justify-content-center">
+										<div class="col-5 text-center">
+
+											<% if @article.favorited_by?(current_user) %>
+
+												<%= link_to article_favorites_path(@article),style: "text-decoration: none;" , method: :delete do %>
+
+													<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
+														<%= fa_icon("thumbs-up 2x") %>
+														<span class="ml-1 font-weight-bold">
+															<%= @article.favorites.count %>
+														</span>
+													</span>
+
+												<% end %>
+
+											<% else %>
+
+												<%= link_to article_favorites_path(@article),style: "text-decoration: none;" , method: :post do %>
+
+													<span class="list-group-item list-group-item-action nav-font mb-2">
+														<%= fa_icon("thumbs-up 2x") %>
+														<span class="ml-1 font-weight-bold">
+															<%= @article.favorites.count %>
+														</span>
+													</span>
+
+												<% end %>
+
+											<% end %>
+
+										</div>
+
+										<div class="col-5 text-center">
+											<!-- キープしたかどうか -->
+											<% if @article.kept_by?(current_user) %>
+
+												<%= link_to keep_path(article_id: @article.id),style: "text-decoration: none;" , method: :delete do %>
+
+													<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
+														<%= fa_icon("folder-open 2x") %>
+													</span>
+
+												<% end %>
+
+											<% else %>
+
+												<%= link_to keeps_path,style: "text-decoration: none;" , method: :post do %>
+
+													<span class="list-group-item list-group-item-action nav-font mb-2">
+														<%= fa_icon("folder-open 2x") %>
+													</span>
+
+												<% end %>
+
+											<% end %>
+
+										</div>
+									</div>
+
+								</div>
+
+		            <div class="title-border"></div>
+
+                <div class="col-sm-12 mt-4" style="overflow: scroll;">
+                    <%= raw @article.body %>
+                </div>
+
 		          </div>
 		        </td>
 		      </tr><!-- eachを終了 -->

@@ -129,7 +129,7 @@ ActiveRecord::Schema.define(version: 20180707011524) do
     t.string "uid", null: false
     t.string "access_token"
     t.string "access_secret"
-    t.string "name", null: false
+    t.string "name"
     t.string "nickname"
     t.string "email"
     t.string "url"

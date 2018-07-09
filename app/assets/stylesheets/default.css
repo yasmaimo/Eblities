@@ -69,3 +69,10 @@ footer {
 .blank-margin {
   margin-top: 47px;
 }
+
+.title-border {
+  height: 3px;
+  width: 95%;
+  background-color:#e6e6fa;
+  margin: 0 auto;
+}

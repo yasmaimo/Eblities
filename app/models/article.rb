@@ -19,4 +19,14 @@ class Article < ApplicationRecord
   has_many :keeps, dependent: :destroy
   has_many :taggings, dependent: :destroy
 
+  # イイねしたかどうか
+  def favorited_by?(user)
+    favorites.where(user_id: user.id).exists?
+  end
+
+  # キープしたかどうか
+  def kept_by?(user)
+    keeps.where(user_id: user.id).exists?
+  end
+
 end

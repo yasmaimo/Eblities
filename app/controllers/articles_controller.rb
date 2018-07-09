@@ -12,6 +12,10 @@ class ArticlesController < ApplicationController
   end
 
   def create
+    @article = Article.new(article_params)
+    @article.user_id = current_user.id
+    @article.save
+    redirect_to articles_path
   end
 
   def new
@@ -22,6 +26,9 @@ class ArticlesController < ApplicationController
   end
 
   def show
+    @article = Article.find(params[:id])
+    @user = User.find(@article.user_id)
+    @user.id = @article.user_id
   end
 
   def edit_confirm
