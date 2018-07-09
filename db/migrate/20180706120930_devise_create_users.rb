@@ -35,7 +35,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       ## 追加カラム
       t.string :family_name, index: true
       t.string :given_name,  index: true
-      t.string :user_name, null: false,  index: true
+      t.string :user_name,   null: false,  index: true
       t.string :introduction
       t.string :user_url
       # t.string :other_service
