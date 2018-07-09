@@ -17,6 +17,8 @@ class User < ApplicationRecord
 
   validates :user_name,
     presence: true,
+    length: { maximum: 16,
+              message: "タイトルは最大500文字まで入力できます" },
     format: { with: /\A[a-zA-Z_`_]+\z/,
     					message: "半角の英語とアンダースコア _ のみ使用できます" }
 

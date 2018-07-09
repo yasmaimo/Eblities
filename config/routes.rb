@@ -1,4 +1,4 @@
-  Rails.application.routes.draw do
+Rails.application.routes.draw do
 
   # root
   root to: 'articles#index'
@@ -53,9 +53,9 @@
     resource :favorites, only: [:create, :destroy]
   end
 
-  get 'articles/user_timeline', to: 'articles#user_timeline', as: 'user_timeline'
+  get 'user_timeline', to: 'articles#user_timeline', as: 'user_timeline'
 
-  get 'articles/tag_timeline', to: 'articles#tag_timeline', as: 'tag_timeline'
+  get 'tag_timeline', to: 'articles#tag_timeline', as: 'tag_timeline'
 
   get 'articles/confirm', to: 'articles#confirm', as: 'confirm_article'
 
@@ -78,5 +78,11 @@
   get 'contacts/confirm', to: 'contacts#confirm', as: 'confirm_contact'
 
   get 'contacts/sent', to: 'contacts#sent', as: 'sent_contact'
+
+  # terms
+  get 'terms', to: 'terms#index', as: 'terms'
+
+  # help
+  get 'help', to: 'helps#index', as: 'helps'
 
 end
