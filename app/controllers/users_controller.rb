@@ -1,8 +1,11 @@
 class UsersController < ApplicationController
   def index
+    @search_user = User.ransack(params[:q])
+    @users = @search_user.result.page(params[:page]).reverse_order
   end
 
   def show
+    @user = User.find(params[:id])
   end
 
   def account
@@ -24,6 +27,18 @@ class UsersController < ApplicationController
   end
 
   def update
+  end
+
+  def following
+    @user  = User.find(params[:id])
+    @users = @user.followings
+    render 'show_follow'
+  end
+
+  def followers
+    @user  = User.find(params[:id])
+    @users = @user.followers
+    render 'show_follower'
   end
 
   private

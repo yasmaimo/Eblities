@@ -32,7 +32,14 @@ Rails.application.routes.draw do
   get 'admins/:id/two_factor_authentication_setting', to: 'admins#two_factor_authentication_setting', as: 'admins_two_factor_authentication_setting'
 
   # users
-  resources :users, only: [ :index, :create, :edit, :show, :update]
+  resources :users, only: [ :index, :create, :edit, :show, :update] do
+    member do
+     get :following, :followers
+    end
+  end
+
+  # relationships
+  resources :relationships, only: [:create, :destroy]
 
   get 'users/:id/account', to: 'users#account', as: 'user_account'
 
