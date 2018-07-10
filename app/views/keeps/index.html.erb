@@ -1,2 +1,106 @@
-<h1>Keeps#index</h1>
-<p>Find me in app/views/keeps/index.html.erb</p>
+<div class="container-fluid">
+	<div class="row justify-content-center">
+
+		<p class="col-12 d-lg-block d-none"></p>
+
+		<div class="col-lg-3 col-sm-11">
+
+	    <%= search_form_for @search_keep do |f| %>
+	      <div class="form-inline my-lg-0 my-2">
+	        <%= f.text_field :article_title_or_article_body_cont, class: "col-sm-10 col-xs-12 form-control", placeholder: 'キープした記事を検索' %>
+	        <%= f.button fa_icon("search"), class: 'col-sm-2 col-xs-12 btn btn-outline-dark my-lg-0 my-2'%>
+	      </div>
+	    <% end %>
+
+	  </div>
+
+		<div class="col-lg-9 col-sm-11">
+
+			<% if Keep.exists?(user_id: current_user.id) %>
+
+			  <table class="table bg-white">
+				  <thead class="">
+				    <tr>
+				    	<th>
+					    	<div class="row">
+					    		<div class="col-7">
+					    			<span>キープ一覧</span>
+					    		</div>
+					    	</div>
+				    	</th>
+				    </tr>
+				  </thead>
+
+			    <tbody>
+
+			    	<% @keeps.each do |keep| %>
+
+				      <tr><!-- ここでeach -->
+				        <td>
+				          <div class="card">
+				            <div class="card-header">
+				              <div class="row">
+
+				                <div class="col-6 ranking-table">
+				                	<img src="https://placehold.jp/40x40.png" class="rounded">
+				                	<span class="text-secondary">
+
+				                	</span>
+				                </div>
+
+				                <div class="col-6 small text-secondary text-right align-self-center">
+				                	<span class="mx-1" >
+				                		<%= keep.article.created_at.strftime('%Y/%m/%d') %>
+				                	</span><br>
+
+				                	<span class="mx-1">
+				                		<%= fa_icon("thumbs-up") %><%= keep.article.favorites.count %>
+				                	</span>
+
+				                	<span class="mx-1">
+				                		<%= fa_icon("comments") %><%= keep.article.comments.count %>
+				                	</span>
+
+				                </div>
+
+				              </div>
+				            </div>
+
+				            <div class="card-body">
+
+			                <div class="row">
+			                  <div class="col-12">
+			                  	<span class="font-weight-bold text-dark">
+			                  		<%= link_to keep.article.title, article_path(keep.article) %>
+			                  	</span>
+			                  </div>
+
+			                </div>
+
+				            </div>
+				          </div>
+				        </td>
+				      </tr><!-- eachを終了 -->
+
+				    <% end %>
+
+			    <% else %>
+
+					  <table class="table bg-white">
+						  <thead>
+						    <tr>
+						    	<th class="text-center">
+					    			<span>キープした記事はありません</span>
+						    	</th>
+						    </tr>
+						  </thead>
+						</table>
+
+			    <% end %>
+
+		    </tbody>
+		  </table>
+
+		</div>
+	</div>
+</div>
