@@ -79,6 +79,9 @@ Rails.application.routes.draw do
   # tags
   resources :tags, only: [ :index, :create, :show, :update]
 
+  # taggings
+  resources :taggings, only: [ :destroy]
+
   # contacts
   resources :contacts, only: [ :index, :create, :new, :show, :update]
 

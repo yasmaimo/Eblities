@@ -10,7 +10,9 @@
     <tr>
       <td class="right-sidebar-link">
       	<span class="mr-1 font-weight-bold"><%= rank %></span>
-        <span class="badge badge-secondary"><%= tag.name %></span>
+        <span class="badge badge-secondary">
+          <%= link_to tag.name, tag_path(tag), class: "text-white" %>
+        </span>
       </td>
       <td class="text-right">
       	<span class="font-weight-bold"><%= tag.taggings_count %></span><br>

@@ -1,9 +1,13 @@
 class TagsController < ApplicationController
+
   def index
+    @search_tag = Tag.ransack(params[:q])
+    @tags = @search_tag.result.page(params[:page]).reverse_order
   end
 
   def create
     params[:user][:tag_list].split(",").each do |tag_name|
+      binding.pry
       if Tag.exists?(name: tag_name)
         @tag = Tag.find_by(name: tag_name)
         if Tagging.exists?(tag_id: @tag.id, taggable_type: "User", taggable_id: current_user.id)
@@ -24,6 +28,8 @@ class TagsController < ApplicationController
   end
 
   def show
+    @tag = Tag.find(params[:id])
+    @taggings = Tagging.where(tag_id: params[:id], taggable_type: "Article")
   end
 
   def update

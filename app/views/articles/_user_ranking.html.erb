@@ -7,11 +7,11 @@
 </thead>
 <tbody>
   <% @users.each do |user| %>
-    <tr class="">
+    <tr>
       <td>
       	<span class="mr-1 font-weight-bold"><%= rank %></span>
-      	<a href="#" class="mx-1"><img src="https://placehold.jp/40x40.png" class="rounded"></a>
-      	<span class="small"><%= user.user_name %></span>
+      	<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+      	<span class="small"><%= link_to user.user_name, user_path(user) %></span>
       </td>
       <td class="text-right">
       	<span class="font-weight-bold"><%= user.point %></span><br>

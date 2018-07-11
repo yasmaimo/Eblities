@@ -40,7 +40,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :user_url
       # t.string :other_service
       t.integer :image_id
-      t.integer :point, index: true
+      t.integer :point, index: true, default: 0
       t.integer :status, null: false, index: true, default: 0
 
 
