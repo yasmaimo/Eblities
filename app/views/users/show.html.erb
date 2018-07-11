@@ -22,21 +22,22 @@
 		<div class="col-lg-3 col-sm-10">
 			<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: "card-img" %>
 			<%= @user.user_name %>
-
-
-			<p>関心のあるタグ</p>
-			<% if Tagging.exists?(tagging_type: User, taggable_id: @user.id) %>
-
-				<% @user.tagging.tag.each do |tag| %>
-					<% tag.name %>
-				<% end %>
-
-			<% else %>
-
-				<p>未登録</p>
-
+			<% @taggings.each do |tagging| %>
+				<%= tagging.tag.name %>
 			<% end %>
 		</div>
+
+<%= form_for(@tag) do |f| %>
+  <div class="field">
+    <%= f.label :tag_list, "タグ（カンマ区切り）" %><br>
+    <%= text_field_tag 'user[tag_list]', @user.tag_list.join(',') %>
+    <%= f.hidden_field :taggable_type, :value => controller.controller_name.classify %>
+    <%= f.hidden_field :context, :value => "tags" %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
 
 	</div>
 </div>

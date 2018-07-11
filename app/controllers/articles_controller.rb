@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
   def index
+    binding.pry
   end
 
   def user_timeline

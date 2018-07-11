@@ -6,6 +6,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @tag = Tag.new
+    @taggings = Tagging.where(taggable_type: "User", taggable_id: current_user.id)
   end
 
   def account
@@ -44,7 +46,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:family_name, :given_name, :user_name, :introduction, :user_url, :image_id, :email, :password, :status)
+    params.require(:user).permit(:family_name, :given_name, :user_name, :introduction, :user_url, :image_id, :email, :password, :status, :tag_list)
   end
 
 end

@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   attachment :image
 
+  acts_as_taggable
+
   # Validatoin
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email,
@@ -83,7 +85,6 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :keeps, dependent: :destroy
-  has_many :taggings, dependent: :destroy
 
   def following?(other_user)
     following_relationships.find_by(following_id: other_user.id)
