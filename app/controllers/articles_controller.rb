@@ -1,6 +1,8 @@
 class ArticlesController < ApplicationController
+  before_action :user_ranking
+  before_action :tag_ranking
+
   def index
-    binding.pry
   end
 
   def user_timeline
@@ -13,8 +15,8 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(article_params)
-    @article.user_id = current_user.id
+    @article = Article.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body])
+    @article.tag_list.add(article_params[:tag_list], parse: true)
     @article.save
     redirect_to articles_path
   end
@@ -39,10 +41,18 @@ class ArticlesController < ApplicationController
   def update
   end
 
+  def user_ranking
+    @users = User.all.order(:point).limit(10)
+  end
+
+  def tag_ranking
+    @tags = ActsAsTaggableOn::Tag.most_used(10)
+  end
+
   private
 
   def article_params
-    params.require(:article).permit(:user_id, :title, :body)
+    params.require(:article).permit(:user_id, :title, :body, :tag_list)
   end
 
 end

@@ -187,12 +187,14 @@ ActiveRecord::Schema.define(version: 20180707011524) do
     t.string "introduction"
     t.string "user_url"
     t.integer "image_id"
+    t.integer "point"
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email"
     t.index ["family_name"], name: "index_users_on_family_name"
     t.index ["given_name"], name: "index_users_on_given_name"
+    t.index ["point"], name: "index_users_on_point"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["status"], name: "index_users_on_status"
     t.index ["user_name"], name: "index_users_on_user_name"

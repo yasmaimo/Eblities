@@ -8,6 +8,13 @@
 <%= simple_form_for(@article) do |f| %>
   <%= f.error_notification %>
 
+  <div class="field">
+    <%= f.label :tag_list, "タグ（カンマ区切り）" %><br>
+    <%= text_field_tag 'article[tag_list]', @article.tag_list.join(',') %>
+    <%= f.hidden_field :taggable_type, :value => controller.controller_name.classify %>
+    <%= f.hidden_field :context, :value => "tags" %>
+  </div>
+
   <div class="form-inputs">
     <%= f.input :title %>
     <%= f.input :body, as: :summernote %>

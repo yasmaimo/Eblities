@@ -1,0 +1,25 @@
+<% rank = 1 %>
+
+<thead>
+  <tr>
+    <th colspan="2">人気ユーザー</th>
+  </tr>
+</thead>
+<tbody>
+  <% @users.each do |user| %>
+    <tr class="">
+      <td>
+      	<span class="mr-1 font-weight-bold"><%= rank %></span>
+      	<a href="#" class="mx-1"><img src="https://placehold.jp/40x40.png" class="rounded"></a>
+      	<span class="small"><%= user.user_name %></span>
+      </td>
+      <td class="text-right">
+      	<span class="font-weight-bold"><%= user.point %></span><br>
+      	<span class="small text-secondary">
+      		EP
+      	</span>
+      </td>
+    </tr>
+    <% rank += 1 %>
+  <% end %>
+</tbody>

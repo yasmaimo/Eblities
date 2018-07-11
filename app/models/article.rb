@@ -1,5 +1,7 @@
 class Article < ApplicationRecord
 
+  acts_as_taggable
+
   # Validatoin
   validates :title,
   	presence: true,
@@ -17,7 +19,6 @@ class Article < ApplicationRecord
   has_many :images, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :keeps, dependent: :destroy
-  has_many :taggings, dependent: :destroy
 
   # イイねしたかどうか
   def favorited_by?(user)
