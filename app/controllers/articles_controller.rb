@@ -17,7 +17,9 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body])
     @article.tag_list.add(article_params[:tag_list], parse: true)
-    @article.save
+    if @article.save
+      get_ep_on_create
+    end
     redirect_to articles_path
   end
 
@@ -42,7 +44,7 @@ class ArticlesController < ApplicationController
   end
 
   def user_ranking
-    @users = User.all.order(:point).limit(10)
+    @users = User.order(:point).limit(10)
   end
 
   def tag_ranking

@@ -7,7 +7,6 @@ class TagsController < ApplicationController
 
   def create
     params[:user][:tag_list].split(",").each do |tag_name|
-      binding.pry
       if Tag.exists?(name: tag_name)
         @tag = Tag.find_by(name: tag_name)
         if Tagging.exists?(tag_id: @tag.id, taggable_type: "User", taggable_id: current_user.id)

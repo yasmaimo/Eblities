@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_search
+  before_action :set_search
 
   def after_sign_in_path_for(resource)
 		root_path
@@ -15,6 +16,42 @@ class ApplicationController < ActionController::Base
   def set_search
     @search = Article.ransack(params[:q])
     @articles = @search.result.page(params[:page]).reverse_order
+  end
+
+  def get_ep_on_create
+    ep = current_user.point
+    ep += 5
+    current_user.update(point: ep)
+  end
+
+  def get_ep_on_delete
+    ep = current_user.point
+    ep -= 5
+    current_user.update(point: ep)
+  end
+
+  def get_ep_on_followed
+    ep = @user.point
+    ep += 2
+    @user.update(point: ep)
+  end
+
+  def get_ep_on_unfollowed
+    ep = current_user.point
+    ep -= 2
+    @user.update(point: ep)
+  end
+
+  def get_ep_on_favorited
+    ep = current_user.point
+    ep += 1
+    @user.update(point: ep)
+  end
+
+  def get_ep_on_release_favorite
+    ep = current_user.point
+    ep -= 1
+    @user.update(point: ep)
   end
 
 	protected

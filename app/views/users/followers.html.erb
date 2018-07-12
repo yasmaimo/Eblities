@@ -9,7 +9,7 @@
 				<ul class="nav nav-tabs mt-2">
 
 				  <li class="nav-item">
-						<%= link_to user_path(current_user) do %>
+						<%= link_to user_path(@user) do %>
 							<span class="nav-link active nav-font text-secondary">
 								<%= fa_icon("user", text: "投稿履歴") %>
 							</span>
@@ -17,7 +17,7 @@
 				  </li>
 
 				  <li class="nav-item mx-1">
-						<%= link_to followers_path(current_user) do %>
+						<%= link_to followers_path(@user) do %>
 							<span class="nav-link nav-font bg-danger text-white border">
 								<%= fa_icon("users", text: "フォロワー") %>
 							</span>
@@ -27,7 +27,7 @@
 				</ul>
 			</div>
 
-			<% if Article.exists?(user_id: @user) %>
+			<% if @user.followers.present? %>
 
 			  <table class="table bg-white">
 				  <thead class="">
@@ -35,8 +35,7 @@
 				    	<th>
 					    	<div class="row">
 					    		<div class="col-12">
-					    			<span>投稿履歴</span>
-					    			<span class="ml-3"><%= current_user.articles.count %>件の投稿</span>
+					    			<span class="ml-3"><%= @user.followers.count %>人のフォロワー</span>
 					    		</div>
 					    	</div>
 				    	</th>
@@ -62,6 +61,32 @@
 
 				                <div class="col-6 small text-secondary text-right align-self-center">
 
+													<% unless current_user?(user) %>
+
+														<div id="follow_form">
+
+														<% if current_user.following?(user) %>
+
+															<%= form_for(current_user.following_relationships.find_by(following_id: user.id), html: { method: :delete }) do |f| %>
+															<%= f.submit "Unfollow", class: "btn btn-large follow-btn" %>
+
+														<% end %>
+
+													<% else %>
+
+															<%= form_for(current_user.following_relationships.build(following_id: user.id)) do |f| %>
+																<div>
+																	<%= f.hidden_field :following_id %>
+																</div>
+																<%= f.submit "Follow", class: "btn btn-large btn-primary follow-btn" %>
+															<% end %>
+
+														<% end %>
+
+														</div>
+
+													<% end %>
+
 				                	<span class="mx-1">
 				                		<%= fa_icon("paperclip") %><%= user.articles.count %>個の記事
 				                	</span>
@@ -78,36 +103,11 @@
 				            <div class="card-body">
 
 			                <div class="row">
-			                  <div class="col-8">
-			                  	<span class="small">
+			                  <div class="col-12">
+			                  	<span class="small text-dark">
 			                  		<%= user.introduction %>
 			                  	</span>
-
 			                  </div>
-
-												<% unless current_user?(user) %>
-
-													<div class="col-4 text-right">
-
-													<% if current_user.following?(user) %>
-
-														<%= form_for(current_user.following_relationships.find_by(following_id: user.id), html: { method: :delete }) do |f| %>
-														<%= f.submit "フォロー中", class: "btn btn-sm" %>
-
-													<% end %>
-
-												<% else %>
-
-														<%= form_for(current_user.following_relationships.build(following_id: user.id)) do |f| %>
-															<%= f.hidden_field :following_id %>
-															<%= f.submit "フォローする", class: "btn btn-sm btn-outline-primary " %>
-														<% end %>
-
-													<% end %>
-
-													</div>
-
-												<% end %>
 
 			                </div>
 
@@ -133,7 +133,7 @@
 				  </thead>
 				</table>
 
-				<p class="text-center font-weight-bold"><%= current_user.user_name %>さんのフォロワーはいません</p>
+				<p class="text-center font-weight-bold"><%= @user.user_name %>さんのフォロワーはいません</p>
 
 	    <% end %>
 

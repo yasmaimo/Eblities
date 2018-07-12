@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   end
 
   def account
+    @user = User.find(params[:id])
   end
 
   def password
@@ -23,6 +24,7 @@ class UsersController < ApplicationController
   end
 
   def two_factor_authentication
+    @user = User.find(params[:id])
   end
 
   def two_factor_authentication_setting
@@ -34,9 +36,16 @@ class UsersController < ApplicationController
   end
 
   def update
+    path = Rails.application.routes.recognize_path(request.referer)
     @user = User.find(params[:id])
-    @user.update(user_params)
-    redirect_to user_profile_path(params[:id])
+    if @user.update(user_params)
+      sign_in(@user, bypass: true)
+      redirect_to action: path[:action]
+      flash[:succeeded] = "変更を保存しました"
+    else
+      redirect_to action: path[:action]
+      flash[:failed] = "6~16文字のパスワードを入力してください"
+    end
   end
 
   def following
@@ -56,7 +65,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:family_name, :given_name, :user_name, :introduction, :user_url, :image, :email, :password, :point, :status, :tag_list)
+    params.require(:user).permit(:family_name, :given_name, :user_name, :introduction, :web_site_url, :image, :email, :password, :point, :status, :tag_list)
   end
 
 end

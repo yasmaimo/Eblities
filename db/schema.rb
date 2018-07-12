@@ -185,7 +185,7 @@ ActiveRecord::Schema.define(version: 20180707011524) do
     t.string "given_name"
     t.string "user_name", null: false
     t.string "introduction"
-    t.string "user_url"
+    t.string "web_site_url"
     t.string "image_id"
     t.integer "point", default: 0
     t.integer "status", default: 0, null: false

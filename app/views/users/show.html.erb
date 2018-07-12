@@ -8,7 +8,7 @@
 			<ul class="nav nav-tabs mt-2">
 
 			  <li class="nav-item">
-					<%= link_to user_path(current_user) do %>
+					<%= link_to user_path(@user) do %>
 						<span class="nav-link active nav-font bg-danger text-white">
 							<%= fa_icon("user", text: "投稿履歴") %>
 						</span>
@@ -16,7 +16,7 @@
 			  </li>
 
 			  <li class="nav-item mx-1">
-					<%= link_to followers_path(current_user) do %>
+					<%= link_to followers_path(@user) do %>
 						<span class="nav-link nav-font text-secondary border">
 							<%= fa_icon("users", text: "フォロワー") %>
 						</span>
