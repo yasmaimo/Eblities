@@ -42,26 +42,17 @@ class User < ApplicationRecord
     on: :update,
     allow_blank: true
 
-  validates :user_name,
-    presence: true,
-    length: { maximum: 16,
-              message: "タイトルは最大500文字まで入力できます" },
-    format: { with: /\A[a-zA-Z_`_]+\z/,
-              message: "半角の英語とアンダースコア _ のみ使用できます" },
-    on: :update,
-    allow_blank: true
-
   validates :introduction,
     length: { maximum: 150,
               message: "自己紹介は最大150文字まで入力できます" },
     on: :update,
     allow_blank: true
 
-  validates :status,
-    presence: true,
-    format: { with: /\A\d[0-2]\z/,
-              message: "無効な入力です" },
-    on: :update
+  # validates :status,
+  #   presence: true,
+  #   format: { with: /\A\d[0-2]\z/,
+  #             message: "無効な入力です" },
+  #   on: :update
 
   def update_without_current_password(params, *options)
     params.delete(:current_password)

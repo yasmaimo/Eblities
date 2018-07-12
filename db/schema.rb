@@ -186,8 +186,8 @@ ActiveRecord::Schema.define(version: 20180707011524) do
     t.string "user_name", null: false
     t.string "introduction"
     t.string "user_url"
-    t.integer "image_id"
-    t.integer "point"
+    t.string "image_id"
+    t.integer "point", default: 0
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

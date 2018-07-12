@@ -1,0 +1,143 @@
+<div class="container">
+	<div class="row justify-content-center">
+
+		<%= render 'users/info_sidebar' %>
+
+		<div class="col-lg-9 col-sm-11">
+
+			<div>
+				<ul class="nav nav-tabs mt-2">
+
+				  <li class="nav-item">
+						<%= link_to user_path(current_user) do %>
+							<span class="nav-link active nav-font text-secondary">
+								<%= fa_icon("user", text: "投稿履歴") %>
+							</span>
+						<% end %>
+				  </li>
+
+				  <li class="nav-item mx-1">
+						<%= link_to followers_path(current_user) do %>
+							<span class="nav-link nav-font bg-danger text-white border">
+								<%= fa_icon("users", text: "フォロワー") %>
+							</span>
+						<% end %>
+				  </li>
+
+				</ul>
+			</div>
+
+			<% if Article.exists?(user_id: @user) %>
+
+			  <table class="table bg-white">
+				  <thead class="">
+				    <tr>
+				    	<th>
+					    	<div class="row">
+					    		<div class="col-12">
+					    			<span>投稿履歴</span>
+					    			<span class="ml-3"><%= current_user.articles.count %>件の投稿</span>
+					    		</div>
+					    	</div>
+				    	</th>
+				    </tr>
+				  </thead>
+
+			    <tbody>
+
+			    	<% @users.each do |user| %>
+
+				      <tr><!-- ここでeach -->
+				        <td>
+				          <div class="card">
+				            <div class="card-header">
+				              <div class="row">
+
+				                <div class="col-6 ranking-table">
+				                	<img src="https://placehold.jp/40x40.png" class="rounded">
+				                	<span class="text-secondary">
+				                		<%= link_to user.user_name, user_path(user) %>
+				                	</span>
+				                </div>
+
+				                <div class="col-6 small text-secondary text-right align-self-center">
+
+				                	<span class="mx-1">
+				                		<%= fa_icon("paperclip") %><%= user.articles.count %>個の記事
+				                	</span>
+
+				                	<span class="mx-1">
+				                		<%= fa_icon("thumbs-up") %><%= user.favorites.count %>イイね
+				                	</span>
+
+				                </div>
+
+				              </div>
+				            </div>
+
+				            <div class="card-body">
+
+			                <div class="row">
+			                  <div class="col-8">
+			                  	<span class="small">
+			                  		<%= user.introduction %>
+			                  	</span>
+
+			                  </div>
+
+												<% unless current_user?(user) %>
+
+													<div class="col-4 text-right">
+
+													<% if current_user.following?(user) %>
+
+														<%= form_for(current_user.following_relationships.find_by(following_id: user.id), html: { method: :delete }) do |f| %>
+														<%= f.submit "フォロー中", class: "btn btn-sm" %>
+
+													<% end %>
+
+												<% else %>
+
+														<%= form_for(current_user.following_relationships.build(following_id: user.id)) do |f| %>
+															<%= f.hidden_field :following_id %>
+															<%= f.submit "フォローする", class: "btn btn-sm btn-outline-primary " %>
+														<% end %>
+
+													<% end %>
+
+													</div>
+
+												<% end %>
+
+			                </div>
+
+				            </div>
+				          </div>
+				        </td>
+				      </tr><!-- eachを終了 -->
+
+				    <% end %>
+
+			    </tbody>
+			  </table>
+
+	    <% else %>
+
+			  <table class="table bg-white">
+				  <thead>
+				    <tr>
+				    	<th>
+			    			<span>投稿履歴</span>
+				    	</th>
+				    </tr>
+				  </thead>
+				</table>
+
+				<p class="text-center font-weight-bold"><%= current_user.user_name %>さんのフォロワーはいません</p>
+
+	    <% end %>
+
+		</div>
+
+	</div>
+</div>

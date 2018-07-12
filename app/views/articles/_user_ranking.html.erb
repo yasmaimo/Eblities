@@ -10,7 +10,7 @@
     <tr>
       <td>
       	<span class="mr-1 font-weight-bold"><%= rank %></span>
-      	<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+      	<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
       	<span class="small"><%= link_to user.user_name, user_path(user) %></span>
       </td>
       <td class="text-right">

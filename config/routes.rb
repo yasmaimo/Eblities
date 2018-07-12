@@ -38,8 +38,7 @@ Rails.application.routes.draw do
     end
   end
 
-  # relationships
-  resources :relationships, only: [:create, :destroy]
+  get 'users/:id/followers', to: 'users#followers', as: 'followers'
 
   get 'users/:id/account', to: 'users#account', as: 'user_account'
 
@@ -52,6 +51,9 @@ Rails.application.routes.draw do
   get 'users/:id/two_factor_authentication_setting', to: 'users#two_factor_authentication_setting', as: 'users_two_factor_authentication_setting'
 
   get 'users/:id/unsubscribe_confirm', to: 'users#unsubscribe_confirm', as: 'users_unsubscribe_confirm'
+
+  # relationships
+  resources :relationships, only: [:create, :destroy]
 
   # articles
   resources :articles do
