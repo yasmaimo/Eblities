@@ -80,10 +80,6 @@ class User < ApplicationRecord
   has_many :keeps, dependent: :destroy
   has_many :tagging, as: :taggable
 
-  # def social_profile(provider)
-  #   social_profiles.select{ |sp| sp.provider == provider.to_s }.first
-  # end
-
   def following?(other_user)
     following_relationships.find_by(following_id: other_user.id)
   end
