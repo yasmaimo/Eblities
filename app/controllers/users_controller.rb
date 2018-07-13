@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @tag = Tag.new
     @taggings = Tagging.where(taggable_type: "User", taggable_id: current_user.id)
-    @articles = Article.where(user_id: current_user.id)
+    @articles = Article.where(user_id: @user.id)
   end
 
   def account

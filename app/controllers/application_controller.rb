@@ -37,19 +37,19 @@ class ApplicationController < ActionController::Base
   end
 
   def get_ep_on_unfollowed
-    ep = current_user.point
+    ep = @user.point
     ep -= 2
     @user.update(point: ep)
   end
 
-  def get_ep_on_favorited
-    ep = current_user.point
+  def get_ep_one
+    ep = @user.point
     ep += 1
     @user.update(point: ep)
   end
 
-  def get_ep_on_release_favorite
-    ep = current_user.point
+  def get_ep_on_release
+    ep = @user.point
     ep -= 1
     @user.update(point: ep)
   end

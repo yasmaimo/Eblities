@@ -34,62 +34,59 @@
 
 			    <tbody>
 
-				    <% current_user.tag_list.each do |tag_list| %>
-				      <% Tag.where(name: tag_list).each do |tag| %>
-				        <% Tagging.where(tag_id: tag, taggable_type: "Article").each do |tagging| %>
-				          <% Article.where(id: tagging.taggable_id).each do |article| %>
+		        <% current_user.taggings.each do |tagging| %>
+		          <% Article.where(id: tagging.taggable_id).each do |article| %>
 
-										<tr><!-- ここでeach -->
-										  <td>
-										    <div class="card">
-										      <div class="card-header">
-										        <div class="row">
+								<tr><!-- ここでeach -->
+								  <td>
+								    <div class="card">
+								      <div class="card-header">
+								        <div class="row">
 
-										          <div class="col-6 ranking-table">
-										          	<%= attachment_image_tag article.user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
-										          	<span class="text-secondary">
-										          		<%= link_to article.user.user_name, user_path(article.user_id) %>
-										          	</span>
-										          </div>
+								          <div class="col-6 ranking-table">
+								          	<%= attachment_image_tag article.user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+								          	<span class="text-secondary">
+								          		<%= link_to article.user.user_name, user_path(article.user_id) %>
+								          	</span>
+								          </div>
 
-										          <div class="col-6 small text-secondary text-right align-self-center">
-										          	<span class="mx-1" >
-										          		<%= article.created_at.strftime('%Y/%m/%d') %>
-										          	</span><br>
+								          <div class="col-6 small text-secondary text-right align-self-center">
+								          	<span class="mx-1" >
+								          		<%= article.created_at.strftime('%Y/%m/%d') %>
+								          	</span><br>
 
-										          	<span class="mx-1">
-										          		<%= fa_icon("thumbs-up") %><%= article.favorites.count %>
-										          	</span>
+								          	<span class="mx-1">
+								          		<%= fa_icon("thumbs-up") %><%= article.favorites.count %>
+								          	</span>
 
-										          	<span class="mx-1">
-										          		<%= fa_icon("comments") %><%= article.comments.count %>
-										          	</span>
+								          	<span class="mx-1">
+								          		<%= fa_icon("comments") %><%= article.comments.count %>
+								          	</span>
 
-										          </div>
+								          </div>
 
-										        </div>
-										      </div>
+								        </div>
+								      </div>
 
-										      <div class="card-body">
+								      <div class="card-body">
 
-										        <div class="row">
-										          <div class="col-12">
-										          	<span class="font-weight-bold text-dark">
-										          		<%= link_to article.title, article_path(article) %>
-										          	</span>
-										          </div>
+								        <div class="row">
+								          <div class="col-12">
+								          	<span class="font-weight-bold text-dark">
+								          		<%= link_to article.title, article_path(article) %>
+								          	</span>
+								          </div>
 
-										        </div>
+								        </div>
 
-										      </div>
-										    </div>
-										  </td>
-										</tr><!-- eachを終了 -->
+								      </div>
+								    </div>
+								  </td>
+								</tr><!-- eachを終了 -->
 
-									<% end %>
-								<% end %>
-					    <% end %>
-					  <% end %>
+							<% end %>
+						<% end %>
+
 
 			    <% else %>
 

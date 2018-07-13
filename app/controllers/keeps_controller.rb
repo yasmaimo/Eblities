@@ -8,6 +8,9 @@ class KeepsController < ApplicationController
     path = Rails.application.routes.recognize_path(request.referer)
     keep = Keep.new(article_id: path[:id].to_i, user_id: current_user.id)
     keep.save
+    article = Article.find(keep.article_id)
+    @user = User.find(article.user_id)
+    get_ep_one
     redirect_to article_path(path[:id])
   end
 
@@ -18,6 +21,8 @@ class KeepsController < ApplicationController
     article = Article.find(params[:article_id])
     keep = current_user.keeps.find_by(article_id: params[:article_id])
     keep.destroy
+    @user = User.find(article.user_id)
+    get_ep_on_release
     redirect_to article_path(article)
   end
 
