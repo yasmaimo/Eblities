@@ -78,6 +78,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :keeps, dependent: :destroy
+  has_many :taggins, as: :taggable
 
   def following?(other_user)
     following_relationships.find_by(following_id: other_user.id)

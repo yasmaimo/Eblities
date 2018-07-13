@@ -29,7 +29,7 @@
           <%= link_to "タグから記事を探す", tags_path, class: "dropdown-item nav-font my-3" %>
           <%= link_to "キープ一覧", keeps_path, class: "dropdown-item nav-font my-3" %>
           <%= link_to "投稿", new_article_path, class: "dropdown-item nav-font my-3" %>
-          <%= link_to "下書き一覧", drafts_path, class: "dropdown-item nav-font my-3" %>
+          <%= link_to "下書き一覧", user_drafts_path(current_user), class: "dropdown-item nav-font my-3" %>
         </div>
       </li>
       <li class="nav-item my-2">

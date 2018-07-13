@@ -33,6 +33,12 @@ Rails.application.routes.draw do
 
   # users
   resources :users, only: [ :index, :create, :edit, :show, :update] do
+    resources :drafts do
+      member do
+        get 'confirm'
+        post 'create_article'
+      end
+    end
     member do
      get :following, :followers
     end
@@ -60,20 +66,16 @@ Rails.application.routes.draw do
     resources :comments, only: [ :index, :create, :show, :update, :destroy]
     resource :images, only: [:create, :destroy]
     resource :favorites, only: [:create, :destroy]
+    collection do
+      post 'confirm'
+    end
   end
 
   get 'user_timeline', to: 'articles#user_timeline', as: 'user_timeline'
 
   get 'tag_timeline', to: 'articles#tag_timeline', as: 'tag_timeline'
 
-  get 'articles/confirm', to: 'articles#confirm', as: 'confirm_article'
-
   get 'articles/:id/edit_confirm', to: 'articles#edit_confirm', as: 'confirm_edit_article'
-
-  # drafts
-  resources :drafts
-
-  get 'drafts/confirm', to: 'drafts#confirm', as: 'confirm_draft'
 
   # keeps
   resources :keeps, only: [ :index, :create, :update, :destroy]

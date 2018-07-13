@@ -12,15 +12,30 @@ class ArticlesController < ApplicationController
   end
 
   def confirm
+    @article = Article.new(article_params)
+    if @article.invalid?
+      render :new
+    end
   end
 
   def create
-    @article = Article.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body])
-    @article.tag_list.add(article_params[:tag_list], parse: true)
-    if @article.save
-      get_ep_on_create
+    if params[:create_article]
+      @article = Article.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body])
+      @article.tag_list.add(article_params[:tag_list], parse: true)
+      if @article.save
+        get_ep_on_create
+      end
+      redirect_to article_path(@article)
+    elsif params[:create_draft]
+      @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body])
+      @draft.save
+      tagging_draft
+      redirect_to user_path(current_user)
+    elsif params[:back]
+      @article = Article.new(article_params)
+      @article.tag_list.add(article_params[:tag_list], parse: true)
+      render :new
     end
-    redirect_to articles_path
   end
 
   def new
@@ -49,6 +64,22 @@ class ArticlesController < ApplicationController
 
   def tag_ranking
     @tags = ActsAsTaggableOn::Tag.most_used(10)
+  end
+
+  def tagging_draft
+    params[:article][:tag_list].split(",").each do |tag_name|
+      if Tag.exists?(name: tag_name)
+        @tag = Tag.find_by(name: tag_name)
+        if Tagging.exists?(tag_id: @tag.id, taggable_type: "Draft", taggable_id: @draft.id, context: "tags")
+        else
+          Tagging.create(tag_id: @tag.id, taggable_type: "Draft", taggable_id: @draft.id, context: "tags")
+        end
+      else
+        Tag.create(name: tag_name)
+        @tag = Tag.find_by(name: tag_name)
+        Tagging.create(tag_id: @tag.id, taggable_type: "Draft", taggable_id: @draft.id, context: "tags")
+      end
+    end
   end
 
   private

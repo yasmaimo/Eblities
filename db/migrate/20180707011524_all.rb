@@ -40,7 +40,8 @@ class All < ActiveRecord::Migration[5.1]
     end
 
     create_table :images do |t|
-			t.integer		:article_id,  	index: true
+			t.integer		:post_id,		  	index: true
+			t.string		:post_type,			index: true
 			t.string		:image, 				index: true
       t.timestamps
     end

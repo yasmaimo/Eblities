@@ -5,14 +5,12 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
 
-<%= simple_form_for(@article) do |f| %>
+<%= simple_form_for(@article, url: {action: 'confirm'}) do |f| %>
   <%= f.error_notification %>
 
   <div class="field">
     <%= f.label :tag_list, "タグ（カンマ区切り）" %><br>
     <%= text_field_tag 'article[tag_list]', @article.tag_list.join(',') %>
-    <%= f.hidden_field :taggable_type, :value => controller.controller_name.classify %>
-    <%= f.hidden_field :context, :value => "tags" %>
   </div>
 
   <div class="form-inputs">
@@ -21,6 +19,7 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.submit "投稿する", class: "btn btn-primary btn-sm" %>
+    <%= f.submit "下書きとして保存する", class: "btn border text-dark btn-sm" %>
   </div>
 <% end %>

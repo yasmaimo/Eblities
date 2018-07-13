@@ -1,0 +1,38 @@
+<tr><!-- ここでeach -->
+  <td>
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+
+          <div class="col-6 ranking-table">
+          	<%= attachment_image_tag current_user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+          	<span class="text-secondary">
+          		<%= current_user.user_name %>
+          	</span>
+          </div>
+
+          <div class="col-6 small text-secondary text-right align-self-center">
+          	<span class="mx-1" >
+          		<%= draft.created_at.strftime('%Y/%m/%d') %>
+          	</span><br>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col-12">
+          	<span class="font-weight-bold text-dark">
+          		<%= link_to draft.title, user_draft_path(id: draft) %>
+          	</span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </td>
+</tr><!-- eachを終了 -->

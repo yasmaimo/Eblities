@@ -1,6 +1,6 @@
 class Image < ApplicationRecord
 
 	# Association
-	belongs_to :article
+	belongs_to :post, polymorphic: true
 
 end
