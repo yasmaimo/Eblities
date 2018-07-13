@@ -7,7 +7,7 @@
 
 			<%= render 'users/nav_bar' %>
 
-			<% if Article.exists?(user_id: @user) %>
+			<% if @drafts.present? %>
 
 			  <table class="table bg-white">
 				  <thead>
@@ -15,7 +15,7 @@
 				    	<th>
 					    	<div class="row">
 					    		<div class="col-12">
-					    			<span class="ml-3"><%= current_user.articles.count %>件の下書き</span>
+					    			<span class="ml-3"><%= @drafts.count %>件の下書き</span>
 					    		</div>
 					    	</div>
 				    	</th>

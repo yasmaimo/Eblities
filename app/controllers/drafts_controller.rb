@@ -16,6 +16,13 @@ class DraftsController < ApplicationController
     @article = Article.new(user_id: current_user.id, title: params[:article][:title], body: params[:article][:body])
     @article.tag_list.add(params[:article][:tag_list], parse: true)
     @article.save
+    taggings = Tagging.where(taggable_type: "Article", taggable_id: @article.id)
+    taggings.each do |tagging|
+      count = tagging.tag.taggings_count
+      count += 1
+      tag = Tag.find(tagging.tag_id)
+      tag.update(taggings_count: count)
+    end
     get_ep_on_create
     redirect_to article_path(@article)
     @draft.destroy

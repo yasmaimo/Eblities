@@ -11,16 +11,16 @@ class TagsController < ApplicationController
         @tag = Tag.find_by(name: tag_name)
         if Tagging.exists?(tag_id: @tag.id, taggable_type: "User", taggable_id: current_user.id)
         else
-          Tagging.create(tag_id: @tag.id, taggable_type: "User", taggable_id: current_user.id)
-          count = @tag.taggings_count + 1
-          @tag.update(taggings_count: count)
+          Tagging.create(tag_id: @tag.id, taggable_type: "User", taggable_id: current_user.id, context: "tags")
+          # count = @tag.taggings_count + 1
+          # @tag.update(taggings_count: count)
         end
       else
         Tag.create(name: tag_name)
         @tag = Tag.find_by(name: tag_name)
-        Tagging.create(tag_id: @tag.id, taggable_type: "User", taggable_id: current_user.id)
-        count = @tag.taggings_count + 1
-        @tag.update(taggings_count: count)
+        Tagging.create(tag_id: @tag.id, taggable_type: "User", taggable_id: current_user.id, context: "tags")
+        # count = @tag.taggings_count + 1
+        # @tag.update(taggings_count: count)
       end
     end
     redirect_to user_path(current_user)

@@ -56,6 +56,7 @@ class ArticlesController < ApplicationController
   end
 
   def update
+    @article = Article.find(params[:id])
   end
 
   def user_ranking
@@ -63,14 +64,14 @@ class ArticlesController < ApplicationController
   end
 
   def tag_ranking
-    @tags = ActsAsTaggableOn::Tag.most_used(10)
+    @taggings = Tagging.where(taggable_type: "Article")
   end
 
   def tagging_draft
     params[:article][:tag_list].split(",").each do |tag_name|
       if Tag.exists?(name: tag_name)
         @tag = Tag.find_by(name: tag_name)
-        if Tagging.exists?(tag_id: @tag.id, taggable_type: "Draft", taggable_id: @draft.id, context: "tags")
+        if Tagging.exists?(tag_id: @tag.id, taggable_type: "Draft", taggable_id: @draft.id)
         else
           Tagging.create(tag_id: @tag.id, taggable_type: "Draft", taggable_id: @draft.id, context: "tags")
         end

@@ -19,7 +19,7 @@ class Article < ApplicationRecord
   has_many :images, as: :post, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :keeps, dependent: :destroy
-  has_many :taggins, as: :taggable
+  has_many :tagging, as: :taggable, dependent: :destroy
 
   # イイねしたかどうか
   def favorited_by?(user)

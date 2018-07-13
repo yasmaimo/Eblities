@@ -96,12 +96,14 @@ ActiveRecord::Schema.define(version: 20180707011524) do
   end
 
   create_table "images", force: :cascade do |t|
-    t.integer "article_id"
+    t.integer "post_id"
+    t.string "post_type"
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_images_on_article_id"
     t.index ["image"], name: "index_images_on_image"
+    t.index ["post_id"], name: "index_images_on_post_id"
+    t.index ["post_type"], name: "index_images_on_post_type"
   end
 
   create_table "keeps", force: :cascade do |t|
