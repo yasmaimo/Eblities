@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable#, :omniauthable
 
   attachment :image
 
@@ -69,7 +69,7 @@ class User < ApplicationRecord
   end
 
   # Association
-  has_many :social_profiles
+  has_many :social_profiles, dependent: :destroy
   has_many :following_relationships, foreign_key: "follower_id", class_name: "Relationship", dependent: :destroy
   has_many :followings, through: :following_relationships
   has_many :follower_relationships, foreign_key: "following_id", class_name: "Relationship", dependent: :destroy
@@ -79,6 +79,10 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :keeps, dependent: :destroy
   has_many :tagging, as: :taggable
+
+  # def social_profile(provider)
+  #   social_profiles.select{ |sp| sp.provider == provider.to_s }.first
+  # end
 
   def following?(other_user)
     following_relationships.find_by(following_id: other_user.id)
