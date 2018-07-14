@@ -1,9 +1,16 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook twitter google_oauth2]
+
+  devise :two_factor_authenticatable,
+         :otp_secret_encryption_key => ENV['ENCRYPTION_KEY']
+
+  devise :two_factor_backupable, otp_number_of_backup_codes: 10
+
+  serialize :otp_backup_codes, JSON
 
   attachment :image
 

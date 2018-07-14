@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     get '/logout', to: 'devise/sessions#destroy', as: 'logout'
   end
 
+  resource :two_factor_auth, only: [:new, :create, :destroy]
+
   # admins
   resources :admins, only: [ :index, :create, :edit, :show, :update]
 

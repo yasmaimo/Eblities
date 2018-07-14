@@ -27,6 +27,15 @@
 	          	<span>
 	          		<%= link_to "二段階認証の設定を始める", root_path %>
 	          	</span>
+
+							<div>
+							  <% if current_user.otp_required_for_login %>
+							    <%= button_to "Disable 2FA", two_factor_auth_path, method: :delete %>
+							  <% else %>
+							    <%= button_to "Enable 2FA", new_two_factor_auth_path, method: :get %>
+							  <% end %>
+							</div>
+
 	          </div>
 
 	        </div>
