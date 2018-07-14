@@ -2,7 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable#, :omniauthable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable, omniauth_providers: %i[facebook twitter google_oauth2]
 
   attachment :image
 
@@ -79,6 +80,15 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :keeps, dependent: :destroy
   has_many :tagging, as: :taggable
+
+  # omniauth_callback
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.user_name = auth.info.name
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
+    end
+  end
 
   def following?(other_user)
     following_relationships.find_by(following_id: other_user.id)

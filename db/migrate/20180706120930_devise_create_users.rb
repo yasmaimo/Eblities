@@ -38,12 +38,11 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :user_name,   null: false,  index: true
       t.string :introduction
       t.string :web_site_url
-      # t.string :other_service
       t.string :image_id
       t.integer :point, index: true, default: 0
       t.integer :status, null: false, index: true, default: 0
-
-
+      t.string :provider
+      t.string :uid
 
       t.timestamps null: false
     end

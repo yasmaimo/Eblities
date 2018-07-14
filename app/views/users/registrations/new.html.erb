@@ -29,6 +29,12 @@
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>
+
+  <%= recaptcha_tags callback: 'recaptchaCallbackFunction'  %>
+
 <% end %>
 
 <%= render "users/shared/links" %>
+
+
+

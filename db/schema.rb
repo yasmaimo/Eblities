@@ -191,6 +191,8 @@ ActiveRecord::Schema.define(version: 20180707011524) do
     t.string "image_id"
     t.integer "point", default: 0
     t.integer "status", default: 0, null: false
+    t.string "provider"
+    t.string "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email"
