@@ -30,7 +30,7 @@ class ArticlesController < ApplicationController
       @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body])
       @draft.save
       tagging_draft
-      redirect_to user_path(current_user)
+      redirect_to user_drafts_path(current_user)
     elsif params[:back]
       @article = Article.new(article_params)
       @article.tag_list.add(article_params[:tag_list], parse: true)
