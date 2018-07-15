@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources 'uploads', only: [:create, :destroy]
+
   # root
   root to: 'articles#index'
 

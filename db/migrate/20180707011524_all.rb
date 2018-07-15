@@ -73,5 +73,10 @@ class All < ActiveRecord::Migration[5.1]
       t.timestamps
     end
 
+    create_table :uploads do |t|
+      t.string :image
+      t.timestamps
+    end
+
   end
 end

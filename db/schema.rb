@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180714044445) do
+ActiveRecord::Schema.define(version: 20180715225820) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -172,6 +172,12 @@ ActiveRecord::Schema.define(version: 20180714044445) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  create_table "uploads", force: :cascade do |t|
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -193,14 +199,14 @@ ActiveRecord::Schema.define(version: 20180714044445) do
     t.integer "status", default: 0, null: false
     t.string "provider"
     t.string "uid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "encrypted_otp_secret"
     t.string "encrypted_otp_secret_iv"
     t.string "encrypted_otp_secret_salt"
     t.integer "consumed_timestep"
     t.boolean "otp_required_for_login"
     t.text "otp_backup_codes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email"
     t.index ["family_name"], name: "index_users_on_family_name"
     t.index ["given_name"], name: "index_users_on_given_name"

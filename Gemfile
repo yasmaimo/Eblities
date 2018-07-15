@@ -21,6 +21,7 @@ gem 'jquery-rails'
 # 画像投稿用
 gem "refile", require: "refile/rails", github: 'manfe/refile'
 gem "refile-mini_magick"
+gem 'carrierwave'
 
 # ログイン機能
 gem 'devise'
