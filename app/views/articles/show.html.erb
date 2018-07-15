@@ -1,134 +1,120 @@
 <div class="container-fluid">
 	<div class="row justify-content-center">
 
-		<div class="col-lg-8 col-md-10 col-sm-10">
+		<div class="left-sidebar col-lg-1 d-none d-lg-block">
+			<div class="list-group left-sidebar-link">
+
+				<%= render 'articles/favorite' %>
+
+				<%= render 'articles/keep' %>
+
+				<%= link_to tag_timeline_path do %>
+					<span class="list-group-item list-group-item-action nav-font mb-2" >
+						<%= fa_icon("twitter 2x") %>
+					</span>
+				<% end %>
+
+				<%= link_to tag_timeline_path do %>
+					<span class="list-group-item list-group-item-action nav-font" >
+						<%= fa_icon("facebook 2x") %>
+					</span>
+				<% end %>
+
+			</div>
+		</div>
+
+		<div class="col-lg-7 col-sm-10">
 
 			<p class="blank-margin"></p>
 
-		  <table class="table bg-white">
-			  <thead class="">
-			    <tr>
-			    	<th>
-				    	<div class="row">
-				    		<div class="col-7">
-				    			<span>最新の記事</span>
-				    		</div>
-				    	</div>
-			    	</th>
-			    </tr>
-			  </thead>
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
 
-		    <tbody>
-		      <tr><!-- ここでeach -->
-		        <td>
-		          <div class="card">
-		            <div class="card-header">
-		              <div class="row">
+            <div class="col-6 ranking-table">
+            	<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+            	<span class="text-secondary">
+            		<%= link_to @user.user_name, user_path(@user) %>
+            	</span>
+            </div>
 
-		                <div class="col-6 ranking-table">
-		                	<img src="https://placehold.jp/40x40.png" class="rounded">
-		                	<a href="#" class="text-secondary">Mark_sdfhh_12355</a>
-		                </div>
+            <div class="col-6 small text-secondary text-right align-self-center">
+            	<span class="mx-1" >
+            		<%= @article.created_at.strftime('%Y/%m/%d') %>
+            	</span><br>
 
-		                <div class="col-6 small text-secondary text-right align-self-center">
-		                	<span class="mx-1">3days ago</span><br>
-		                	<a href="#" class="mx-1">
-		                		<%= fa_icon("star", text: "100") %>
-		                	</a>
-		                	<a href="#" class="mx-1">
-		                		<%= fa_icon("folder-open", text: "100") %>
-		                	</a>
-		                </div>
+            	<span class="mx-1">
+            		<%= fa_icon("folder-open") %><%= @article.keeps.count %>
+            	</span>
 
-		              </div>
-		            </div>
+            	<span class="mx-1">
+            		<%= fa_icon("comments") %><%= @article.comments.count %>
+            	</span>
 
-		            <div class="card-body">
+            </div>
 
-	                <div class="row">
-	                  <div class="col-12">
-	                    <a href="#" class="font-weight-bold text-dark">
-	                      WAVファイルのサンプリングレートについて
-	                    </a>
-	                  </div>
+          </div>
+        </div>
 
-	                  <div class="col-sm-12">
-	                    <span class="small text-secondary">
-	                      おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。
-	                    </span>
-	                  </div>
+        <div class="card-body">
 
-	                </div>
+          <div class="row">
+            <div class="col-12">
+            	<h2 class="font-weight-bold text-dark mt-1">
+            		<%= @article.title %>
+            	</h2>
+            </div>
+          </div>
+        </div>
 
-		            </div>
-		          </div>
-		        </td>
-		      </tr><!-- eachを終了 -->
+        <p><%= @article.tag_list %></p>
 
-		    </tbody>
-		  </table>
+				<div class="d-lg-none d-sm-block">
+					<div class="row justify-content-center">
+						<div class="col-5 text-center">
+
+							<%= render 'articles/favorite' %>
+
+						</div>
+
+						<div class="col-5 text-center">
+
+							<%= render 'articles/keep' %>
+
+						</div>
+					</div>
+
+				</div>
+
+        <p class="title-border"></p>
+        <div class="col-sm-12 mt-4" style="overflow: scroll;">
+            <%= raw @article.body %>
+        </div>
+
+      </div>
+      <div class="d-lg-block d-none">
+	  		<%= render 'articles/comment' %>
+			</div>
+	  </div>
+
+	  <div class="d-lg-none d-sm-block col-sm-10">
+
+	  	<%= render 'articles/comment' %>
 
 	  </div>
 
-	  <div class="col-lg-3 col-md-10 col-sm-10 right-sidebar">
+	  <div class="col-lg-3 col-sm-10 right-sidebar">
 
 				<table class="table bg-white">
-				  <thead>
-				    <tr>
-				      <th colspan="2">人気ユーザー</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				    <tr class="">
-				      <td>
-				      	<span class="mr-1 font-weight-bold">2</span>
-				      	<a href="#" class="mx-1"><img src="https://placehold.jp/40x40.png" class="rounded"></a>
-				      	<a href="#" class="small">Markasdfhha12355</a>
-				      </td>
-				      <td class="text-right">
-				      	<span class="font-weight-bold">1024</span><br>
-				      	<span class="small text-secondary">
-				      		AP
-				      	</span>
-				      </td>
-				    </tr>
-				    <tr>
 
-				    </tr>
-				    <tr>
+					<%= render 'articles/user_ranking' %>
 
-				    </tr>
-				  </tbody>
 				</table>
 
 				<table class="table bg-white">
-				  <thead>
-				    <tr>
-				      <th colspan="2">人気タグ</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				    <tr>
-				      <td class="right-sidebar-link">
-				      	<span class="mr-1 font-weight-bold">2</span>
-				      	<a href="#" class="badge badge-secondary">
-				      	タグの名前を入れるよタグの名
-				      	</a>
-				      </td>
-				      <td class="text-right">
-				      	<span class="font-weight-bold">1024</span><br>
-				      	<span class="small text-secondary">
-				      		posts
-				      	</span>
-				      </td>
-				    </tr>
-				    <tr>
 
-				    </tr>
-				    <tr>
+					<%= render 'articles/tag_ranking' %>
 
-				    </tr>
-				  </tbody>
 				</table>
 
 		</div>

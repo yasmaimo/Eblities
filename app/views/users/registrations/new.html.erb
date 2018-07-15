@@ -1,34 +1,94 @@
-<h2>Sign up</h2>
+<div class="container">
+  <div class="row justify-content-center">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+    <p class="col-12 h2 font-weight-bold text-center mt-5">新規登録</p>
 
-  <div class="field">
-    <%= f.label :ユーザーネーム %><br />
-    <%= f.text_field :user_name, autofocus: true, autocomplete: "user_name", placeholder: "2~16文字までの半角英数字かアンダースコア_" %>
+    <div class="col-lg-3 col-sm-9 text-lg-left text-center">
+
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+        <div>
+          <%= f.label :ユーザーネーム, class: "small text-secondary" %><br />
+          <%= f.text_field :user_name, autofocus: true, autocomplete: "user_name", class: "w-100" %>
+        </div>
+
+        <div class="mt-3">
+          <%= f.label :メールアドレス, class: "small text-secondary" %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-100" %>
+        </div>
+
+        <div class="mt-3">
+          <%= f.label :パスワード, class: "small text-secondary" %><br />
+          <%= f.password_field :password, autocomplete: "off", class: "w-100" %>
+        </div>
+
+        <div class="mt-3">
+          <%= f.label :パスワード再入力, class: "small text-secondary" %><br />
+          <%= f.password_field :password_confirmation, autocomplete: "off", class: "w-100" %>
+        </div>
+
+        <p class="text-center mt-2">
+          <%= recaptcha_tags callback: 'recaptchaCallbackFunction', class: "d-lg-none" %>
+        </p>
+
+        <div class="text-center">
+          <%= f.submit "新規登録", class: "btn btn-success my-2" %>
+        </div>
+      <% end %>
+
+    </div>
+
+    <div class="col-lg-4 col-sm-9 align-self-center">
+
+      <%- if devise_mapping.omniauthable? %>
+        <%- resource_class.omniauth_providers.each do |provider| %>
+
+          <% if "#{OmniAuth::Utils.camelize(provider)}" == "Facebook" -%>
+            <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+              <span class="btn text-white w-100" style="background-color: #3B5998;">
+                <%= fa_icon("facebook", text: "Facebookアカウントで登録") %>
+              </span>
+            <% end %>
+          <% end %>
+
+          <p class="my-2"></p>
+
+          <% if "#{OmniAuth::Utils.camelize(provider)}" == "Twitter" -%>
+            <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+              <span class="btn text-white w-100" style="background-color: #1DA1F2;">
+                <%= fa_icon("twitter", text: "Twitterアカウントで登録") %>
+              </span>
+            <% end %>
+          <% end %>
+
+          <p class="my-2"></p>
+
+          <% if "#{OmniAuth::Utils.camelize(provider)}" == "GoogleOauth2" -%>
+            <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+              <span class="btn text-white w-100" style="background-color: #DB4437;">
+                <%= fa_icon("google", text: "Googleアカウントで登録") %>
+              </span>
+            <% end %>
+          <% end %>
+
+        <% end -%>
+      <% end -%>
+
+      <p class="text-center mt-2">
+        <%= recaptcha_tags callback: 'recaptchaCallbackFunction', class: "d-lg-block d-none" %>
+      </p>
+
+    </div>
+
+    <div class="col-12 text-center my-2">
+
+      <%= link_to "既存のアカウントでログインする", new_session_path(resource_name), class: "text-secondary" %><br />
+
+    </div>
+
   </div>
+</div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autocomplete: "email" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>

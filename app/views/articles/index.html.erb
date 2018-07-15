@@ -2,203 +2,75 @@
 	<div class="row justify-content-center">
 
 		<div class="left-sidebar col-lg-2 d-none d-lg-block">
-			<div class="list-group left-sidebar-link">
 
-				<%= link_to articles_path do %>
-					<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
-						<%= fa_icon("book", text: "最新記事") %>
-					</span>
-				<% end %>
+			<%= render 'articles/nav_bar' %>
 
-				<%= link_to user_timeline_path do %>
-					<span class="list-group-item list-group-item-action nav-font mb-2">
-						<%= fa_icon("users", text: "タイムライン") %>
-					</span>
-				<% end %>
-
-				<%= link_to tag_timeline_path do %>
-					<span class="list-group-item list-group-item-action nav-font" >
-						<%= fa_icon("tags", text: "タグ") %>
-					</span>
-				<% end %>
-
-			</div>
 		</div>
 
-		<div class="col-lg-6 col-md-7 col-sm-10">
+		<div class="col-lg-6 col-sm-10">
 
 			<p class="d-lg-block d-none blank-margin"></p>
 
-			<ul class="nav nav-tabs mt-2 d-lg-none">
+			<div class="d-lg-none d-sm-block">
 
-			  <li class="nav-item">
-					<%= link_to articles_path do %>
-						<span class="nav-link active nav-font bg-danger text-white">
-							<%= fa_icon("book", text: "最新記事") %>
-						</span>
-					<% end %>
-			  </li>
+				<%= render 'articles/nav_bar' %>
 
-			  <li class="nav-item mx-1">
-					<%= link_to user_timeline_path do %>
-						<span class="nav-link nav-font text-secondary border">
-							<%= fa_icon("users", text: "タイムライン") %>
-						</span>
-					<% end %>
-			  </li>
+			</div>
 
-			  <li class="nav-item">
-					<%= link_to tag_timeline_path do %>
-						<span class="nav-link nav-font text-secondary border">
-							<%= fa_icon("tags", text: "タグ") %>
-						</span>
-					<% end %>
-			  </li>
+			<% if Article.exists? %>
 
-			</ul>
+			  <table class="table bg-white">
+				  <thead class="">
+				    <tr>
+				    	<th>
+					    	<div class="row">
+					    		<div class="col-7">
+					    			<span>最新の記事</span>
+					    		</div>
+					    	</div>
+				    	</th>
+				    </tr>
+				  </thead>
 
-		  <table class="table bg-white">
-			  <thead class="">
-			    <tr>
-			    	<th>
-				    	<div class="row">
-				    		<div class="col-7">
-				    			<span>最新の記事</span>
-				    		</div>
-				    	</div>
-			    	</th>
-			    </tr>
-			  </thead>
+			    <tbody>
 
-		    <tbody>
-		      <tr><!-- ここでeach -->
-		        <td>
-		          <div class="card">
-		            <div class="card-header">
-		              <div class="row">
+			    	<% @articles.each do |article| %>
 
-		                <div class="col-6 ranking-table">
-		                	<img src="https://placehold.jp/40x40.png" class="rounded">
-		                	<a href="#" class="text-secondary">Mark_sdfhh_12355</a>
-		                </div>
+				      <%= render 'articles/articles',article: article %>
 
-		                <div class="col-6 small text-secondary text-right align-self-center">
-		                	<span class="mx-1">3days ago</span><br>
-		                	<a href="#" class="mx-1">
-		                		<%= fa_icon("star", text: "100") %>
-		                	</a>
-		                	<a href="#" class="mx-1">
-		                		<%= fa_icon("folder-open", text: "100") %>
-		                	</a>
-		                </div>
+				    <% end %>
 
-		              </div>
-		            </div>
+			    <% else %>
 
-		            <div class="card-body">
+					  <table class="table bg-white">
+						  <thead>
+						    <tr>
+						    	<th class="text-center">
+					    			<span>記事がありません</span>
+						    	</th>
+						    </tr>
+						  </thead>
+						</table>
 
-	                <div class="row">
-	                  <div class="col-12">
-	                    <a href="#" class="font-weight-bold text-dark">
-	                      WAVファイルのサンプリングレートについて
-	                    </a>
-	                  </div>
-
-	                  <div class="d-none d-xl-block col-sm-12 text-truncate" style="max-width: 530px;">
-	                    <span class="small text-secondary">
-	                      おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。
-	                    </span>
-	                  </div>
-
-	                  <div class="d-none d-lg-block d-xl-none col-sm-12 text-truncate" style="max-width: 440px;">
-	                    <span class="small text-secondary">
-	                      おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。
-	                    </span>
-	                  </div>
-
-	                  <div class="d-none d-sm-block d-lg-none col-sm-12 text-truncate" style="max-width: 400px;">
-	                    <span class="small text-secondary">
-	                      おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。
-	                    </span>
-	                  </div>
-
-	                  <div class="d-sm-none col-sm-12 text-truncate" style="max-width: 320px;">
-	                    <span class="small text-secondary">
-	                      おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。おはよう。
-	                    </span>
-	                  </div>
-
-	                </div>
-
-		            </div>
-		          </div>
-		        </td>
-		      </tr><!-- eachを終了 -->
+			    <% end %>
 
 		    </tbody>
 		  </table>
 
 	  </div>
 
-	  <div class="col-lg-3 col-md-4 col-sm-10 right-sidebar">
+	  <div class="col-lg-3 col-md-10 col-sm-10 right-sidebar">
 
 				<table class="table bg-white">
-				  <thead>
-				    <tr>
-				      <th colspan="2">人気ユーザー</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				    <tr class="">
-				      <td>
-				      	<span class="mr-1 font-weight-bold">2</span>
-				      	<a href="#" class="mx-1"><img src="https://placehold.jp/40x40.png" class="rounded"></a>
-				      	<a href="#" class="small">Markasdfhha12355</a>
-				      </td>
-				      <td class="text-right">
-				      	<span class="font-weight-bold">1024</span><br>
-				      	<span class="small text-secondary">
-				      		AP
-				      	</span>
-				      </td>
-				    </tr>
-				    <tr>
 
-				    </tr>
-				    <tr>
+					<%= render 'articles/user_ranking' %>
 
-				    </tr>
-				  </tbody>
 				</table>
 
 				<table class="table bg-white">
-				  <thead>
-				    <tr>
-				      <th colspan="2">人気タグ</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				    <tr>
-				      <td class="right-sidebar-link">
-				      	<span class="mr-1 font-weight-bold">2</span>
-				      	<a href="#" class="badge badge-secondary">
-				      	タグの名前を入れるよタグの名
-				      	</a>
-				      </td>
-				      <td class="text-right">
-				      	<span class="font-weight-bold">1024</span><br>
-				      	<span class="small text-secondary">
-				      		posts
-				      	</span>
-				      </td>
-				    </tr>
-				    <tr>
 
-				    </tr>
-				    <tr>
+					<%= render 'articles/tag_ranking' %>
 
-				    </tr>
-				  </tbody>
 				</table>
 
 		</div>

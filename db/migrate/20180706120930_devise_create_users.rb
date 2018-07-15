@@ -37,12 +37,22 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :given_name,  index: true
       t.string :user_name,   null: false,  index: true
       t.string :introduction
-      t.string :user_url
-      # t.string :other_service
-      t.integer :image_id
+      t.string :web_site_url
+      t.string :image_id
+      t.integer :point, index: true, default: 0
       t.integer :status, null: false, index: true, default: 0
 
+      ## SNS階認証用カラム
+      t.string :provider
+      t.string :uid
 
+      ## 二段階認証用カラム
+      t.string :encrypted_otp_secret
+      t.string :encrypted_otp_secret_iv
+      t.string :encrypted_otp_secret_salt
+      t.integer :consumed_timestep
+      t.boolean :otp_required_for_login
+      t.text    :otp_backup_codes
 
       t.timestamps null: false
     end

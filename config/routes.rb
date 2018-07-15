@@ -13,12 +13,15 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
   sessions:      'users/sessions',
   passwords:     'users/passwords',
-  registrations: 'users/registrations'
+  registrations: 'users/registrations',
+  omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
   devise_scope :user do
     get '/logout', to: 'devise/sessions#destroy', as: 'logout'
   end
+
+  resource :two_factor_auth, only: [:new, :create, :destroy]
 
   # admins
   resources :admins, only: [ :index, :create, :edit, :show, :update]
@@ -32,7 +35,19 @@ Rails.application.routes.draw do
   get 'admins/:id/two_factor_authentication_setting', to: 'admins#two_factor_authentication_setting', as: 'admins_two_factor_authentication_setting'
 
   # users
-  resources :users, only: [ :index, :create, :edit, :show, :update]
+  resources :users, only: [ :index, :create, :edit, :show, :update] do
+    resources :drafts do
+      member do
+        get 'confirm'
+        post 'create_article'
+      end
+    end
+    member do
+     get :following, :followers
+    end
+  end
+
+  get 'users/:id/followers', to: 'users#followers', as: 'followers'
 
   get 'users/:id/account', to: 'users#account', as: 'user_account'
 
@@ -46,31 +61,33 @@ Rails.application.routes.draw do
 
   get 'users/:id/unsubscribe_confirm', to: 'users#unsubscribe_confirm', as: 'users_unsubscribe_confirm'
 
+  # relationships
+  resources :relationships, only: [:create, :destroy]
+
   # articles
   resources :articles do
     resources :comments, only: [ :index, :create, :show, :update, :destroy]
     resource :images, only: [:create, :destroy]
     resource :favorites, only: [:create, :destroy]
+    collection do
+      post 'confirm'
+    end
   end
 
   get 'user_timeline', to: 'articles#user_timeline', as: 'user_timeline'
 
   get 'tag_timeline', to: 'articles#tag_timeline', as: 'tag_timeline'
 
-  get 'articles/confirm', to: 'articles#confirm', as: 'confirm_article'
-
   get 'articles/:id/edit_confirm', to: 'articles#edit_confirm', as: 'confirm_edit_article'
-
-  # drafts
-  resources :drafts
-
-  get 'drafts/confirm', to: 'drafts#confirm', as: 'confirm_draft'
 
   # keeps
   resources :keeps, only: [ :index, :create, :update, :destroy]
 
   # tags
   resources :tags, only: [ :index, :create, :show, :update]
+
+  # taggings
+  resources :taggings, only: [ :destroy]
 
   # contacts
   resources :contacts, only: [ :index, :create, :new, :show, :update]

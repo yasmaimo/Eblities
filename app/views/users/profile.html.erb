@@ -1,2 +1,104 @@
-<h1>Users#profile</h1>
-<p>Find me in app/views/users/profile.html.erb</p>
+<div class="container">
+	<div class="row justify-content-center">
+
+		<%= render 'users/setting_sidebar' %>
+
+		<div class="col-lg-10 col-sm-12 mt-lg-5">
+
+			<div class="card">
+	      <div class="card-header">
+	        <div class="row">
+
+	          <div class="col-12">
+	          	プロフィール設定
+	          </div>
+
+	        </div>
+	      </div>
+
+	      <%= form_for @user do |f| %>
+
+		      <div class="card-body">
+
+		        <div class="row">
+
+		          <div class="col-lg-6 col-sm-12 text-center">
+		          	<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", style: "max-height: 200px; max-width: 200px;"%>
+		          	<p class="mt-4 small text-secondary">プロフィール画像変更</p>
+		          	<%= f.attachment_field :image, class: "small" %>
+		          </div>
+
+		          <div class="col-lg-6 col-sm-12 align-self-center">
+		          	<span class="small text-secondary">
+		          		ユーザーネーム(16文字以内)
+		          	</span><br>
+		          	<span>
+		          		<%= f.text_field :user_name, class: "font-weight-bold text-dark" %>
+		          	</span><br>
+		          	<p class="my-3"></p>
+		          	<span class="small text-secondary">
+		          		メールアドレス
+		          	</span><br>
+		          	<span>
+		          		<%= f.text_field :email, class: "font-weight-bold text-dark" %>
+		          	</span><br>
+		          </div>
+
+		        </div>
+
+		        <div class="row">
+		        	<p class="col-12 text-center text-secondary mt-5">--- 以下の入力は任意です ---</p>
+
+		        	<p class="col-12 text-center small">登録すると公開されますのでご注意ください</p>
+
+		          <div class="col-lg-4 col-sm-12">
+		          	<span class="small text-secondary">
+		          		姓
+		          	</span><br>
+		          	<span>
+		          		<%= f.text_field :family_name, placeholder: "姓" %>
+		          	</span><br>
+		          </div>
+
+		          <div class="col-lg-4 col-sm-12">
+		          	<span class="small text-secondary">
+		          		名
+		          	</span><br>
+		          	<span>
+		          		<%= f.text_field :given_name, placeholder: "名" %>
+		          	</span><br>
+		          </div>
+
+		          <div class="col-12">
+		          	<span class="small text-secondary">
+		          		自分のブログ、WEBサイト
+		          	</span><br>
+		          	<span>
+		          		<%= f.text_field :web_site_url, placeholder: "URL", class: "w-100" %>
+		          	</span><br>
+		          </div>
+
+		          <div class="col-12 mt-4">
+		          	<span class="small text-secondary">
+		          		自己紹介(150文字以内)
+		          	</span><br>
+		          	<span>
+		          		<%= f.text_area :introduction, class: "w-100" %>
+		          	</span><br>
+		          </div>
+
+		          <div class="col-12 mt-3 text-center">
+		          	<%= f.submit "登録・変更", class: "btn btn-primary btn-sm" %>
+		          </div>
+
+		        </div>
+
+		      </div>
+
+		    <% end %>
+
+	    </div>
+
+	  </div>
+	</div>
+</div>

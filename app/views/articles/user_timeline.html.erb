@@ -1,2 +1,131 @@
-<h1>Articles#user_timeline</h1>
-<p>Find me in app/views/articles/user_timeline.html.erb</p>
+<div class="container-fluid">
+	<div class="row justify-content-center">
+
+		<div class="left-sidebar col-lg-2 d-none d-lg-block">
+
+			<%= render 'articles/nav_bar' %>
+
+		</div>
+
+		<div class="col-lg-6 col-sm-10">
+
+			<p class="d-lg-block d-none blank-margin"></p>
+
+			<div class="d-lg-none d-sm-block">
+
+				<%= render 'articles/nav_bar' %>
+
+			</div>
+
+			<% if current_user.followings.present? %>
+
+			  <table class="table bg-white">
+				  <thead class="">
+				    <tr>
+				    	<th>
+					    	<div class="row">
+					    		<div class="col-7">
+					    			<span>タイムライン</span>
+					    		</div>
+					    	</div>
+				    	</th>
+				    </tr>
+				  </thead>
+
+			    <tbody>
+
+			    	<% current_user.followings.each do |following| %>
+				    	<% articles = following.articles.order(:created_at) %>
+				    	<% articles.each do |article| %>
+
+								<tr><!-- ここでeach -->
+								  <td>
+								    <div class="card">
+								      <div class="card-header">
+								        <div class="row">
+
+								          <div class="col-6 ranking-table">
+								          	<%= attachment_image_tag article.user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+								          	<span class="text-secondary">
+								          		<%= link_to article.user.user_name, user_path(article.user_id) %>
+								          	</span>
+								          </div>
+
+								          <div class="col-6 small text-secondary text-right align-self-center">
+								          	<span class="mx-1" >
+								          		<%= article.created_at.strftime('%Y/%m/%d') %>
+								          	</span><br>
+
+								          	<span class="mx-1">
+								          		<%= fa_icon("thumbs-up") %><%= article.favorites.count %>
+								          	</span>
+
+								          	<span class="mx-1">
+								          		<%= fa_icon("comments") %><%= article.comments.count %>
+								          	</span>
+
+								          </div>
+
+								        </div>
+								      </div>
+
+								      <div class="card-body">
+
+								        <div class="row">
+								          <div class="col-12">
+								          	<span class="font-weight-bold text-dark">
+								          		<%= link_to article.title, article_path(article) %>
+								          	</span>
+								          </div>
+
+								        </div>
+
+								      </div>
+								    </div>
+								  </td>
+								</tr><!-- eachを終了 -->
+
+							<% end %>
+				    <% end %>
+
+			    <% else %>
+
+					  <table class="table bg-white">
+						  <thead>
+						    <tr>
+						    	<th class="text-center">
+					    			<span>タイムライン</span>
+						    	</th>
+						    </tr>
+						  </thead>
+						</table>
+
+						<p class="text-center font-weight-bold">
+							フォロー中のユーザーがいません
+						</p>
+
+			    <% end %>
+
+		    </tbody>
+		  </table>
+
+	  </div>
+
+	  <div class="col-lg-3 col-md-10 col-sm-10 right-sidebar">
+
+				<table class="table bg-white">
+
+					<%= render 'articles/user_ranking' %>
+
+				</table>
+
+				<table class="table bg-white">
+
+					<%= render 'articles/tag_ranking' %>
+
+				</table>
+
+		</div>
+
+	</div>
+</div>

@@ -61,6 +61,12 @@ gem 'seed-fu', '~> 2.3'
 gem 'simple_form', '~> 3.5.1'
 gem 'summernote-rails', github: 'summernote/summernote-rails'
 
+# reCAPTCHA認証
+gem "recaptcha", require: "recaptcha/rails"
+
+# 環境変数管理
+gem 'dotenv-rails'
+
 # メールの送信確認 使用未定
 # gem 'letter-opener'
 # gem 'mailcatcher'

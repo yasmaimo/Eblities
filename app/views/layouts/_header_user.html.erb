@@ -1,42 +1,47 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-  <%= link_to "Eb", root_path, class: "h1 text-white logo", style: "text-decoration: none;"%>
+<% if controller.controller_name != "two_factor_auths" %>
 
-  <span class="copy ml-3 text-white">
-    <span class="h5 logo">Eblities</span><br>
-    クリエイターの知識をシェアするサイト
-  </span>
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <%= link_to "Eb", root_path, class: "h1 text-white logo", style: "text-decoration: none;"%>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <span class="copy ml-3 text-white">
+      <span class="h5 logo">Eblities</span><br>
+      クリエイターの知識をシェアするサイト
+    </span>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <form class="form-inline my-2 my-lg-0 ml-3">
-      <input class="form-control mr-sm-2" type="search" placeholder="記事を探す" aria-label="search">
-      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
-        <%= fa_icon("search", text: "") %>
-      </button>
-    </form>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-white nav-font" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          メニュー
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <%= link_to "ユーザーを探す", users_path, class: "dropdown-item nav-font" %>
-          <%= link_to "タグから記事を探す", tags_path, class: "dropdown-item nav-font" %>
-          <%= link_to "投稿", new_article_path, class: "dropdown-item nav-font" %>
-          <%= link_to "下書き一覧", drafts_path, class: "dropdown-item nav-font" %>
+      <%= search_form_for @search do |f| %>
+        <div class="form-inline my-2 my-lg-0 ml-lg-3 justify-content-center">
+          <%= f.text_field :title_or_body_cont, class: "col-sm-9 col-xs-12 form-control", placeholder: '記事を検索' %>
+          <%= f.button fa_icon("search"), class: 'col-sm-2 col-xs-12 btn btn-outline-light my-2 ml-sm-2 '%>
         </div>
-      </li>
-      <li class="nav-item">
-        <%= link_to "マイページ", user_path(current_user), class: "nav-link text-white nav-font" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link text-white nav-font" %>
-      </li>
-    </ul>
-  </div>
-</nav>
+      <% end %>
+
+      <ul class="navbar-nav ml-auto text-right">
+        <li class="nav-item dropdown my-2">
+          <a class="nav-link dropdown-toggle text-white nav-font" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            メニュー
+          </a>
+          <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
+            <%= link_to "ユーザーを探す", users_path, class: "dropdown-item nav-font my-3" %>
+            <%= link_to "タグから記事を探す", tags_path, class: "dropdown-item nav-font my-3" %>
+            <%= link_to "キープ一覧", keeps_path, class: "dropdown-item nav-font my-3" %>
+            <%= link_to "投稿", new_article_path, class: "dropdown-item nav-font my-3" %>
+            <%= link_to "下書き一覧", user_drafts_path(current_user), class: "dropdown-item nav-font my-3" %>
+          </div>
+        </li>
+        <li class="nav-item my-2">
+          <%= link_to "マイページ", user_path(current_user), class: "nav-link text-white nav-font" %>
+        </li>
+        <li class="nav-item my-2">
+          <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link text-white nav-font" %>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<% end %>

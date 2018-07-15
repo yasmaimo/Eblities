@@ -1,2 +1,55 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<div class="container">
+	<div class="row">
+
+		<%= render 'users/info_sidebar' %>
+
+		<div class="col-lg-9 col-sm-11">
+
+			<%= render 'users/nav_bar' %>
+
+			<% if Article.exists?(user_id: @user) %>
+
+			  <table class="table bg-white">
+				  <thead>
+				    <tr>
+				    	<th>
+					    	<div class="row">
+					    		<div class="col-12">
+					    			<span class="ml-3"><%= @user.articles.count %>件の投稿</span>
+					    		</div>
+					    	</div>
+				    	</th>
+				    </tr>
+				  </thead>
+
+			    <tbody>
+
+			    	<% @articles.each do |article| %>
+
+			    		<%= render 'articles/articles',article: article %>
+
+				    <% end %>
+
+			    </tbody>
+			  </table>
+
+	    <% else %>
+
+			  <table class="table bg-white">
+				  <thead>
+				    <tr>
+				    	<th>
+			    			<span>投稿履歴</span>
+				    	</th>
+				    </tr>
+				  </thead>
+				</table>
+
+				<p class="text-center font-weight-bold"><%= @user.user_name %>さんの投稿した記事はありません</p>
+
+	    <% end %>
+
+		</div>
+
+	</div>
+</div>

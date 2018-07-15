@@ -1,0 +1,35 @@
+<p class="text-center my-4 text-white " style="background-color:#B40404;">コメント</p>
+<table class="table" style="word-break: break-all;">
+  <tbody>
+    <% if @article.comments.exists? %>
+      <% @article.comments.each do |comment| %>
+        <tr>
+          <td class="bg-white">
+            <p class="text-dark">
+              <%= comment.user.user_name %>
+            </p>
+            <span class="text-secondary">
+              <%= comment.created_at.strftime('%Y/%m/%d') %>
+            </span>
+            <div class="mt-1 small text-dark">
+              <%= comment.comment %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+
+    <% else %>
+
+      <p class='text-center'>コメントはありません</p>
+
+    <% end %>
+
+  	<div>
+    	<%= form_for [@article,@comment] do |f| %>
+				<%= f.text_field :comment, class: "form-cotrol", placeholder: "コメント *500文字まで", rows:'5' %>
+				<%= f.submit "Post", class: "btn-sm btn-outline-success col-1" %>
+			<% end %>
+		</div>
+
+  </tbody>
+</table>

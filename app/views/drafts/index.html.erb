@@ -1,2 +1,55 @@
-<h1>Drafts#index</h1>
-<p>Find me in app/views/drafts/index.html.erb</p>
+<div class="container">
+	<div class="row">
+
+		<%= render 'users/info_sidebar' %>
+
+		<div class="col-lg-9 col-sm-11">
+
+			<%= render 'users/nav_bar' %>
+
+			<% if @drafts.present? %>
+
+			  <table class="table bg-white">
+				  <thead>
+				    <tr>
+				    	<th>
+					    	<div class="row">
+					    		<div class="col-12">
+					    			<span class="ml-3"><%= @drafts.count %>件の下書き</span>
+					    		</div>
+					    	</div>
+				    	</th>
+				    </tr>
+				  </thead>
+
+			    <tbody>
+
+			    	<% @drafts.each do |draft| %>
+
+			    		<%= render 'drafts/drafts',draft: draft %>
+
+				    <% end %>
+
+			    </tbody>
+			  </table>
+
+	    <% else %>
+
+			  <table class="table bg-white">
+				  <thead>
+				    <tr>
+				    	<th>
+			    			<span>下書き一覧</span>
+				    	</th>
+				    </tr>
+				  </thead>
+				</table>
+
+				<p class="text-center font-weight-bold"><%= current_user.user_name %>さんの保存した下書きはありません</p>
+
+	    <% end %>
+
+		</div>
+
+	</div>
+</div>

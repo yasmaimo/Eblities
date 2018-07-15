@@ -1,0 +1,79 @@
+<div class="list-group left-sidebar-link d-lg-block d-none">
+
+	<%= link_to articles_path do %>
+		<% if controller.action_name == "index" %>
+			<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
+		<% else %>
+			<span class="list-group-item list-group-item-action nav-font mb-2">
+		<% end %>
+
+				<%= fa_icon("book", text: "最新記事") %>
+			</span>
+	<% end %>
+
+	<%= link_to user_timeline_path do %>
+		<% if controller.action_name == "user_timeline" %>
+			<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
+		<% else %>
+			<span class="list-group-item list-group-item-action nav-font mb-2">
+		<% end %>
+
+				<%= fa_icon("users", text: "タイムライン") %>
+			</span>
+	<% end %>
+
+	<%= link_to tag_timeline_path do %>
+		<% if controller.action_name == "tag_timeline" %>
+			<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
+		<% else %>
+			<span class="list-group-item list-group-item-action nav-font mb-2">
+		<% end %>
+
+				<%= fa_icon("tags", text: "タグ") %>
+			</span>
+	<% end %>
+
+</div>
+
+<ul class="nav nav-tabs mt-2 d-lg-none">
+
+  <li class="nav-item">
+		<%= link_to articles_path do %>
+			<% if controller.action_name == "index" %>
+				<span class="nav-link active nav-font bg-danger text-white">
+			<% else %>
+				<span class="nav-link nav-font text-secondary border">
+			<% end %>
+
+					<%= fa_icon("book", text: "最新記事") %>
+				</span>
+		<% end %>
+  </li>
+
+  <li class="nav-item mx-1">
+		<%= link_to user_timeline_path do %>
+			<% if controller.action_name == "user_timeline" %>
+				<span class="nav-link active nav-font bg-danger text-white">
+			<% else %>
+				<span class="nav-link nav-font text-secondary border">
+			<% end %>
+
+					<%= fa_icon("users", text: "タイムライン") %>
+				</span>
+		<% end %>
+  </li>
+
+  <li class="nav-item">
+		<%= link_to tag_timeline_path do %>
+			<% if controller.action_name == "tag_timeline" %>
+				<span class="nav-link active nav-font bg-danger text-white">
+			<% else %>
+				<span class="nav-link nav-font text-secondary border">
+			<% end %>
+
+					<%= fa_icon("tags", text: "タグ") %>
+				</span>
+		<% end %>
+  </li>
+
+</ul>

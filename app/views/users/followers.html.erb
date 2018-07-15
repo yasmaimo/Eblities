@@ -1,0 +1,123 @@
+<div class="container">
+	<div class="row justify-content-center">
+
+		<%= render 'users/info_sidebar' %>
+
+		<div class="col-lg-9 col-sm-11">
+
+			<%= render 'users/nav_bar' %>
+
+			<% if @user.followers.present? %>
+
+			  <table class="table bg-white">
+				  <thead class="">
+				    <tr>
+				    	<th>
+					    	<div class="row">
+					    		<div class="col-12">
+					    			<span><%= @user.followers.count %>人のフォロワー</span>
+					    		</div>
+					    	</div>
+				    	</th>
+				    </tr>
+				  </thead>
+
+			    <tbody>
+
+			    	<% @users.each do |user| %>
+
+				      <tr><!-- ここでeach -->
+				        <td>
+				          <div class="card">
+				            <div class="card-header">
+				              <div class="row">
+
+				                <div class="col-6 ranking-table">
+				                	<img src="https://placehold.jp/40x40.png" class="rounded">
+				                	<span class="text-secondary">
+				                		<%= link_to user.user_name, user_path(user) %>
+				                	</span>
+				                </div>
+
+				                <div class="col-6 small text-secondary text-right align-self-center">
+
+													<% unless current_user?(user) %>
+
+														<div id="follow_form">
+
+														<% if current_user.following?(user) %>
+
+															<%= form_for(current_user.following_relationships.find_by(following_id: user.id), html: { method: :delete }) do |f| %>
+															<%= f.submit "Unfollow", class: "btn btn-large follow-btn" %>
+
+														<% end %>
+
+													<% else %>
+
+															<%= form_for(current_user.following_relationships.build(following_id: user.id)) do |f| %>
+																<div>
+																	<%= f.hidden_field :following_id %>
+																</div>
+																<%= f.submit "Follow", class: "btn btn-large btn-primary follow-btn" %>
+															<% end %>
+
+														<% end %>
+
+														</div>
+
+													<% end %>
+
+				                	<span class="mx-1">
+				                		<%= fa_icon("paperclip") %><%= user.articles.count %>個の記事
+				                	</span>
+
+				                	<span class="mx-1">
+				                		<%= fa_icon("thumbs-up") %><%= user.favorites.count %>イイね
+				                	</span>
+
+				                </div>
+
+				              </div>
+				            </div>
+
+				            <div class="card-body">
+
+			                <div class="row">
+			                  <div class="col-12">
+			                  	<span class="small text-dark">
+			                  		<%= user.introduction %>
+			                  	</span>
+			                  </div>
+
+			                </div>
+
+				            </div>
+				          </div>
+				        </td>
+				      </tr><!-- eachを終了 -->
+
+				    <% end %>
+
+			    </tbody>
+			  </table>
+
+	    <% else %>
+
+			  <table class="table bg-white">
+				  <thead>
+				    <tr>
+				    	<th>
+			    			<span><%= @user.followers.count %>人のフォロワー</span>
+				    	</th>
+				    </tr>
+				  </thead>
+				</table>
+
+				<p class="text-center font-weight-bold"><%= @user.user_name %>さんのフォロワーはいません</p>
+
+	    <% end %>
+
+		</div>
+
+	</div>
+</div>

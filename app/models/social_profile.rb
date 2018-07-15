@@ -1,2 +1,2 @@
-class SocialProfile < ApplicationRecord
+class SocialProfile < ActiveRecord::Base
 end

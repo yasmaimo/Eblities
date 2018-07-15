@@ -1,2 +1,55 @@
-<h1>Users#account</h1>
-<p>Find me in app/views/users/account.html.erb</p>
+<div class="container">
+	<div class="row justify-content-center">
+
+		<%= render 'users/setting_sidebar' %>
+
+		<div class="col-lg-10 col-sm-12 mt-lg-5">
+
+			<div class="card">
+	      <div class="card-header">
+	        <div class="row">
+
+	          <div class="col-12">
+	          	SNS連携の設定
+	          </div>
+
+	        </div>
+	      </div>
+
+	      <div class="card-body">
+
+	        <div class="row">
+
+	          <div class="col-lg-10 col-sm-12å">
+	          	<span class="small text-secondary">
+	          		Twitter
+	          	</span><br>
+	          	<span>
+	          		<%= link_to "Twitterと連携する", root_path %>
+	          	</span><br>
+	          	<p class="my-3"></p>
+	          	<span class="small text-secondary">
+	          		Facebook
+	          	</span><br>
+	          	<span>
+	          		<%= link_to "Facebookと連携する", root_path %>
+	          	</span><br>
+	          	<p class="my-3"></p>
+	          	<span class="small text-secondary">
+	          		Google
+	          	</span><br>
+	          	<span>
+	          		<%= link_to "Googleと連携する", root_path %>
+	          	</span><br>
+	          	<p class="my-3"></p>
+	          </div>
+
+	        </div>
+
+	      </div>
+
+	    </div>
+
+	  </div>
+	</div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180707011524) do
+ActiveRecord::Schema.define(version: 20180714044445) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -96,12 +96,14 @@ ActiveRecord::Schema.define(version: 20180707011524) do
   end
 
   create_table "images", force: :cascade do |t|
-    t.integer "article_id"
+    t.integer "post_id"
+    t.string "post_type"
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_images_on_article_id"
     t.index ["image"], name: "index_images_on_image"
+    t.index ["post_id"], name: "index_images_on_post_id"
+    t.index ["post_type"], name: "index_images_on_post_type"
   end
 
   create_table "keeps", force: :cascade do |t|
@@ -129,7 +131,7 @@ ActiveRecord::Schema.define(version: 20180707011524) do
     t.string "uid", null: false
     t.string "access_token"
     t.string "access_secret"
-    t.string "name", null: false
+    t.string "name"
     t.string "nickname"
     t.string "email"
     t.string "url"
@@ -185,14 +187,24 @@ ActiveRecord::Schema.define(version: 20180707011524) do
     t.string "given_name"
     t.string "user_name", null: false
     t.string "introduction"
-    t.string "user_url"
-    t.integer "image_id"
+    t.string "web_site_url"
+    t.string "image_id"
+    t.integer "point", default: 0
     t.integer "status", default: 0, null: false
+    t.string "provider"
+    t.string "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "encrypted_otp_secret"
+    t.string "encrypted_otp_secret_iv"
+    t.string "encrypted_otp_secret_salt"
+    t.integer "consumed_timestep"
+    t.boolean "otp_required_for_login"
+    t.text "otp_backup_codes"
     t.index ["email"], name: "index_users_on_email"
     t.index ["family_name"], name: "index_users_on_family_name"
     t.index ["given_name"], name: "index_users_on_given_name"
+    t.index ["point"], name: "index_users_on_point"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["status"], name: "index_users_on_status"
     t.index ["user_name"], name: "index_users_on_user_name"

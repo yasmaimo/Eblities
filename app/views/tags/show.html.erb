@@ -1,2 +1,52 @@
-<h1>Tags#show</h1>
-<p>Find me in app/views/tags/show.html.erb</p>
+<div class="container-fluid">
+	<div class="row justify-content-center">
+
+		<div class="col-sm-10">
+
+			<p class="blank-margin"></p>
+
+			<% if @taggings.present? %>
+
+			  <table class="table bg-white">
+				  <thead class="">
+				    <tr>
+				    	<th>
+					    	<div class="row">
+					    		<div class="col-7">
+					    			<span><%= @tag.name %>の記事一覧</span>
+					    		</div>
+					    	</div>
+				    	</th>
+				    </tr>
+				  </thead>
+
+			    <tbody>
+			    	<% @taggings.each do |tagging| %>
+			    	<% article = Article.find_by(id: tagging.taggable_id) %>
+
+			    		<%= render 'articles/articles', article: article %>
+
+				    <% end %>
+
+				  </tbody>
+				</table>
+
+	    <% else %>
+
+			  <table class="table bg-white">
+				  <thead>
+				    <tr>
+				    	<th>
+			    			<span><%= @tag.name %>の記事一覧</span>
+				    	</th>
+				    </tr>
+				  </thead>
+				</table>
+
+				<p class="text-center font-weight-bold"><%= @tag.name %>の記事はありません</p>
+
+	    <% end %>
+
+	  </div>
+	</div>
+</div>

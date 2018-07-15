@@ -1,0 +1,26 @@
+<% rank = 1 %>
+
+<thead>
+  <tr>
+    <th colspan="2">人気タグ</th>
+  </tr>
+</thead>
+<tbody>
+  <% @taggings.each do |tagging| %>
+    <tr>
+      <td class="right-sidebar-link">
+      	<span class="mr-1 font-weight-bold"><%= rank %></span>
+        <span class="badge badge-secondary">
+          <%= link_to tagging.tag.name, tag_path(tagging.tag), class: "text-white" %>
+        </span>
+      </td>
+      <td class="text-right">
+      	<span class="font-weight-bold"><%= tagging.tag.taggings_count %></span><br>
+      	<span class="small text-secondary">
+      		taggings
+      	</span>
+      </td>
+    </tr>
+    <% rank += 1 %>
+  <% end %>
+</tbody>

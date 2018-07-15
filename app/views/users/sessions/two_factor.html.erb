@@ -1,0 +1,28 @@
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-lg-8 col-12 mt-5">
+
+			<div class="card">
+			  <div class="card-header text-center font-weight-bold">
+			    二段階認証
+			  </div>
+			  <div class="card-body text-center">
+
+					<%= form_for(resource, as: resource_name, url: session_path(resource_name), method: :post) do |f| %>
+					  <div class="field">
+					    <%= f.label :コードを入力 %><br />
+					    <%= f.text_field :otp_attempt %>
+					  </div>
+
+					  <div class="actions">
+					    <%= f.submit "送信",class: "btn btn-secondary mt-3" %>
+					  </div>
+					<% end %>
+
+			  </div>
+			</div>
+
+		</div>
+	</div>
+</div>
+

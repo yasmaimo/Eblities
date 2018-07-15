@@ -1,0 +1,21 @@
+<% if @article.kept_by?(current_user) %>
+
+	<%= link_to keep_path(article_id: @article.id),style: "text-decoration: none;" , method: :delete do %>
+
+		<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
+			<%= fa_icon("folder-open 2x") %>
+		</span>
+
+	<% end %>
+
+<% else %>
+
+	<%= link_to keeps_path,style: "text-decoration: none;" , method: :post do %>
+
+		<span class="list-group-item list-group-item-action nav-font mb-2">
+			<%= fa_icon("folder-open 2x") %>
+		</span>
+
+	<% end %>
+
+<% end %>
