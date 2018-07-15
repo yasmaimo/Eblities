@@ -24,7 +24,7 @@
 
 							  	<p>二段階認証は<span class="font-weight-bold text-success">有効</span>になっています</p>
 
-							    <%= button_to "二段階認証を解除する", two_factor_auth_path, "data-confirm" => "二段階認証の解除処理を実行します。本当に解除しますか？", method: :delete %>
+							    <%= button_to "二段階認証を解除する", two_factor_auth_path, method: :delete, data: {confirm: '二段階認証の解除処理を実行します。本当に解除しますか？'} %>
 
 							  <% else %>
 

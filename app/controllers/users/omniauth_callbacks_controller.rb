@@ -43,10 +43,4 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     render 'users/sessions/two_factor' and return
   end
 
-  def valid_otp_attempt?(user)
-    user.validate_and_consume_otp!(params[:otp_attempt]) ||
-    user.invalidate_otp_backup_code!(params[:otp_attempt]) # この条件を追加
-  end
-
-
 end

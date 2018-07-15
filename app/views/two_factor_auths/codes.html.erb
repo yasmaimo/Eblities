@@ -1,9 +1,63 @@
-<h1>Recovery Codes</h1>
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-12">
 
-<ul>
-  <% @codes.each do |code| %>
-    <li><%= code %></li>
-  <% end %>
-</ul>
+			<div class="card">
+			  <div class="card-header text-center font-weight-bold">
+			  	リカバリーコード
+			  </div>
+			  <div class="card-body text-center">
 
-<%= link_to 'Proceed', root_path %>
+					<div class="row justify-content-center">
+						<div class="col-sm-9 col-12">
+
+					  	<p class="font-weight-bold h2 text-success">二段階認証が有効になりました</p>
+
+					  	<div class="my-2 small">
+					  		今後のログイン時には、Google 認証アプリから発行されるワンタイムパスワード(OTP)が必要になります。二段階認証が有効になっている間に下記の状態になった場合、ログインにはリカバリーコードが必要となります。
+					  	</div>
+
+							<ul class="list-group list-group-flush my-2">
+							  <li class="list-group-item">アプリからOTP登録を削除した場合</li>
+							  <li class="list-group-item">アプリ自体を端末から削除した場合</li>
+							  <li class="list-group-item">アプリが入った端末を紛失した場合</li>
+							</ul>
+
+					  	<div class="my-2 small">
+					  		リカバリーコードは1度使用すると、同じコードは再度使用できなくなります。使用は緊急時のみとしてください。万が一に備え、このページをプリントアウトしておくことを強く推奨します。
+					  	</div>
+
+					  </div>
+					</div>
+
+					<div class="row justify-content-center">
+						<div class="col-sm-9 col-12">
+
+							<table class="table small">
+								<thead>
+									<tr>
+										<th class="thead-light">リカバリーコード</th>
+									</tr>
+								</thead>
+							  <tbody>
+							  	<% @codes.each do |code| %>
+								    <tr class="thead-light">
+								    	<td><%= code %></td>
+								   	</tr>
+								  <% end %>
+							  </tbody>
+							</table>
+
+						</div>
+					</div>
+
+					<p class="text-center">
+						<%= link_to 'マイページへ戻る', user_path(current_user),class: " btn btn-secondary btn-sm text-white" %>
+					</p>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

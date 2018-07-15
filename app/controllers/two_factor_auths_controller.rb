@@ -39,14 +39,14 @@ class TwoFactorAuthsController < ApplicationController
       encrypted_otp_secret_iv:   nil,
       encrypted_otp_secret_salt: nil,
     )
-    redirect_to root_path
+    redirect_to user_two_factor_authentication_path(current_user)
   end
 
   private
   # QRコードを作成
   def build_qr_code
     RQRCode::render_qrcode(
-      current_user.otp_provisioning_uri(current_user.email, issuer: "mfa-sample"),
+      current_user.otp_provisioning_uri(current_user.email, issuer: "Eblities"),
       :svg,        # SVG形式
       level: :l,   # 誤り訂正レベル
       unit: 2      # 一つのマスの縦横ピクセル数
