@@ -8,7 +8,7 @@
         <div class="form-inputs">
           <%= text_field_tag 'article[tag_list]', @article.tag_list.join(','), placeholder: "タグを入力（エンターキーで確定）", class: "col my-3 form-control" %>
           <%= f.input :title, label: false, placeholder: "タイトル", error: "タイトルを入力してください" %>
-          <%= f.input :body, label: false, as: :summernote, error: "本文を入力してください"  %>
+          <%= f.input :body, as: :summernote, label: false, error: "本文を入力してください"  %>
         </div>
 
         <div class="form-actions text-center">
@@ -20,3 +20,16 @@
       </div>
   </div>
 </div>
+
+
+<!-- <script>
+  $(function() {
+      $('#article').froalaEditor();
+  $scope.csrf_token = $( 'meta[name="csrf-token"]' ).attr( 'content' );
+  $scope.froalaOptions = {
+    imageUploadURL: '/image/upload.json',
+    imageUploadMethod: 'POST',
+    imageUploadParams: {'authenticity_token': $scope.csrf_token}
+    }
+  });
+</script> -->

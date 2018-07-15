@@ -21,6 +21,7 @@ gem 'jquery-rails'
 # 画像投稿用
 gem "refile", require: "refile/rails", github: 'manfe/refile'
 gem "refile-mini_magick"
+gem 'carrierwave'
 
 # ログイン機能
 gem 'devise'
@@ -60,6 +61,7 @@ gem 'seed-fu', '~> 2.3'
 # 記事投稿用
 gem 'simple_form', '~> 3.5.1'
 gem 'summernote-rails', github: 'summernote/summernote-rails'
+gem 'wysiwyg-rails'
 
 # reCAPTCHA認証
 gem "recaptcha", require: "recaptcha/rails"
