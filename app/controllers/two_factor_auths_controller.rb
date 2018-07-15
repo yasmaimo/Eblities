@@ -24,7 +24,7 @@ class TwoFactorAuthsController < ApplicationController
 
     #　認証コードが合っていなければもう一度確認画面をレンダリング
     else
-      @error = 'Invalid pin code'
+      @error = 'コードが違います'
       @qr_code = build_qr_code
 
       render 'new'

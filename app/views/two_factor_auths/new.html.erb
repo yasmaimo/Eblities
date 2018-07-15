@@ -1,22 +1,106 @@
-<h1>Enable 2FA</h1>
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-12">
 
-<% if @error %>
-  <div><%= @error %></div>
-<% end %>
+			<div class="card">
+			  <div class="card-header text-center font-weight-bold">
+			    二段階認証設定
+			  </div>
+			  <div class="card-body text-center">
 
-<div class="ml-5"><%= raw @qr_code %></div>
+					<% if @error %>
+					  <div class="col-6"><%= @error %></div>
+					<% end %>
 
-<div>
-  <p>Account : <%= current_user.email %></p>
-  <p>Key : <%= current_user.otp_secret.scan(/.{4}/).join(' ') %></p>
-  <p>Time Based : Yes</p>
+					<div class="row justify-content-center">
+						<div class="col-lg-5 col-sm-9 col-12">
+
+							<table class="table table-borderless">
+							  <thead>
+							    <tr>
+							      <th scope="col" colspan="2">設定手順</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+							    <tr>
+							      <th scope="row">1</th>
+							      <td>Google認証アプリを開く</td>
+							    </tr>
+							    <tr>
+							      <th scope="row">2</th>
+							      <td>右上の + アイコンを選択</td>
+							    </tr>
+							    <tr>
+							      <th scope="row">3</th>
+							      <td>”バーコードをスキャン” を選択</td>
+							    </tr>
+							    <tr>
+							      <th scope="row">4</th>
+							      <td>下記のQRコードをスキャン</td>
+							    </tr>
+							    <tr>
+							      <td colspan="2"><%= raw @qr_code %></td>
+							    </tr>
+							    <tr>
+							      <th scope="row">5</th>
+							      <td>発行されたパスワード*を送信</td>
+							    </tr>
+							  </tbody>
+							</table>
+
+					    <%= form_tag two_factor_auth_path do %>
+
+				      	<%= text_field_tag :otp_attempt%>
+				      	<%= submit_tag :送信 %>
+
+						  <% end %>
+
+						</div>
+					</div>
+
+					<div class="small py-3">
+						*発行されるパスワードはワンタイムパスワードです。発行されてから
+						<span class="text-danger">1分間のみ有効</span>
+						です。パスワードが入力中に変わってしまった場合は、
+						<span class="text-danger">変わった後のもの</span>
+						を入力してください。
+					</div>
+
+					<p class="small">-- QRコードが読み取れない場合 --</p>
+					<p class="small">上記の設定手順2まで進み、”手動で入力” を選択した後、下記の情報を登録してください。</p>
+
+					<div class="row justify-content-center">
+						<div class="col-lg-6 col-12">
+
+							<table class="table small">
+							  <tbody>
+							    <tr class="thead-light">
+							      <th scope="col">アカウント</th>
+							    </tr>
+							    <tr>
+							      <td><%= current_user.email %></td>
+							    </tr>
+							    <tr class="thead-light">
+							      <th scope="col">キー</th>
+							    </tr>
+							    <tr>
+							      <td><%= current_user.otp_secret.scan(/.{4}/).join(' ') %></td>
+							    </tr>
+							    <tr class="thead-light">
+							      <th scope="col">時間ベース</th>
+							    </tr>
+							    <tr>
+							      <td>オン</td>
+							    </tr>
+							  </tbody>
+							</table>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
 </div>
-
-<%= form_tag two_factor_auth_path do %>
-  <div class="field">
-    <%= label_tag :otp_attempt %><br />
-    <%= text_field_tag :otp_attempt %>
-  </div>
-
-  <%= submit_tag :submit %>
-<% end %>
