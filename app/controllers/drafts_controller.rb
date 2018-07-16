@@ -17,12 +17,12 @@ class DraftsController < ApplicationController
     @article.tag_list.add(params[:article][:tag_list], parse: true)
     @article.save
     taggings = Tagging.where(taggable_type: "Article", taggable_id: @article.id)
-    # taggings.each do |tagging|
-    #   count = tagging.tag.taggings_count
-    #   count += 1
-    #   tag = Tag.find(tagging.tag_id)
-    #   tag.update(taggings_count: count)
-    # end
+    taggings.each do |tagging|
+      count = tagging.tag.taggings_count
+      count += 1
+      tag = Tag.find(tagging.tag_id)
+      tag.update(taggings_count: count)
+    end
     get_ep_on_create
     redirect_to article_path(@article)
     @draft.destroy
@@ -40,7 +40,10 @@ class DraftsController < ApplicationController
 
   def update
     @draft = Draft.find(params[:id])
-    @draft.update(draft_params)
+    @taggings = Tagging.where(taggable_type: "Draft", taggable_id: @draft.id)
+    @taggings.destroy_all
+    @draft.update(title: params[:draft][:title], body: params[:draft][:body])
+    tagging_draft
     if params[:update_draft]
       redirect_to user_drafts_path(current_user)
     elsif params[:confirm_draft]
@@ -49,6 +52,22 @@ class DraftsController < ApplicationController
   end
 
   def destroy
+  end
+
+  def tagging_draft
+    params[:draft][:tag_list].split(",").each do |tag_name|
+      if Tag.exists?(name: tag_name)
+        @tag = Tag.find_by(name: tag_name)
+        if Tagging.exists?(tag_id: @tag.id, taggable_type: "Draft", taggable_id: @draft.id)
+        else
+          Tagging.create(tag_id: @tag.id, taggable_type: "Draft", taggable_id: @draft.id, context: "tags")
+        end
+      else
+        Tag.create(name: tag_name)
+        @tag = Tag.find_by(name: tag_name)
+        Tagging.create(tag_id: @tag.id, taggable_type: "Draft", taggable_id: @draft.id, context: "tags")
+      end
+    end
   end
 
   private

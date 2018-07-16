@@ -69,8 +69,10 @@
           </div>
 
 	        <div class="my-3">
-		        <% @article.tag_list.each do |tag| %>
-		        	<span class="badge d-inline tag-color"><%= tag %></span>
+		        <% @taggings.each do |tagging| %>
+		        	<span class="badge tag-color p-1">
+		        		<%= link_to tagging.tag.name, tag_path(tagging.tag), class: "text-white" %>
+	        		</span>
 		        <% end %>
 	        </div>
 

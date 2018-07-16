@@ -6,16 +6,16 @@
   </tr>
 </thead>
 <tbody>
-  <% @taggings.each do |tagging| %>
+  <% @tags.order("taggings_count DESC").limit(10).each do |tag| %>
     <tr>
       <td class="right-sidebar-link">
       	<span class="mr-1 font-weight-bold"><%= rank %></span>
-        <span class="badge badge-secondary">
-          <%= link_to tagging.tag.name, tag_path(tagging.tag), class: "text-white" %>
+        <span class="badge tag-color p-1">
+          <%= link_to tag.name, tag_path(tag), class: "text-white" %>
         </span>
       </td>
       <td class="text-right">
-      	<span class="font-weight-bold"><%= tagging.tag.taggings_count %></span><br>
+      	<span class="font-weight-bold"><%= tag.taggings_count %></span><br>
       	<span class="small text-secondary">
       		taggings
       	</span>
@@ -23,4 +23,5 @@
     </tr>
     <% rank += 1 %>
   <% end %>
+
 </tbody>

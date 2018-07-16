@@ -50,6 +50,7 @@ class ArticlesController < ApplicationController
     @user = User.find(@article.user_id)
     @user.id = @article.user_id
     @comment = Comment.new
+    @taggings = Tagging.where(taggable_type: "Article", taggable_id: @article.id)
   end
 
   def edit_confirm
@@ -60,11 +61,11 @@ class ArticlesController < ApplicationController
   end
 
   def user_ranking
-    @users = User.order(:point).limit(10)
+    @users = User.all
   end
 
   def tag_ranking
-    @taggings = Tagging.where(taggable_type: "Article")
+    @tags = Tag.all
   end
 
   def tagging_draft

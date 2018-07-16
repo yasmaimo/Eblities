@@ -1,14 +1,18 @@
 <p class="text-center my-4 text-white " style="background-color:#B40404;">コメント</p>
-<div class="border border-secondary" style="height: 400px; overflow: scroll;">
 
-  <table class="table">
-    <tbody>
-      <% if @article.comments.exists? %>
+<% if @article.comments.exists? %>
+
+  <div class="border" style="max-height: 800px; overflow: scroll;">
+
+    <table class="table">
+      <tbody>
+
         <% @article.comments.each do |comment| %>
           <tr>
             <td class="bg-white">
               <p class="text-dark">
-                <%= comment.user.user_name %>
+                <%= attachment_image_tag comment.user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+                <%= link_to comment.user.user_name, user_path(comment.user_id) %>
               </p>
               <span class="text-secondary">
                 <%= comment.created_at.strftime('%Y/%m/%d') %>
@@ -20,16 +24,20 @@
           </tr>
         <% end %>
 
-      <% else %>
+      </tbody>
+    </table>
 
-        <p class='text-center'>コメントはありません</p>
+  </div>
 
-      <% end %>
+<% else %>
 
-    </tbody>
-  </table>
+  <div class="" style="max-height: 400px; overflow: scroll;">
 
-</div>
+    <p class="text-center text-secondary small">コメントはありません</p>
+
+  </div>
+
+<% end %>
 
 <div class="mt-5">
   <%= simple_form_for [@article,@comment] do |f| %>
