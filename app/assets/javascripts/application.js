@@ -15,10 +15,10 @@
 //= require popper
 //= require bootstrap
 //= require bootstrap-sprockets
+//= require bootstrap-tagsinput.min
 //= require summernote/summernote-bs4.min
 //= require summernote/lang/summernote-ja-JP
 //= require summernote-init
 //= require turbolinks
 //= require_tree .
 //= require rails-ujs
-

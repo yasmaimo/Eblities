@@ -26,6 +26,7 @@ deleteFile = (file_id) ->
 $(document).on 'turbolinks:load', ->
   $('[data-provider="summernote"]').each ->
     $(this).summernote
+      placeholder: '本文'
       lang: 'ja-JP'
       height: 400
       callbacks:

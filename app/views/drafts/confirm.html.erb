@@ -31,17 +31,22 @@
 	            	</h2>
 	            </div>
 	          </div>
-	        </div>
 
-	        <p><%= @draft.tag_list %></p>
-	        <span class="d-none"><%= text_field_tag 'article[tag_list]', @draft.tag_list.join(',') %></span>
+		        <div class="my-3">
+			        <% @draft.tag_list.each do |tag| %>
+			        	<span class="badge d-inline tag-color"><%= tag %></span>
+			        <% end %>
+		        </div>
 
-	        <p class="title-border"></p>
-	        <div class="col-sm-12 mt-4" style="overflow: scroll;">
-	            <%= raw @draft.body %>
-	            <%= f.hidden_field :body, :value => @draft.body %>
-	        </div>
+		        <span class="d-none"><%= text_field_tag 'article[tag_list]', @draft.tag_list.join(',') %></span>
 
+		        <p class="title-border"></p>
+		        <div class="col-sm-12 mt-4" style="overflow: scroll;">
+		            <%= raw @draft.body %>
+		            <%= f.hidden_field :body, :value => @draft.body %>
+		        </div>
+
+		      </div>
 	      </div>
 		  </div>
 
@@ -58,17 +63,17 @@
 		  </div>
 
 			<div class="mt-2 d-lg-none d-sm-block">
-					<
+
 			  <p>
 					<%= f.submit "投稿する", name: "create_article", class: "col btn btn-danger btn-sm text-white" %>
 			  </p>
 
 			  <p>
-			  	<%= link_to "修正する", user_draft_path(@draft), class: "col btn btn-sm text-secondary border" %>
+			  	<%= link_to "修正する", user_draft_path(@draft), class: "col bg-white btn btn-sm text-dark border" %>
 			  </p>
 
 			  <p>
-			  	<%= link_to "下書き一覧に戻る", user_drafts_path(current_user), class: "col btn btn-sm text-secondary border" %>
+			  	<%= link_to "下書き一覧に戻る", user_drafts_path(current_user), class: "col bg-white btn btn-sm text-dark border" %>
 			  </p>
 
 			</div>

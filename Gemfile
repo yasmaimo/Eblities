@@ -45,6 +45,7 @@ gem 'rqrcode-rails3'
 
 # タグ付け用
 gem 'acts-as-taggable-on', '~> 6.0'
+gem 'jquery-ui-rails'
 
 # もっと見る機能
 gem 'kaminari'

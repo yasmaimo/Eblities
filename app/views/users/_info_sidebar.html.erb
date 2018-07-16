@@ -5,11 +5,11 @@
 	<% if @user.web_site_url.present? %>
 		<p class="small"><%= link_to "Webサイトを訪問する", "https://#{@user.web_site_url}" %></p>
 	<% end %>
-	<p class="small"><%= @user.introduction %></p>
+	<p class="small my-3"><%= @user.introduction %></p>
 
+	<span class="small">Eblities Point</span><br>
 	<span class="font-weight-bold h5"><%= @user.point %></span>
 	<span class="font-weight-bold h5">EP</span><br>
-	<span class="small">Eblities Point</span><br>
 
 	<% unless current_user?(@user) %>
 	  <div class="mt-3">
@@ -33,27 +33,46 @@
 		<span><%= @user.followers.count %></span><br>
 	</div>
 
-	<%= link_to user_profile_path(current_user) do %>
-		<p class="mt-3 btn btn-secondary btn-sm"><%= fa_icon("cog", text: "プロフィール設定") %></p>
+	<% if @user == current_user %>
+
+		<%= link_to user_profile_path(current_user) do %>
+			<p class="mt-3 btn btn-secondary btn-sm"><%= fa_icon("cog", text: "プロフィール設定") %></p>
+		<% end %>
+
 	<% end %>
 
+	<p class="small title-color text-white mt-3">関心のあるタグ</p>
+
 	<div>
-		<% @taggings.each do |tagging| %>
-			<span class="badge badge-secondary">
-				<%= link_to tagging.tag.name, tag_path(tagging.tag_id), class: "text-white" %>
-			</span>
+		<% if Tagging.exists?(taggable_type: "User", taggable_id: @user.id) %>
+
+			<% @taggings.each do |tagging| %>
+				<span class="badge tag-color p-1">
+					<%= link_to tagging.tag.name, tag_path(tagging.tag_id), class: "text-white" %>
+				</span>
+			<% end %>
+
+		<% else %>
+
+			<p class="text-secondary">未登録</p>
+
 		<% end %>
+
 	</div>
 
-	<button type="button" class="btn btn-primary btn-sm mt-2 mb-5" data-toggle="modal" data-target="#exampleModalLong">
-	  タグを編集する
-	</button>
+	<% if @user == current_user %>
+
+		<button type="button" class="btn btn-secondary btn-sm mt-3" data-toggle="modal" data-target="#exampleModalLong">
+		  タグを編集する
+		</button>
+
+	<% end %>
 
 	<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <p class="modal-title" id="exampleModalLongTitle">タグ編集</p>
+	        <p class="modal-title font-weight-bold" id="exampleModalLongTitle">タグ編集</p>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -68,7 +87,7 @@
 							  	<%= link_to tagging_path(tagging.id), method: :delete do %>
 							  		<%= fa_icon("times", class: "text-secondary") %>
 							  	<% end %>
-							  	<span class="badge badge-secondary"><%= tagging.tag.name %></span>
+							  	<span class="badge d-inline tag-color"><%= tagging.tag.name %></span>
 							  </li>
 							<% end %>
 						</ul>
@@ -77,8 +96,8 @@
 
 					<%= form_for(@tag) do |f| %>
 				    <%= f.label :tag_list, "追加したいタグを入力", class: "small" %><br>
-				    <%= text_field_tag 'user[tag_list]', @user.tag_list.join(','), class: "col" %>
-						<%= f.submit "タグを登録", class: "btn btn-primary btn-sm mt-3" %>
+				    <%= text_field_tag 'user[tag_list]', @user.tag_list.join(','), class: "col", "data-role" => "tagsinput", value: nil %>
+						<%= f.submit "タグを追加する", class: "btn btn-secondary btn-sm mt-3" %>
 	        <% end %>
 
 	      </div>
@@ -88,6 +107,19 @@
 	      </div>
 	    </div>
 	  </div>
+	</div>
+
+	<p class="small title-color text-white mt-3">実績</p>
+
+	<div>
+		<span>投稿数</span><br>
+		<span><%= @user.articles.count %></span><br>
+		<span>イイねされた数</span><br>
+		<span><%= Favorite.where.not(user_id: @user.id).count %></span><br>
+		<span>キープされた数</span><br>
+		<span><%= Keep.where.not(user_id: @user.id).count %></span><br>
+		<span>コメントされた数</span><br>
+		<span><%= Comment.where.not(user_id: @user.id).count %></span><br>
 	</div>
 
 </div>

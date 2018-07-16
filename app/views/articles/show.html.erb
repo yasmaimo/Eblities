@@ -4,9 +4,11 @@
 		<div class="left-sidebar col-lg-1 d-none d-lg-block">
 			<div class="list-group left-sidebar-link">
 
-				<%= render 'articles/favorite' %>
+				<% if @article.user_id != current_user.id %>
+					<%= render 'articles/favorite' %>
 
-				<%= render 'articles/keep' %>
+					<%= render 'articles/keep' %>
+				<% end %>
 
 				<%= link_to tag_timeline_path do %>
 					<span class="list-group-item list-group-item-action nav-font mb-2" >
@@ -65,31 +67,42 @@
             	</h2>
             </div>
           </div>
-        </div>
 
-        <p><%= @article.tag_list %></p>
+	        <div class="my-3">
+		        <% @article.tag_list.each do |tag| %>
+		        	<span class="badge d-inline tag-color"><%= tag %></span>
+		        <% end %>
+	        </div>
 
-				<div class="d-lg-none d-sm-block">
-					<div class="row justify-content-center">
-						<div class="col-5 text-center">
+					<div class="d-lg-none d-sm-block">
+						<div class="row justify-content-center">
 
-							<%= render 'articles/favorite' %>
+							<% if @article.user_id != current_user.id %>
+
+								<div class="col-5 text-center">
+
+									<%= render 'articles/favorite' %>
+
+								</div>
+
+								<div class="col-5 text-center">
+
+									<%= render 'articles/keep' %>
+
+								</div>
+
+							<% end %>
 
 						</div>
 
-						<div class="col-5 text-center">
-
-							<%= render 'articles/keep' %>
-
-						</div>
 					</div>
 
-				</div>
+	        <p class="title-border"></p>
+	        <div class="col-sm-12 mt-4" style="overflow: scroll;">
+	            <%= raw @article.body %>
+	        </div>
 
-        <p class="title-border"></p>
-        <div class="col-sm-12 mt-4" style="overflow: scroll;">
-            <%= raw @article.body %>
-        </div>
+	      </div>
 
       </div>
       <div class="d-lg-block d-none">
