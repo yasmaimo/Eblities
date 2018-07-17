@@ -6,7 +6,7 @@
   </tr>
 </thead>
 <tbody>
-  <% @tags.order("taggings_count DESC").limit(10).each do |tag| %>
+  <% Tag.order("taggings_count DESC").limit(10).each do |tag| %>
     <tr>
       <td class="right-sidebar-link">
       	<span class="mr-1 font-weight-bold"><%= rank %></span>

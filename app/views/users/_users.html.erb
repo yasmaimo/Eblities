@@ -1,0 +1,54 @@
+<tr class="user"><!-- ここでeach -->
+  <td>
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+
+          <div class="col-6 ranking-table">
+          	<img src="https://placehold.jp/40x40.png" class="rounded">
+          	<span class="text-secondary">
+          		<%= link_to user.user_name, user_path(user) %>
+          	</span>
+          </div>
+
+          <div class="col-6 small text-secondary text-right align-self-center">
+
+            <%= render 'relationships/follow_or_unfollow', user: user %>
+
+            <span class="mx-1 d-md-inline d-none">
+              <%= fa_icon("paperclip") %><%= user.articles.count %>個の記事
+            </span>
+
+          	<span class="mx-1 d-md-none">
+          		<%= fa_icon("paperclip") %><%= user.articles.count %>
+          	</span>
+
+          	<span class="mx-1 d-md-inline d-none">
+          		<%= fa_icon("thumbs-up") %><%= user.favorites.count %>イイね
+          	</span>
+
+            <span class="mx-1 d-md-none">
+              <%= fa_icon("thumbs-up") %><%= user.favorites.count %>
+            </span>
+
+
+          </div>
+
+        </div>
+      </div>
+
+      <% if user.introduction.present? %>
+
+        <div class="card-body">
+
+        	<span class="small text-dark">
+        		<%= user.introduction %>
+        	</span>
+
+        </div>
+
+      <% end %>
+
+    </div>
+  </td>
+</tr><!-- eachを終了 -->

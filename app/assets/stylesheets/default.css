@@ -87,3 +87,10 @@ footer {
   background-color: #87ceeb;
   border: solid 1px #669db3;
 }
+
+.relationship-link {
+  height: 23px;
+  line-height: 0px;
+  padding-top: 3px;
+  cursor: pointer;
+}

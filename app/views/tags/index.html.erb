@@ -4,92 +4,160 @@
 		<p class="col-12 d-lg-block d-none"></p>
 
 		<div class="col-lg-3 col-sm-11">
+			<div class="row">
+				<div class="col-12">
 
-	    <%= search_form_for @search_tag do |f| %>
-	      <div class="form-inline my-lg-0 my-2">
-	        <%= f.text_field :name_cont, class: "col-sm-10 col-xs-12 form-control", placeholder: 'タグを検索' %>
-	        <%= f.button fa_icon("search"), class: 'col-sm-2 col-xs-12 btn btn-outline-dark my-lg-0 my-2'%>
-	      </div>
-	    <% end %>
+					<p>
+						<%= link_to "タグ一覧", tags_path, class: "btn btn-outline-danger col mt-lg-0 mt-3" %>
+					</p>
 
-	  </div>
-
-		<div class="col-lg-9 col-sm-11">
-
-			<% if Tag.exists? %>
-
-			  <table class="table bg-white">
-				  <thead class="">
-				    <tr>
-				    	<th>
-					    	<div class="row">
-					    		<div class="col-7">
-					    			<span>タグ一覧</span>
-					    		</div>
-					    	</div>
-				    	</th>
-				    </tr>
-				  </thead>
-
-			    <tbody>
-
-			    	<% @tags.each do |tag| %>
-
-				      <tr><!-- ここでeach -->
-				        <td>
-				          <div class="card">
-				            <div class="card-header">
-				              <div class="row">
-
-				                <div class="col-6 ranking-table">
-				                	<img src="https://placehold.jp/40x40.png" class="rounded">
-				                	<span class="text-secondary">
-				                		<%= link_to tag.name, tag_path(tag) %>
-				                	</span>
-				                </div>
-
-				                <div class="col-6 small text-secondary text-right align-self-center">
-
-				                	<span class="mx-1">
-				                		<% tagging_article = Tagging.where(tag_id: tag.id, taggable_type: "Article") %>
-				                		<%= fa_icon("paperclip") %><%= tagging_article.count %>個の記事
-				                	</span>
-
-				                	<span class="mx-1">
-				                		<% tagging_user = Tagging.where(tag_id: tag.id, taggable_type: "User") %>
-				                		<%= fa_icon("users") %><%= tagging_user.count %>名が登録
-				                	</span>
-
-				                </div>
-
-				              </div>
-				            </div>
-
-				          </div>
-				        </td>
-				      </tr><!-- eachを終了 -->
-
-				    <% end %>
-
-			    <% else %>
-
-					  <table class="table bg-white">
-						  <thead>
-						    <tr>
-						    	<th class="text-center">
-					    			<span>タグ一覧</span>
-						    	</th>
-						    </tr>
-						  </thead>
-						</table>
-
-						<p class="text-center font-weight-bold">タグはまだ登録されていません</p>
-
+			    <%= search_form_for @search_tag do |f| %>
+			      <div class="form-inline my-lg-0 my-2">
+			        <%= f.text_field :name_cont, class: "col-sm-10 col-xs-12 form-control", placeholder: 'タグを検索' %>
+			        <%= f.button fa_icon("search"), class: 'col-sm-2 col-xs-12 btn btn-outline-dark my-lg-0 my-2'%>
+			      </div>
 			    <% end %>
 
-		    </tbody>
-		  </table>
+				</div>
+
+		    <% if user_signed_in? %>
+
+		    	<div class="col-12 text-center mt-3">
+
+		    		<table class="table bg-white">
+		    			<thead>
+		    				<tr>
+		    					<th>あなたが関心を持っているタグ</th>
+		    				</tr>
+		    			</thead>
+		    			<tbody>
+		    				<tr>
+		    					<td>
+										<% if Tagging.exists?(taggable_type: "User", taggable_id: current_user.id) %>
+
+											<% @taggings.each do |tagging| %>
+												<span class="badge tag-color p-1">
+													<%= link_to tagging.tag.name, tag_path(tagging.tag_id), class: "text-white" %>
+												</span>
+											<% end %>
+
+										<% else %>
+
+											<p class="text-secondary">未登録</p>
+
+										<% end %>
+		    					</td>
+		    				</tr>
+		    			</tbody>
+		    		</table>
+
+				  </div>
+
+					<div class="col-12">
+						<table class="table bg-white">
+							<% rank = 1 %>
+							<thead>
+							  <tr>
+							    <th colspan="2">
+							    	共通のタグに関心を持つユーザー
+							    </th>
+							  </tr>
+							</thead>
+							<tbody>
+							  <% current_user.find_related_tags.order("RANDOM()").limit(5).each do |user| %>
+							    <tr>
+							      <td class="right-sidebar-link">
+							      	<p>
+							      		<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+							      		<%= link_to user.user_name, user_path(user) %>
+							      	</p>
+							      	<span class="small">共通のタグ</span>
+							      	<% Tagging.where(taggable_type: "User", taggable_id: user).each do |tagging| %>
+							      		<% Tagging.where(taggable_type: "User", taggable_id: current_user).each do |my_tagging| %>
+							      			<% if tagging.tag.name == my_tagging.tag.name %>
+										        <span class="badge tag-color p-1">
+										        	<%= link_to tagging.tag.name, tag_path(tagging.tag.id),class: "text-white" %>
+									        	</span>
+									        <% end %>
+									      <% end %>
+								      <% end %>
+							      </td>
+							    </tr>
+							  <% end %>
+							</tbody>
+						</table>
+
+					</div>
+
+				<% end %>
+
+			</div>
+	  </div>
+
+		<div class="col-lg-6 col-sm-11">
+
+			<% if Tag.exists? %>
+				<% if @search_tag.result.count > 0 %>
+
+				  <table class="table bg-white" id="tags">
+					  <thead>
+					    <tr>
+					    	<th>
+					    		<%= @search_tag.result.count %>種類のタグ
+					    	</th>
+					    </tr>
+					  </thead>
+
+		    		<% if params[:q].present? %>
+		    			<% if params[:q][:name_cont] != "" %>
+			    			<p class="text-center font-weight-bold my-3">"<%= params[:q][:name_cont] %>"の検索結果</p>
+		    			<% end %>
+		    		<% end %>
+
+				    <tbody class="page">
+
+				    	<% @tags.each do |tag| %>
+
+				    		<%= render 'tags/tags', tag: tag %>
+
+				    	<% end %>
+
+				    </tbody>
+				  </table>
+
+			  <% elsif @search_tag.result.count == 0 %>
+
+			  	<p class="text-center font-weight-bold mt-3">"<%= params[:q][:name_cont] %>"を含むタグはありません</p>
+
+			 	<% end %>
+
+	    <% else %>
+
+				<p class="text-center font-weight-bold">タグはまだ登録されていません</p>
+
+	    <% end %>
+
+	    <div class="row justify-content-center">
+	    		<p class="col-12"><%= paginate @tags %></p>
+	    </div>
 
 		</div>
+
+		<div class="col-lg-3 col-sm-11">
+			<div class="row">
+
+				<div class="col-12">
+
+					<table class="table bg-white">
+
+						<%= render 'articles/tag_ranking' %>
+
+					</table>
+
+				</div>
+			</div>
+		</div>
+
+
 	</div>
 </div>

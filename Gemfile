@@ -49,6 +49,7 @@ gem 'jquery-ui-rails'
 
 # もっと見る機能
 gem 'kaminari'
+gem 'jquery-turbolinks'
 
 # 検索機能用
 gem 'ransack'

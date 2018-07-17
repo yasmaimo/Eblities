@@ -3,6 +3,9 @@ class TagsController < ApplicationController
   def index
     @search_tag = Tag.ransack(params[:q])
     @tags = @search_tag.result.page(params[:page]).reverse_order
+    if user_signed_in?
+      @taggings = Tagging.where(taggable_type: "User", taggable_id: current_user.id)
+    end
   end
 
   def create

@@ -11,7 +11,10 @@
 // about supported directives.
 //
 //= require jquery3
+//= require jquery.turbolinks
 //= require jquery_ujs
+//= require infinite-scroll.pkgd.min
+//= require articles
 //= require popper
 //= require bootstrap
 //= require bootstrap-sprockets

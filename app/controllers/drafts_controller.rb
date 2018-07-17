@@ -3,7 +3,10 @@ class DraftsController < ApplicationController
     @user = current_user
     @tag = Tag.new
     @taggings = Tagging.where(taggable_type: "User", taggable_id: current_user.id)
-    @drafts = Draft.where(user_id: current_user.id)
+    # @drafts = Draft.where(user_id: current_user.id)
+    @search_draft = Draft.where(user_id: current_user.id).ransack(params[:q])
+    @drafts = @search_draft.result.page(params[:page]).reverse_order
+
   end
 
   def confirm

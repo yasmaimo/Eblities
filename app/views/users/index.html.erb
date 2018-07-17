@@ -3,7 +3,11 @@
 
 		<p class="col-12 d-lg-block d-none"></p>
 
-		<div class="col-lg-3 col-sm-11">
+		<div class="col-xl-3 col-lg-4 col-sm-11">
+
+			<p>
+				<%= link_to "ユーザー一覧", users_path, class: "btn btn-outline-danger col mt-lg-0 mt-3" %>
+			</p>
 
 	    <%= search_form_for @search_user do |f| %>
 	      <div class="form-inline my-lg-0 my-2">
@@ -12,117 +16,138 @@
 	      </div>
 	    <% end %>
 
-	  </div>
+		  <% if user_signed_in? %>
 
-		<div class="col-lg-9 col-sm-11">
+		  	<div class="d-lg-block d-none w-100 mt-3">
+
+					<div class="card mb-3">
+					  <div class="card-header bg-warning text-white text-center">イイねしてくれたユーザー</div>
+					  <div class="card-body">
+					    <%= render 'users/favorited_users' %>
+					  </div>
+					</div>
+
+					<div class="card mb-3">
+					  <div class="card-header bg-info text-white text-center">キープしてくれたユーザー</div>
+					  <div class="card-body">
+					    <%= render 'users/kept_users' %>
+					  </div>
+					</div>
+
+					<div class="card mb-3">
+					  <div class="card-header bg-success text-white text-center">コメントしてくれたユーザー</div>
+					  <div class="card-body">
+					    <%= render 'users/commented_users' %>
+					  </div>
+					</div>
+				</div>
+
+				<div class="accordion d-lg-none d-block mb-3" id="accordionExample">
+				  <div class="card">
+				    <div class="card-header card-header bg-warning text-center" id="headingOne">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link collapsed font-weight-bold text-white" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+				          イイねしてくれたユーザー <%= fa_icon("caret-down", text: "") %>
+				        </button>
+				      </h5>
+				    </div>
+
+				    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+
+			      	<%= render 'users/favorited_users' %>
+
+				    </div>
+				  </div>
+
+				  <div class="card">
+				    <div class="card-header bg-info text-center" id="headingTwo">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link collapsed font-weight-bold text-white" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+				          キープしてくれたユーザー <%= fa_icon("caret-down", text: "") %>
+				        </button>
+				      </h5>
+				    </div>
+				    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+
+				      <%= render 'users/kept_users' %>
+
+				    </div>
+				  </div>
+
+				  <div class="card">
+				    <div class="card-header bg-success text-center" id="headingThree">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link collapsed font-weight-bold text-white" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+				          コメントしてくれたユーザー <%= fa_icon("caret-down", text: "") %>
+				        </button>
+				      </h5>
+				    </div>
+				    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+
+							<%= render 'users/commented_users' %>
+
+				    </div>
+				  </div>
+				</div>
+
+			<% end %>
+
+		</div>
+
+		<div class="col-xl-9 col-lg-8 col-sm-11">
 
 			<% if User.exists? %>
+				<% if @search_user.result.count > 0 %>
+
+				  <table class="table bg-white" id="users">
+					  <thead>
+					    <tr>
+					    	<th>
+									<%= @search_user.result.count %>人のユーザー
+					    	</th>
+					    </tr>
+					  </thead>
+
+		    		<% if params[:q].present? %>
+		    			<% if params[:q][:user_name_cont] != "" %>
+			    			<p class="text-center font-weight-bold my-3">"<%= params[:q][:user_name_cont] %>"の検索結果</p>
+		    			<% end %>
+		    		<% end %>
+
+				    <tbody class="page">
+
+				    	<% @users.each do |user| %>
+
+				    		<%= render 'users/users', user: user %>
+
+					    <% end %>
+
+				    </tbody>
+				  </table>
+
+			  <% elsif @search_user.result.count == 0 %>
+
+			  	<p class="text-center font-weight-bold mt-3">"<%= params[:q][:user_name_cont] %>"を含むユーザーはいません</p>
+
+			 	<% end %>
+
+	    <% else %>
 
 			  <table class="table bg-white">
-				  <thead class="">
+				  <thead>
 				    <tr>
-				    	<th>
-					    	<div class="row">
-					    		<div class="col-7">
-					    			<span>ユーザー一覧</span>
-					    		</div>
-					    	</div>
+				    	<th class="text-center">
+			    			<span>ユーザーはまだいません</span>
 				    	</th>
 				    </tr>
 				  </thead>
+				</table>
 
-			    <tbody>
+	    <% end %>
 
-			    	<% @users.each do |user| %>
-
-				      <tr><!-- ここでeach -->
-				        <td>
-				          <div class="card">
-				            <div class="card-header">
-				              <div class="row">
-
-				                <div class="col-6 ranking-table">
-				                	<img src="https://placehold.jp/40x40.png" class="rounded">
-				                	<span class="text-secondary">
-				                		<%= link_to user.user_name, user_path(user) %>
-				                	</span>
-				                </div>
-
-				                <div class="col-6 small text-secondary text-right align-self-center">
-
-													<% unless current_user?(user) %>
-
-														<div id="follow_form">
-
-														<% if current_user.following?(user) %>
-
-															<%= form_for(current_user.following_relationships.find_by(following_id: user.id), html: { method: :delete }) do |f| %>
-															<%= f.submit "Unfollow", class: "btn btn-large follow-btn" %>
-
-														<% end %>
-
-													<% else %>
-
-															<%= form_for(current_user.following_relationships.build(following_id: user.id)) do |f| %>
-																<div>
-																	<%= f.hidden_field :following_id %>
-																</div>
-																<%= f.submit "Follow", class: "btn btn-large btn-primary follow-btn" %>
-															<% end %>
-
-														<% end %>
-
-														</div>
-
-													<% end %>
-
-				                	<span class="mx-1">
-				                		<%= fa_icon("paperclip") %><%= user.articles.count %>個の記事
-				                	</span>
-
-				                	<span class="mx-1">
-				                		<%= fa_icon("thumbs-up") %><%= user.favorites.count %>イイね
-				                	</span>
-
-				                </div>
-
-				              </div>
-				            </div>
-
-				            <div class="card-body">
-
-			                <div class="row">
-			                  <div class="col-12">
-			                  	<span class="small text-dark">
-			                  		<%= user.introduction %>
-			                  	</span>
-			                  </div>
-
-			                </div>
-
-				            </div>
-				          </div>
-				        </td>
-				      </tr><!-- eachを終了 -->
-
-				    <% end %>
-
-			    <% else %>
-
-					  <table class="table bg-white">
-						  <thead>
-						    <tr>
-						    	<th class="text-center">
-					    			<span>ユーザーはまだいません</span>
-						    	</th>
-						    </tr>
-						  </thead>
-						</table>
-
-			    <% end %>
-
-		    </tbody>
-		  </table>
+	    <div class="row justify-content-center">
+	    		<p class="col-12"><%= paginate @users %></p>
+	    </div>
 
 		</div>
 	</div>

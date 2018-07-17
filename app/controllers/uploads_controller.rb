@@ -3,10 +3,10 @@ class UploadsController < ApplicationController
   def create
     @upload = Upload.new(upload_params)
     @upload.save
-
     respond_to do |format|
       format.json { render :json => { url: @upload.image.url, upload_id: @upload.id } }
     end
+    binding.pry
   end
 
   def destroy

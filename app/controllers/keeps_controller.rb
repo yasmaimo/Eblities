@@ -1,6 +1,6 @@
 class KeepsController < ApplicationController
   def index
-    @search_keep = Keep.ransack(params[:q], user_id: current_user.id)
+    @search_keep = Keep.where(user_id: current_user.id).ransack(params[:q])
     @keeps = @search_keep.result.page(params[:page]).reverse_order
   end
 
