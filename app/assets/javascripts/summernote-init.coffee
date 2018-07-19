@@ -1,10 +1,10 @@
 sendFile = (file, toSummernote) ->
   data = new FormData
-  data.append 'image[image]', file
+  data.append 'upload[image]', file
   $.ajax
     data: data
     type: 'POST'
-    url: '/images'
+    url: '/uploads'
     cache: false
     contentType: false
     processData: false
@@ -18,7 +18,7 @@ sendFile = (file, toSummernote) ->
 deleteFile = (file_id) ->
   $.ajax
     type: 'DELETE'
-    url: "/images/#{file_id}"
+    url: "/uploads/#{file_id}"
     cache: false
     contentType: false
     processData: false
@@ -26,14 +26,15 @@ deleteFile = (file_id) ->
 $(document).on 'turbolinks:load', ->
   $('[data-provider="summernote"]').each ->
     $(this).summernote
+      placeholder: '本文'
       lang: 'ja-JP'
       height: 400
       callbacks:
         onImageUpload: (files) ->
           sendFile files[0], $(this)
         onMediaDelete: (target, editor, editable) ->
-          image_id = target[0].id.split('-').slice(-1)[0]
-          console.log image_id
+          upload_id = target[0].id.split('-').slice(-1)[0]
+          console.log upload_id
           if !!upload_id
-            deleteFile image_id
+            deleteFile upload_id
           target.remove()

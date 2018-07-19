@@ -31,17 +31,21 @@
 	            	</h2>
 	            </div>
 	          </div>
-	        </div>
 
-	        <p><%= @article.tag_list %></p>
-	        <span class="d-none"><%= text_field_tag 'article[tag_list]', @article.tag_list.join(',') %></span>
+		        <div class="my-3">
+			        <% @article.tag_list.each do |tag| %>
+			        	<span class="badge d-inline tag-color"><%= tag %></span>
+			        <% end %>
+		        </div>
+		        <span class="d-none"><%= text_field_tag 'article[tag_list]', @article.tag_list.join(',') %></span>
 
-	        <p class="title-border"></p>
-	        <div class="col-sm-12 mt-4" style="overflow: scroll;">
-	            <%= raw @article.body %>
-	            <%= f.hidden_field :body %>
-	        </div>
+		        <p class="title-border"></p>
+		        <div class="col-sm-12 mt-4" style="overflow: scroll;">
+		            <%= raw @article.body %>
+		            <%= f.hidden_field :body %>
+		        </div>
 
+		      </div>
 	      </div>
 		  </div>
 

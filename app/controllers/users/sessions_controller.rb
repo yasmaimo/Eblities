@@ -20,7 +20,6 @@ class Users::SessionsController < Devise::SessionsController
         flash[:failed] = "このアカウントは管理者によって強制退会となったため、ご利用いただけません。"
       else
         super
-        binding.pry
       end
     else
       redirect_to new_user_session_path

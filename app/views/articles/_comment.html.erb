@@ -1,35 +1,65 @@
 <p class="text-center my-4 text-white " style="background-color:#B40404;">コメント</p>
-<table class="table" style="word-break: break-all;">
-  <tbody>
-    <% if @article.comments.exists? %>
-      <% @article.comments.each do |comment| %>
-        <tr>
-          <td class="bg-white">
-            <p class="text-dark">
-              <%= comment.user.user_name %>
-            </p>
-            <span class="text-secondary">
-              <%= comment.created_at.strftime('%Y/%m/%d') %>
-            </span>
-            <div class="mt-1 small text-dark">
-              <%= comment.comment %>
-            </div>
-          </td>
-        </tr>
-      <% end %>
 
-    <% else %>
+<% if @article.comments.exists? %>
 
-      <p class='text-center'>コメントはありません</p>
+  <div class="border" style="max-height: 800px; overflow: scroll;">
 
-    <% end %>
+    <table class="table">
+      <tbody>
 
-  	<div>
-    	<%= form_for [@article,@comment] do |f| %>
-				<%= f.text_field :comment, class: "form-cotrol", placeholder: "コメント *500文字まで", rows:'5' %>
-				<%= f.submit "Post", class: "btn-sm btn-outline-success col-1" %>
-			<% end %>
-		</div>
+        <% @article.comments.each do |comment| %>
+          <tr>
+            <td class="bg-white">
+              <p class="text-dark">
+                <%= attachment_image_tag comment.user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+                <%= link_to comment.user.user_name, user_path(comment.user_id) %>
+              </p>
+              <span class="text-secondary">
+                <%= comment.created_at.strftime('%Y/%m/%d') %>
+              </span>
+              <div class="mt-1 small text-dark">
+                <%= raw comment.comment %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
 
-  </tbody>
-</table>
+      </tbody>
+    </table>
+
+  </div>
+
+<% else %>
+
+  <div class="" style="max-height: 400px; overflow: scroll;">
+
+    <p class="text-center text-secondary small">コメントはありません</p>
+
+  </div>
+
+<% end %>
+
+<div class="mt-5">
+  <%= simple_form_for [@article,@comment] do |f| %>
+    <%= f.input :comment, label: false, class: "form-cotrol col-12",  id: "comment", placeholder: "コメント *500文字まで", error: "コメントを入力してください", type: "text", as: :summernote %>
+    <p class="text-center"><%= f.submit "コメントする", class: "btn-sm btn-outline-success col-2 mt-2", id: "button" %></p>
+  <% end %>
+</div>
+
+<script>
+$(function() {
+
+  var text = document.getElementById('#comment');
+
+  $('#comment').change(function() {
+
+      if ( text == null ){ 
+        $('#button').prop('disabled', true);
+
+      } else { 
+
+        $('#button').prop('disabled', false); 
+      }
+  });
+});
+</script>

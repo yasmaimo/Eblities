@@ -5,6 +5,10 @@
 
 		<div class="col-lg-3 col-sm-11">
 
+			<p>
+				<%= link_to "キープ一覧", keeps_path, class: "btn btn-info col mt-lg-0 mt-3" %>
+			</p>
+
 	    <%= search_form_for @search_keep do |f| %>
 	      <div class="form-inline my-lg-0 my-2">
 	        <%= f.text_field :article_title_or_article_body_cont, class: "col-sm-10 col-xs-12 form-control", placeholder: 'キープした記事を検索' %>
@@ -17,91 +21,96 @@
 		<div class="col-lg-9 col-sm-11">
 
 			<% if Keep.exists?(user_id: current_user.id) %>
+				<% if @search_keep.result.count > 0 %>
 
-			  <table class="table bg-white">
-				  <thead class="">
-				    <tr>
-				    	<th>
-					    	<div class="row">
-					    		<div class="col-7">
-					    			<span>キープ一覧</span>
-					    		</div>
-					    	</div>
-				    	</th>
-				    </tr>
-				  </thead>
+				  <table class="table bg-white" id="keeps">
+					  <thead class="">
+					    <tr>
+					    	<th>
+				    			<span>
+				    				<%= @search_keep.result.count %>件のキープ
+				    			</span>
+					    	</th>
+					    </tr>
+					  </thead>
 
-			    <tbody>
+		    		<% if params[:q].present? %>
+		    			<% if params[:q][:article_title_or_article_body_cont] != "" %>
+			    			<p class="text-center font-weight-bold my-3">"<%= params[:q][:article_title_or_article_body_cont] %>"の検索結果</p>
+		    			<% end %>
+		    		<% end %>
 
-			    	<% @keeps.each do |keep| %>
+				    <tbody class="page">
 
-				      <tr><!-- ここでeach -->
-				        <td>
-				          <div class="card">
-				            <div class="card-header">
-				              <div class="row">
+				    	<% @keeps.each do |keep| %>
 
-				                <div class="col-6 ranking-table">
-				                	<img src="https://placehold.jp/40x40.png" class="rounded">
-				                	<span class="text-secondary">
+					      <tr class="keep"><!-- ここでeach -->
+					        <td>
+					          <div class="card">
+					            <div class="card-header">
+					              <div class="row">
 
-				                	</span>
+					                <div class="col-6 ranking-table">
+									      		<%= attachment_image_tag keep.user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+										    		<%= link_to keep.user.user_name, user_path(keep.user) %>
+
+					                	</span>
+					                </div>
+
+					                <div class="col-6 small text-secondary text-right align-self-center">
+					                	<span class="mx-1" >
+					                		<%= keep.article.created_at.strftime('%Y/%m/%d') %>
+					                	</span><br>
+
+					                	<span class="mx-1">
+					                		<%= fa_icon("thumbs-up") %><%= keep.article.favorites.count %>
+					                	</span>
+
+					                	<span class="mx-1">
+					                		<%= fa_icon("comments") %><%= keep.article.comments.count %>
+					                	</span>
+
+					                </div>
+
+					              </div>
+					            </div>
+
+					            <div class="card-body">
+
+				                <div class="row">
+				                  <div class="col-12">
+				                  	<span class="font-weight-bold text-dark">
+				                  		<%= link_to keep.article.title, article_path(keep.article) %>
+				                  	</span>
+				                  </div>
+
 				                </div>
 
-				                <div class="col-6 small text-secondary text-right align-self-center">
-				                	<span class="mx-1" >
-				                		<%= keep.article.created_at.strftime('%Y/%m/%d') %>
-				                	</span><br>
+					            </div>
+					          </div>
+					        </td>
+					      </tr><!-- eachを終了 -->
 
-				                	<span class="mx-1">
-				                		<%= fa_icon("thumbs-up") %><%= keep.article.favorites.count %>
-				                	</span>
+					    <% end %>
 
-				                	<span class="mx-1">
-				                		<%= fa_icon("comments") %><%= keep.article.comments.count %>
-				                	</span>
+				    </tbody>
+				  </table>
 
-				                </div>
+			  <% elsif @search_keep.result.count == 0 %>
 
-				              </div>
-				            </div>
+			  	<p class="text-center font-weight-bold mt-3">"<%= params[:q][:article_title_or_article_body_cont] %>"を含むキープした記事はありません</p>
 
-				            <div class="card-body">
+			 	<% end %>
 
-			                <div class="row">
-			                  <div class="col-12">
-			                  	<span class="font-weight-bold text-dark">
-			                  		<%= link_to keep.article.title, article_path(keep.article) %>
-			                  	</span>
-			                  </div>
+	    <% else %>
 
-			                </div>
+				<p class="text-center font-weight-bold"><%= current_user.user_name %>さんがキープした記事はありません</p>
 
-				            </div>
-				          </div>
-				        </td>
-				      </tr><!-- eachを終了 -->
+	    <% end %>
 
-				    <% end %>
-
-			    <% else %>
-
-					  <table class="table bg-white">
-						  <thead>
-						    <tr>
-						    	<th>
-					    			<span>キープ一覧</span>
-						    	</th>
-						    </tr>
-						  </thead>
-						</table>
-
-						<p class="text-center font-weight-bold"><%= current_user.user_name %>さんがキープした記事はありません</p>
-
-			    <% end %>
-
-		    </tbody>
-		  </table>
+	    <div class="row justify-content-center">
+	    		<p class="col-12"><%= paginate @keeps %></p>
+	    </div>
 
 		</div>
 	</div>

@@ -3,17 +3,48 @@
     <div class="col-12">
 
       <%= simple_form_for(@article, url: {action: 'confirm'}) do |f| %>
-        <%= f.error_notification %>
 
-        <div class="form-inputs">
-          <%= text_field_tag 'article[tag_list]', @article.tag_list.join(','), placeholder: "タグを入力（エンターキーで確定）", class: "col my-3 form-control" %>
+        <p class="text-center small text-white mt-3 title-color">
+          タグを入力（エンターキーで確定）
+          <a class="text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            タグとは？
+          </a>
+        </p>
+
+        <div class="collapse" id="collapseExample">
+          <div class="card card-body">
+            <p class="small">タグとは、記事に関係のある分野を表します。タグを登録すると、他のユーザーがあなたの記事を見つけやすくなります。エブリティーズには、クリエイティブな事に関係があればどんな分野の記事を投稿しても大丈夫です。積極的にタグを登録しましょう！
+            </p>
+            <p>
+              例 :
+              <span class="badge d-inline tag-color">音楽</span>
+              <span class="badge d-inline tag-color">DTM</span>
+              <span class="badge d-inline tag-color">イラスト</span>
+              <span class="badge d-inline tag-color">CG</span>
+              <span class="badge d-inline tag-color">基礎知識</span>
+              <span class="badge d-inline tag-color">理論</span>
+          </div>
+        </div>
+
+        <div class="field my-3">
+          <%= text_field_tag 'article[tag_list]', @article.tag_list.join(','), class: "form-control", "data-role" => "tagsinput" %>
+        </div>
+
+        <p class="text-center small text-white mt-3 title-color">タイトル（70文字まで）</p>
+
+        <div>
           <%= f.input :title, label: false, placeholder: "タイトル", error: "タイトルを入力してください" %>
+        </div>
+
+        <p class="text-center small text-white mt-3 title-color">本文（10,000文字まで）</p>
+
+        <div>
           <%= f.input :body, label: false, as: :summernote, error: "本文を入力してください"  %>
         </div>
 
         <div class="form-actions text-center">
-          <%= f.submit "投稿する", class: "btn btn-primary btn-sm" %>
-          <%= f.submit "下書きとして保存する", class: "btn border text-dark btn-sm" %>
+          <%= f.submit "確認画面へ進む", class: "btn btn-primary btn-sm", name: "confirm_article" %>
+          <%= f.submit "下書きとして保存する", class: "btn border text-dark btn-sm" , name: "create_draft" %>
         </div>
       <% end %>
 

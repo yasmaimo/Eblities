@@ -21,6 +21,7 @@ gem 'jquery-rails'
 # 画像投稿用
 gem "refile", require: "refile/rails", github: 'manfe/refile'
 gem "refile-mini_magick"
+gem 'carrierwave'
 
 # ログイン機能
 gem 'devise'
@@ -44,9 +45,11 @@ gem 'rqrcode-rails3'
 
 # タグ付け用
 gem 'acts-as-taggable-on', '~> 6.0'
+gem 'jquery-ui-rails'
 
 # もっと見る機能
 gem 'kaminari'
+gem 'jquery-turbolinks'
 
 # 検索機能用
 gem 'ransack'

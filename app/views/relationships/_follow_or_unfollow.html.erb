@@ -1,0 +1,40 @@
+<% if user_signed_in? %>
+
+  <% unless current_user?(user) %>
+
+    <div id="follow_form">
+
+    <% if current_user.following?(user) %>
+
+      <%= form_for(current_user.following_relationships.find_by(following_id: user.id), html: { method: :delete }) do |f| %>
+
+      <%= f.submit "フォロー中", class: "mt-md-0 mt-1 font-weight-bold bg-primary rounded small text-white relationship-link", "data-confirm" => "#{user.user_name}さんのフォローを解除しますか？" %>
+
+      <% if user.following?(current_user) %>
+        <span class="badge bg-primary rounded small text-white p-1">あなたをフォローしています</span>
+      <% end %>
+
+    <% end %>
+
+  <% else %>
+
+      <%= form_for(current_user.following_relationships.build(following_id: user.id)) do |f| %>
+        <span>
+          <%= f.hidden_field :following_id %>
+        </span>
+
+        <%= f.submit "フォローする", class: "mt-md-0 mt-1 border border-primary rounded small text-primary relationship-link" %>
+
+        <% if user.following?(current_user) %>
+          <span class="badge bg-primary rounded small text-white p-1">あなたをフォローしています</span>
+        <% end %>
+
+      <% end %>
+
+    <% end %>
+
+    </div>
+
+  <% end %>
+
+<% end %>

@@ -2,13 +2,15 @@ class UsersController < ApplicationController
   def index
     @search_user = User.ransack(params[:q])
     @users = @search_user.result.page(params[:page]).reverse_order
+    # binding.pry
   end
 
   def show
     @user = User.find(params[:id])
     @tag = Tag.new
-    @taggings = Tagging.where(taggable_type: "User", taggable_id: current_user.id)
-    @articles = Article.where(user_id: @user.id)
+    @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id)
+    @search_user_article = Article.where(user_id: @user.id).ransack(params[:q])
+    @user_article = @search_user_article.result.page(params[:page]).reverse_order
   end
 
   def account
@@ -56,10 +58,11 @@ class UsersController < ApplicationController
 
   def followers
     @user  = User.find(params[:id])
-    @users = @user.followers
+    @search_user = @user.followers.ransack(params[:q])
+    @users = @search_user.result.page(params[:page]).reverse_order
     @tag = Tag.new
-    @taggings = Tagging.where(taggable_type: "User", taggable_id: current_user.id)
-    @articles = Article.where(user_id: current_user.id)
+    @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id)
+    @articles = Article.where(user_id: @user.id)
   end
 
   private

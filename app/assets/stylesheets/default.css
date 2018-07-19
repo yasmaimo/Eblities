@@ -77,3 +77,20 @@ footer {
   background-color:#e6e6fa;
   margin: 0 auto;
 }
+
+.tag-color {
+  background-color: #1872dd;
+  border: solid 1px #125699;
+}
+
+.title-color {
+  background-color: #87ceeb;
+  border: solid 1px #669db3;
+}
+
+.relationship-link {
+  height: 23px;
+  line-height: 0px;
+  padding-top: 3px;
+  cursor: pointer;
+}

@@ -1,0 +1,43 @@
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8 col-12" id="notifications">
+
+				<p class="text-center mt-3 font-weight-bold"><%= current_user.user_name %>さんの通知一覧</p>
+
+				<% @notifications.each do |notification| %>
+
+					<ul class="list-group list-group-flush notification">
+
+						<li class="list-group-item small my-1 page">
+							<% user = User.find(notification.notified_by_id) %>
+							<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 40px; max-width: 40px;"%>
+							<%= link_to "#{user.user_name}", user_path(user) %>
+							さんが
+							<% if "#{notification.notified_type}" != "キープ" %>
+								<%= link_to "あなたの記事", link_through_path(notification) %>
+								に<%= "#{notification.notified_type}" %>をしました
+
+							<% else %>
+								<%= link_to "あなたの記事", link_through_path(notification) %>
+								を
+								<%= "#{notification.notified_type}" %>しました
+							<% end %>
+							<br>
+							記事 :
+							<span>
+								<%= link_to "#{notification.article.title}", article_path(notification.article_id) %>
+							</span>
+						</li>
+
+					</ul>
+
+				<% end %>
+
+		    <div class="row justify-content-center">
+		    		<p class="col-12"><%= paginate @notifications %></p>
+		    </div>
+
+			</div>
+		</div>
+	</div>
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180714044445) do
+ActiveRecord::Schema.define(version: 20180719091030) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -115,6 +115,28 @@ ActiveRecord::Schema.define(version: 20180714044445) do
     t.index ["user_id"], name: "index_keeps_on_user_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "notified_by_id"
+    t.integer "article_id"
+    t.string "notified_type"
+    t.boolean "read", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_notifications_on_article_id"
+    t.index ["notified_by_id"], name: "index_notifications_on_notified_by_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "post"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post"], name: "index_posts_on_post"
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
   create_table "relationships", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "following_id"
@@ -172,6 +194,12 @@ ActiveRecord::Schema.define(version: 20180714044445) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  create_table "uploads", force: :cascade do |t|
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -193,14 +221,14 @@ ActiveRecord::Schema.define(version: 20180714044445) do
     t.integer "status", default: 0, null: false
     t.string "provider"
     t.string "uid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "encrypted_otp_secret"
     t.string "encrypted_otp_secret_iv"
     t.string "encrypted_otp_secret_salt"
     t.integer "consumed_timestep"
     t.boolean "otp_required_for_login"
     t.text "otp_backup_codes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email"
     t.index ["family_name"], name: "index_users_on_family_name"
     t.index ["given_name"], name: "index_users_on_given_name"

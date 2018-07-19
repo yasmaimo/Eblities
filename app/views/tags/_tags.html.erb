@@ -1,0 +1,34 @@
+<tr class="tag"><!-- ここでeach -->
+  <td>
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+
+          <div class="col-6 ranking-table">
+          	<span class="text-secondary">
+          		<%= link_to tag.name, tag_path(tag) %>
+          	</span>
+          </div>
+
+          <div class="col-6 small text-secondary text-right align-self-center">
+
+          	<span class="mx-1">
+          		<% tagging_article = Tagging.where(tag_id: tag.id, taggable_type: "Article") %>
+          		<%= fa_icon("paperclip") %><%= tagging_article.count %>個の記事
+          	</span>
+
+            <br class="d-md-none">
+
+          	<span class="mx-1">
+          		<% tagging_user = Tagging.where(tag_id: tag.id, taggable_type: "User") %>
+          		<%= fa_icon("users") %><%= tagging_user.count %>名が登録
+          	</span>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </td>
+</tr><!-- eachを終了 -->

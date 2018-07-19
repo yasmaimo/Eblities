@@ -14,12 +14,13 @@ class Article < ApplicationRecord
               message: "本文は最大10000文字まで入力できます" }
 
   # Association
-	belongs_to :user, optional: true
+	belongs_to :user
 	has_many :comments, dependent: :destroy
   has_many :images, as: :post, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :keeps, dependent: :destroy
   has_many :tagging, as: :taggable, dependent: :destroy
+  has_many :notifications, dependent: :destroy
 
   # イイねしたかどうか
   def favorited_by?(user)

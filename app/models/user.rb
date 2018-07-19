@@ -87,6 +87,7 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :keeps, dependent: :destroy
   has_many :tagging, as: :taggable
+  has_many :notifications, dependent: :destroy
 
   # omniauth_callback
   def self.from_omniauth(auth)

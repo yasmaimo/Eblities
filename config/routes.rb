@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'notifications/link_through'
+
+  resources 'uploads', only: [:create, :destroy]
+
   # root
   root to: 'articles#index'
 
@@ -101,5 +105,15 @@ Rails.application.routes.draw do
 
   # help
   get 'help', to: 'helps#index', as: 'helps'
+
+  # posts
+  resources :posts
+
+  # notifications
+  resources :notifications
+
+  get 'notifications', to: 'notifications#index'
+
+  get 'notifications/:id/link_through', to: 'notifications#link_through', as: :link_through
 
 end

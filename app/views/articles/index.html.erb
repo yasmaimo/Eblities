@@ -19,20 +19,16 @@
 
 			<% if Article.exists? %>
 
-			  <table class="table bg-white">
-				  <thead class="">
+			  <table class="table bg-white" id="articles">
+				  <thead>
 				    <tr>
 				    	<th>
-					    	<div class="row">
-					    		<div class="col-7">
-					    			<span>最新の記事</span>
-					    		</div>
-					    	</div>
+			    			<span>最新の記事</span>
 				    	</th>
 				    </tr>
 				  </thead>
 
-			    <tbody>
+			    <tbody class="page" >
 
 			    	<% @articles.each do |article| %>
 
@@ -40,22 +36,26 @@
 
 				    <% end %>
 
-			    <% else %>
+			    </tbody>
+			  </table>
 
-					  <table class="table bg-white">
-						  <thead>
-						    <tr>
-						    	<th class="text-center">
-					    			<span>記事がありません</span>
-						    	</th>
-						    </tr>
-						  </thead>
-						</table>
+	    <% else %>
 
-			    <% end %>
+			  <table class="table bg-white">
+				  <thead>
+				    <tr>
+				    	<th class="text-center">
+			    			<span>記事がありません</span>
+				    	</th>
+				    </tr>
+				  </thead>
+				</table>
 
-		    </tbody>
-		  </table>
+	    <% end %>
+
+	    <div class="row justify-content-center">
+	    		<p class="col-12"><%= paginate @articles %></p>
+	    </div>
 
 	  </div>
 
