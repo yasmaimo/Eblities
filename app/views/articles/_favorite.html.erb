@@ -4,7 +4,7 @@
 		<%= @article.favorites.count %>
 	</p>
 
-	<%= link_to article_favorites_path(@article), style: "text-decoration: none;" , method: :delete do %>
+	<%= link_to article_favorites_path(@article), style: "text-decoration: none;", method: :delete, id: "favorite-button" do %>
 
 		<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
 			<%= fa_icon("thumbs-up 2x") %>
@@ -21,7 +21,7 @@
 		<%= @article.favorites.count %>
 	</p>
 
-	<%= link_to article_favorites_path(@article), style: "text-decoration: none;" , method: :post do %>
+	<%= link_to article_favorites_path(@article), style: "text-decoration: none;" , method: :post, id: "favorite-button" do %>
 
 		<span class="list-group-item list-group-item-action nav-font mb-2">
 			<%= fa_icon("thumbs-up 2x") %>

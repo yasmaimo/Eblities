@@ -5,7 +5,6 @@
         <div class="row">
 
           <div class="col-6 ranking-table">
-          	<img src="https://placehold.jp/40x40.png" class="rounded">
           	<span class="text-secondary">
           		<%= link_to tag.name, tag_path(tag) %>
           	</span>
@@ -17,6 +16,8 @@
           		<% tagging_article = Tagging.where(tag_id: tag.id, taggable_type: "Article") %>
           		<%= fa_icon("paperclip") %><%= tagging_article.count %>個の記事
           	</span>
+
+            <br class="d-md-none">
 
           	<span class="mx-1">
           		<% tagging_user = Tagging.where(tag_id: tag.id, taggable_type: "User") %>

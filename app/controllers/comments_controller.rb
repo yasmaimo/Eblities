@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+
   def index
   end
 
@@ -18,6 +19,7 @@ class CommentsController < ApplicationController
       # flash[:failed] = "500文字までのコメントを入力してください"
     end
     if @comment.save
+      create_notifications
       redirect_to article_path(@article)
       flash[:succeeded] = "コメントを投稿しました"
     end
@@ -33,6 +35,15 @@ class CommentsController < ApplicationController
   end
 
   private
+
+  def create_notifications
+    return if @article.user_id == current_user.id
+    Notification.create(
+                      user_id: @article.user_id,
+                      notified_by_id: current_user.id,
+                      article_id: @article.id,
+                      notified_type: "コメント")
+  end
 
   def comment_params
     params.require(:comment).permit(:article_id, :user_id, :comment)

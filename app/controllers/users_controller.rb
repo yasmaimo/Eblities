@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   def index
     @search_user = User.ransack(params[:q])
     @users = @search_user.result.page(params[:page]).reverse_order
+    # binding.pry
   end
 
   def show

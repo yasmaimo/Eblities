@@ -3,10 +3,10 @@
 
 		<p class="col-12 d-lg-block d-none"></p>
 
-		<div class="col-xl-3 col-lg-4 col-sm-11">
+		<div class="col-lg-4 col-sm-11">
 
 			<p>
-				<%= link_to "ユーザー一覧", users_path, class: "btn btn-outline-danger col mt-lg-0 mt-3" %>
+				<%= link_to "ユーザー一覧", users_path, class: "btn btn-danger col mt-lg-0 mt-3" %>
 			</p>
 
 	    <%= search_form_for @search_user do |f| %>
@@ -18,41 +18,17 @@
 
 		  <% if user_signed_in? %>
 
-		  	<div class="d-lg-block d-none w-100 mt-3">
-
-					<div class="card mb-3">
-					  <div class="card-header bg-warning text-white text-center">イイねしてくれたユーザー</div>
-					  <div class="card-body">
-					    <%= render 'users/favorited_users' %>
-					  </div>
-					</div>
-
-					<div class="card mb-3">
-					  <div class="card-header bg-info text-white text-center">キープしてくれたユーザー</div>
-					  <div class="card-body">
-					    <%= render 'users/kept_users' %>
-					  </div>
-					</div>
-
-					<div class="card mb-3">
-					  <div class="card-header bg-success text-white text-center">コメントしてくれたユーザー</div>
-					  <div class="card-body">
-					    <%= render 'users/commented_users' %>
-					  </div>
-					</div>
-				</div>
-
-				<div class="accordion d-lg-none d-block mb-3" id="accordionExample">
+				<div class="accordion my-3" id="accordionExample">
 				  <div class="card">
 				    <div class="card-header card-header bg-warning text-center" id="headingOne">
 				      <h5 class="mb-0">
 				        <button class="btn btn-link collapsed font-weight-bold text-white" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-				          イイねしてくれたユーザー <%= fa_icon("caret-down", text: "") %>
+				          最近イイねしてくれたユーザー <%= fa_icon("caret-down", text: "") %>
 				        </button>
 				      </h5>
 				    </div>
 
-				    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+				    <div id="collapseOne" class="collapse card-body" aria-labelledby="headingOne" data-parent="#accordionExample">
 
 			      	<%= render 'users/favorited_users' %>
 
@@ -63,11 +39,11 @@
 				    <div class="card-header bg-info text-center" id="headingTwo">
 				      <h5 class="mb-0">
 				        <button class="btn btn-link collapsed font-weight-bold text-white" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-				          キープしてくれたユーザー <%= fa_icon("caret-down", text: "") %>
+				          最近キープしてくれたユーザー <%= fa_icon("caret-down", text: "") %>
 				        </button>
 				      </h5>
 				    </div>
-				    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+				    <div id="collapseTwo" class="collapse card-body" aria-labelledby="headingTwo" data-parent="#accordionExample">
 
 				      <%= render 'users/kept_users' %>
 
@@ -78,11 +54,11 @@
 				    <div class="card-header bg-success text-center" id="headingThree">
 				      <h5 class="mb-0">
 				        <button class="btn btn-link collapsed font-weight-bold text-white" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-				          コメントしてくれたユーザー <%= fa_icon("caret-down", text: "") %>
+				          最近コメントしてくれたユーザー <%= fa_icon("caret-down", text: "") %>
 				        </button>
 				      </h5>
 				    </div>
-				    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+				    <div id="collapseThree" class="collapse card-body" aria-labelledby="headingThree" data-parent="#accordionExample">
 
 							<%= render 'users/commented_users' %>
 
@@ -94,7 +70,7 @@
 
 		</div>
 
-		<div class="col-xl-9 col-lg-8 col-sm-11">
+		<div class="col-lg-8 col-sm-11">
 
 			<% if User.exists? %>
 				<% if @search_user.result.count > 0 %>

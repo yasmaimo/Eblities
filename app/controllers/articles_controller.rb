@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
   end
 
   def confirm
-    @article = Article.new(article_params)
+    @article = Article.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body])
     if @article.invalid?
       render :new
     end
@@ -24,6 +24,7 @@ class ArticlesController < ApplicationController
       @article.tag_list.add(article_params[:tag_list], parse: true)
       if @article.save
         get_ep_on_create
+        post_timeline
       end
       redirect_to article_path(@article)
     elsif params[:create_draft]
@@ -85,6 +86,14 @@ class ArticlesController < ApplicationController
   end
 
   private
+
+  def post_timeline
+    Post.create(
+                user_id: current_user.id,
+                post:
+                "#{current_user.user_name}さんが新しい記事を投稿しました。
+                【#{@article.title}】")
+  end
 
   def article_params
     params.require(:article).permit(:user_id, :title, :body, :tag_list)

@@ -78,5 +78,20 @@ class All < ActiveRecord::Migration[5.1]
       t.timestamps
     end
 
+    create_table :posts do |t|
+			t.integer		:user_id,   		index: true
+			t.string		:post,   			index: true
+      t.timestamps
+    end
+
+    create_table :notifications do |t|
+      t.integer :user_id, index: true
+      t.integer :notified_by_id,index: true
+      t.integer :article_id,index: true
+      t.string :notified_type
+      t.boolean :read, default: false
+      t.timestamps
+    end
+
   end
 end

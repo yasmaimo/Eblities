@@ -1,0 +1,26 @@
+<div class="dropdown notification-dropdown">
+
+  <button class="btn btn-default dropdown-toggle text-white" type="button" data-toggle="dropdown" id='dropdownMenu1' aria-haspopup="true"
+  aria-expanded="true" style="background-color: #125699;">
+    <span class="small"><%= current_user.notifications.where(read: false).count %></span>
+    <span class="glyphicon glyphicon-flag small"><i class="fa fa-bell" aria-hidden="true"></i>通知</span>
+  </button>
+
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li class="dropdown-header text-center">通知</li>
+
+      <%= render current_user.notifications.where(read: false).order('created_at DESC').last(5) %>
+      <% n = current_user.notifications.where(read: false) %>
+
+      <% if n.blank? %>
+
+        <li class="text-center small">未読の通知はありません</li>
+
+      <% end %>
+
+      <li class="divider" role="separator"> </li>
+      <li class="text-center small mt-1">
+      <u><%= link_to '通知一覧を見る', notifications_path, class: "text-dark" %></u>
+    </li>
+  </ul>
+</div>

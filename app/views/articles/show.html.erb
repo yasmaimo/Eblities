@@ -4,22 +4,26 @@
 		<div class="left-sidebar col-lg-1 d-none d-lg-block">
 			<div class="list-group left-sidebar-link">
 
-				<% if @article.user_id != current_user.id %>
-					<%= render 'articles/favorite' %>
+				<% if user_signed_in? %>
 
-					<%= render 'articles/keep' %>
-				<% end %>
+					<% if @article.user_id != current_user.id %>
+						<%= render 'articles/favorite' %>
 
-				<%= link_to tag_timeline_path do %>
-					<span class="list-group-item list-group-item-action nav-font mb-2" >
-						<%= fa_icon("twitter 2x") %>
-					</span>
-				<% end %>
+						<%= render 'articles/keep' %>
+					<% end %>
 
-				<%= link_to tag_timeline_path do %>
-					<span class="list-group-item list-group-item-action nav-font" >
-						<%= fa_icon("facebook 2x") %>
-					</span>
+					<%= link_to tag_timeline_path do %>
+						<span class="list-group-item list-group-item-action nav-font mb-2" >
+							<%= fa_icon("twitter 2x") %>
+						</span>
+					<% end %>
+
+					<%= link_to tag_timeline_path do %>
+						<span class="list-group-item list-group-item-action nav-font" >
+							<%= fa_icon("facebook 2x") %>
+						</span>
+					<% end %>
+
 				<% end %>
 
 			</div>
@@ -79,19 +83,23 @@
 					<div class="d-lg-none d-sm-block">
 						<div class="row justify-content-center">
 
-							<% if @article.user_id != current_user.id %>
+							<% if user_signed_in? %>
 
-								<div class="col-5 text-center">
+								<% if @article.user_id != current_user.id %>
 
-									<%= render 'articles/favorite' %>
+									<div class="col-5 text-center">
 
-								</div>
+										<%= render 'articles/favorite' %>
 
-								<div class="col-5 text-center">
+									</div>
 
-									<%= render 'articles/keep' %>
+									<div class="col-5 text-center">
 
-								</div>
+										<%= render 'articles/keep' %>
+
+									</div>
+
+								<% end %>
 
 							<% end %>
 

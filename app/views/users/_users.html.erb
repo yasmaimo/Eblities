@@ -1,11 +1,17 @@
 <tr class="user"><!-- ここでeach -->
   <td>
-    <div class="card">
+
+    <% if user == current_user %>
+      <div class="card border border-info">
+    <% else %>
+      <div class="card">
+    <% end %>
+
       <div class="card-header">
         <div class="row">
 
-          <div class="col-6 ranking-table">
-          	<img src="https://placehold.jp/40x40.png" class="rounded">
+          <div class="col-6 ranking-table align-self-center">
+          	<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: "mx-1 card-img", style: "max-height: 40px; max-width: 40px;"%>
           	<span class="text-secondary">
           		<%= link_to user.user_name, user_path(user) %>
           	</span>
@@ -20,17 +26,12 @@
             </span>
 
           	<span class="mx-1 d-md-none">
-          		<%= fa_icon("paperclip") %><%= user.articles.count %>
+          		<%= fa_icon("paperclip") %><%= user.articles.count %>個
           	</span>
 
-          	<span class="mx-1 d-md-inline d-none">
-          		<%= fa_icon("thumbs-up") %><%= user.favorites.count %>イイね
+          	<span class="mx-1">
+          		<%= user.point %> EP
           	</span>
-
-            <span class="mx-1 d-md-none">
-              <%= fa_icon("thumbs-up") %><%= user.favorites.count %>
-            </span>
-
 
           </div>
 

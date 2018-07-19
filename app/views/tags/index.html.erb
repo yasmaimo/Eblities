@@ -8,7 +8,7 @@
 				<div class="col-12">
 
 					<p>
-						<%= link_to "タグ一覧", tags_path, class: "btn btn-outline-danger col mt-lg-0 mt-3" %>
+						<%= link_to "タグ一覧", tags_path, class: "btn btn-primary col mt-lg-0 mt-3" %>
 					</p>
 
 			    <%= search_form_for @search_tag do |f| %>
@@ -22,76 +22,76 @@
 
 		    <% if user_signed_in? %>
 
-		    	<div class="col-12 text-center mt-3">
+		    	<div class="col-12 text-center mt-3  d-lg-block d-none">
 
-		    		<table class="table bg-white">
-		    			<thead>
-		    				<tr>
-		    					<th>あなたが関心を持っているタグ</th>
-		    				</tr>
-		    			</thead>
-		    			<tbody>
-		    				<tr>
-		    					<td>
-										<% if Tagging.exists?(taggable_type: "User", taggable_id: current_user.id) %>
+						<div class="card mb-3">
+						  <div class="card-header text-white text-center font-weight-bold" style ="background-color: #125699;">
+						  	あなたが関心を持つタグ
+						  </div>
+						  <div class="card-body">
 
-											<% @taggings.each do |tagging| %>
-												<span class="badge tag-color p-1">
-													<%= link_to tagging.tag.name, tag_path(tagging.tag_id), class: "text-white" %>
-												</span>
-											<% end %>
+						  	<%= render 'tags/my_tags' %>
 
-										<% else %>
-
-											<p class="text-secondary">未登録</p>
-
-										<% end %>
-		    					</td>
-		    				</tr>
-		    			</tbody>
-		    		</table>
+						  </div>
+						</div>
 
 				  </div>
 
-					<div class="col-12">
-						<table class="table bg-white">
-							<% rank = 1 %>
-							<thead>
-							  <tr>
-							    <th colspan="2">
-							    	共通のタグに関心を持つユーザー
-							    </th>
-							  </tr>
-							</thead>
-							<tbody>
-							  <% current_user.find_related_tags.order("RANDOM()").limit(5).each do |user| %>
-							    <tr>
-							      <td class="right-sidebar-link">
-							      	<p>
-							      		<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
-							      		<%= link_to user.user_name, user_path(user) %>
-							      	</p>
-							      	<span class="small">共通のタグ</span>
-							      	<% Tagging.where(taggable_type: "User", taggable_id: user).each do |tagging| %>
-							      		<% Tagging.where(taggable_type: "User", taggable_id: current_user).each do |my_tagging| %>
-							      			<% if tagging.tag.name == my_tagging.tag.name %>
-										        <span class="badge tag-color p-1">
-										        	<%= link_to tagging.tag.name, tag_path(tagging.tag.id),class: "text-white" %>
-									        	</span>
-									        <% end %>
-									      <% end %>
-								      <% end %>
-							      </td>
-							    </tr>
-							  <% end %>
-							</tbody>
-						</table>
+					<div class="col-12 d-lg-block d-none">
+						<div class="card mb-3">
+
+						  <div class="card-header bg-primary text-white text-center font-weight-bold">共通のタグユーザー</div>
+						  <div class="card-body">
+
+								<%= render 'tags/common_users' %>
+
+						  </div>
+						</div>
 
 					</div>
 
 				<% end %>
 
 			</div>
+
+			<% if user_signed_in? %>
+
+				<div class="accordion d-lg-none d-block mb-3" id="accordionExample">
+				  <div class="card">
+				    <div class="card-header card-header text-center" id="headingOne" style ="background-color: #125699;">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link collapsed font-weight-bold text-white" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+				          あなたが関心を持つタグ <%= fa_icon("caret-down", text: "") %>
+				        </button>
+				      </h5>
+				    </div>
+
+				    <div id="collapseOne" class="collapse card-body text-center" aria-labelledby="headingOne" data-parent="#accordionExample">
+
+			      	<%= render 'tags/my_tags' %>
+
+				    </div>
+				  </div>
+
+				  <div class="card">
+				    <div class="card-header bg-primary text-center" id="headingTwo">
+				      <h5 class="mb-0">
+				        <button class="btn btn-link collapsed font-weight-bold text-white" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+				          共通のタグユーザー <%= fa_icon("caret-down", text: "") %>
+				        </button>
+				      </h5>
+				    </div>
+				    <div id="collapseTwo" class="collapse card-body" aria-labelledby="headingTwo" data-parent="#accordionExample">
+
+				      <%= render 'tags/common_users' %>
+
+				    </div>
+				  </div>
+
+				</div>
+
+			<% end %>
+
 	  </div>
 
 		<div class="col-lg-6 col-sm-11">

@@ -7,6 +7,7 @@ class Comment < ApplicationRecord
               message: "タイトルは最大500文字まで入力できます" }
 
 	# Association
+	has_many :notifications
 	belongs_to :article
 	belongs_to :user
 

@@ -3,7 +3,7 @@
 
     <p class="col-12 h2 font-weight-bold text-center mt-5">新規登録</p>
 
-    <div class="col-lg-3 col-sm-9 text-lg-left text-center">
+    <div class="col-lg-4 col-sm-9 text-lg-left text-center">
 
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
@@ -12,24 +12,24 @@
           <%= f.text_field :user_name, autofocus: true, autocomplete: "user_name", class: "w-100" %>
         </div>
 
-        <div class="mt-3">
+        <div class="mt-1">
           <%= f.label :メールアドレス, class: "small text-secondary" %><br />
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-100" %>
         </div>
 
-        <div class="mt-3">
+        <div class="mt-1">
           <%= f.label :パスワード, class: "small text-secondary" %><br />
           <%= f.password_field :password, autocomplete: "off", class: "w-100" %>
         </div>
 
-        <div class="mt-3">
+        <div class="mt-1">
           <%= f.label :パスワード再入力, class: "small text-secondary" %><br />
           <%= f.password_field :password_confirmation, autocomplete: "off", class: "w-100" %>
         </div>
 
-        <p class="text-center mt-2">
-          <%= recaptcha_tags callback: 'recaptchaCallbackFunction', class: "d-lg-none" %>
-        </p>
+        <div class="d-flex justify-content-center mt-2">
+          <%= recaptcha_tags callback: 'recaptchaCallbackFunction'%>
+        </div>
 
         <div class="text-center">
           <%= f.submit "新規登録", class: "btn btn-success my-2" %>
@@ -73,10 +73,6 @@
 
         <% end -%>
       <% end -%>
-
-      <p class="text-center mt-2">
-        <%= recaptcha_tags callback: 'recaptchaCallbackFunction', class: "d-lg-block d-none" %>
-      </p>
 
     </div>
 

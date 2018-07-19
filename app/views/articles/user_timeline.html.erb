@@ -24,19 +24,24 @@
 				    <tr>
 				    	<th>
 					    	<div class="row">
-					    		<div class="col-7">
+					    		<div class="col-5">
 					    			<span>タイムライン</span>
+					    		</div>
+					    		<div class="col-7 text-right">
+					    			<span>フォロー<%= current_user.followings.count %></span>
+					    			/
+					    			<span>フォロワー<%= current_user.followers.count %></span>
 					    		</div>
 					    	</div>
 				    	</th>
 				    </tr>
 				  </thead>
 
-			    <tbody>
+				  <% posts = nil %>
 
+			    <tbody>
 			    	<% current_user.followings.each do |following| %>
-				    	<% articles = following.articles.order(:created_at) %>
-				    	<% articles.each do |article| %>
+				    	<% Post.where(user_id: following.id).each do |post| %>
 
 								<tr><!-- ここでeach -->
 								  <td>
@@ -45,23 +50,23 @@
 								        <div class="row">
 
 								          <div class="col-6 ranking-table">
-								          	<%= attachment_image_tag article.user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
-								          	<span class="text-secondary">
-								          		<%= link_to article.user.user_name, user_path(article.user_id) %>
+								          	<%= attachment_image_tag post.user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+								          	<span class="text-secondary small">
+								          		<%= post.user.user_name %>
 								          	</span>
 								          </div>
 
 								          <div class="col-6 small text-secondary text-right align-self-center">
 								          	<span class="mx-1" >
-								          		<%= article.created_at.strftime('%Y/%m/%d') %>
+								          		<%= post.created_at.strftime('%Y/%m/%d') %>
 								          	</span><br>
 
 								          	<span class="mx-1">
-								          		<%= fa_icon("thumbs-up") %><%= article.favorites.count %>
+
 								          	</span>
 
 								          	<span class="mx-1">
-								          		<%= fa_icon("comments") %><%= article.comments.count %>
+
 								          	</span>
 
 								          </div>
@@ -73,8 +78,8 @@
 
 								        <div class="row">
 								          <div class="col-12">
-								          	<span class="font-weight-bold text-dark">
-								          		<%= link_to article.title, article_path(article) %>
+								          	<span class="small text-dark">
+								          		<%= post.post %>
 								          	</span>
 								          </div>
 

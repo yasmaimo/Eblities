@@ -6,7 +6,7 @@
 			<% if controller.action_name == "show" %>
 				<span class="nav-link active nav-font bg-danger text-white">
 			<% else %>
-				<span class="nav-link nav-font text-secondary border">
+				<span class="nav-link nav-font bg-white text-secondary border">
 			<% end %>
 
 					<%= fa_icon("user", text: "投稿履歴") %>
@@ -21,7 +21,7 @@
 				<% if controller.action_name == "index" %>
 					<span class="nav-link active nav-font bg-danger text-white">
 				<% else %>
-					<span class="nav-link nav-font text-secondary border">
+					<span class="nav-link nav-font bg-white text-secondary border">
 				<% end %>
 
 						<%= fa_icon("users", text: "下書き一覧") %>
@@ -36,7 +36,7 @@
 				<% if controller.action_name == "followers" %>
 					<span class="nav-link active nav-font bg-danger text-white">
 				<% else %>
-					<span class="nav-link nav-font text-secondary border">
+					<span class="nav-link nav-font bg-white text-secondary border">
 				<% end %>
 
 					<%= fa_icon("users", text: "フォロワー") %>

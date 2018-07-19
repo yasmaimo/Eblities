@@ -1,21 +1,23 @@
 <table class="table table-sm bg-white card-body">
 	<tbody>
 	  <% Comment.where.not(user_id: current_user).reverse_order.limit(5).each do |comment| %>
-	    <tr>
-	      <td class="right-sidebar-link">
-	      	<span>
-	      		<%= attachment_image_tag comment.user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
-	      		<%= link_to comment.user.user_name, user_path(comment.user) %>
-	      	</span><br>
-	      	<span class="small">記事</span>
-	      	<span>
-	      		<%= link_to comment.article.title, article_path(comment.article), class: "text-secondary" %>
-      		</span>
+	  	<% if Article.exists?(id: comment.article_id, user_id: current_user) %>
+		    <tr>
+		      <td class="right-sidebar-link">
+		      	<span>
+		      		<%= attachment_image_tag comment.user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+		      		<%= link_to comment.user.user_name, user_path(comment.user) %>
+		      	</span><br>
+		      	<span class="small">記事</span>
+		      	<span>
+		      		<%= link_to comment.article.title, article_path(comment.article), class: "text-secondary" %>
+	      		</span>
 
-      		<%= render 'relationships/follow_or_unfollow', user: comment.user %>
+	      		<%= render 'relationships/follow_or_unfollow', user: comment.user %>
 
-	      </td>
-	    </tr>
+		      </td>
+		    </tr>
+		  <% end %>
 	  <% end %>
 	</tbody>
 </table>

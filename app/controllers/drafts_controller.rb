@@ -27,6 +27,7 @@ class DraftsController < ApplicationController
       tag.update(taggings_count: count)
     end
     get_ep_on_create
+    post_timeline
     redirect_to article_path(@article)
     @draft.destroy
   end
@@ -74,6 +75,14 @@ class DraftsController < ApplicationController
   end
 
   private
+
+  def post_timeline
+    Post.create(
+                user_id: current_user.id,
+                post:
+                "#{current_user.user_name}さんが新しい記事を投稿しました。
+                【#{@article.title}】")
+  end
 
   def draft_params
     params.require(:draft).permit(:user_id, :title, :body, :tag_list)
