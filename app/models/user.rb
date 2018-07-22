@@ -38,18 +38,6 @@ class User < ApplicationRecord
     on: :update,
     allow_blank: true
 
-  validates :family_name,
-    format: { with: /\A[ぁ-んァ-ン一-龥a-zA-Z]+\z/,
-              message: "全角の日本語か半角の英語で入力して下さい" },
-    on: :update,
-    allow_blank: true
-
-  validates :given_name,
-    format: { with: /\A[ぁ-んァ-ン一-龥a-zA-Z]+\z/,
-              message: "全角の日本語か半角の英語で入力して下さい" },
-    on: :update,
-    allow_blank: true
-
   validates :introduction,
     length: { maximum: 150,
               message: "自己紹介は最大150文字まで入力できます" },
@@ -77,7 +65,7 @@ class User < ApplicationRecord
   end
 
   # Association
-  has_many :social_profiles, dependent: :destroy
+  # has_many :social_profiles, dependent: :destroy
   has_many :following_relationships, foreign_key: "follower_id", class_name: "Relationship", dependent: :destroy
   has_many :followings, through: :following_relationships
   has_many :follower_relationships, foreign_key: "following_id", class_name: "Relationship", dependent: :destroy
@@ -93,6 +81,7 @@ class User < ApplicationRecord
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.user_name = auth.info.name
+      # user.image_url = auth.info.image
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
     end

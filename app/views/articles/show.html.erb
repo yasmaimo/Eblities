@@ -64,21 +64,29 @@
 
         <div class="card-body">
 
-          <div class="row">
-            <div class="col-12">
-            	<h2 class="font-weight-bold text-dark mt-1">
-            		<%= @article.title %>
-            	</h2>
-            </div>
-          </div>
+					<div class="card card-size">
 
-	        <div class="my-3">
-		        <% @taggings.each do |tagging| %>
-		        	<span class="badge tag-color p-1">
-		        		<%= link_to tagging.tag.name, tag_path(tagging.tag), class: "text-white" %>
-	        		</span>
-		        <% end %>
-	        </div>
+			      <%= attachment_image_tag @article, :image, fallback: "no_image.jpg", class: "img-trim"  %>
+			      <div class="card-img-overlay article-bg-index">
+
+		          <div class="row">
+		            <div class="col-12">
+		            	<h1 class="font-weight-bold text-border text-white h3 mt-1">
+		            		<%= @article.title %>
+		            	</h1>
+		            </div>
+		          </div>
+
+			        <div class="my-3">
+				        <% @taggings.each do |tagging| %>
+				        	<span class="badge tag-color p-1">
+				        		<%= link_to tagging.tag.name, tag_path(tagging.tag), class: "text-white" %>
+			        		</span>
+				        <% end %>
+			        </div>
+
+			      </div>
+			    </div>
 
 					<div class="d-lg-none d-sm-block">
 						<div class="row justify-content-center">
@@ -87,13 +95,13 @@
 
 								<% if @article.user_id != current_user.id %>
 
-									<div class="col-5 text-center">
+									<div class="col-5 text-center mt-3">
 
 										<%= render 'articles/favorite' %>
 
 									</div>
 
-									<div class="col-5 text-center">
+									<div class="col-5 text-center mt-3">
 
 										<%= render 'articles/keep' %>
 
@@ -107,7 +115,7 @@
 
 					</div>
 
-	        <p class="title-border"></p>
+	        <p class="title-border mt-2"></p>
 	        <div class="col-sm-12 mt-4" style="overflow: scroll;">
 	            <%= raw @article.body %>
 	        </div>

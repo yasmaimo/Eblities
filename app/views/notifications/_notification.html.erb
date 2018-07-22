@@ -1,18 +1,22 @@
-<li class="small my-1">
+<li class="small my-1 text-center">
 
 	<% user = User.find(notification.notified_by_id) %>
 
-	<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 40px; max-width: 40px;"%>
+	<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 30px; max-width: 30px;"%>
 
 	<%= link_to "#{user.user_name}", user_path(notification.user_id) %>さん<br>
 
-	<% if "#{notification.notified_type}" != "キープ" %>
+	<% if "#{notification.notified_type}" == "キープ" %>
 
-		<%= link_to "あなたの記事に#{notification.notified_type}をしました", link_through_path(notification) %>
+		<%= link_to "あなたの記事を#{notification.notified_type}しました", link_through_path(notification) %>
+
+	<% elsif "#{notification.notified_type}" == "フォロー" %>
+
+		<%= link_to "あなたを#{notification.notified_type}しました", link_through_path(notification) %>
 
 	<% else %>
 
-		<%= link_to "あなたの記事を#{notification.notified_type}しました", link_through_path(notification) %>
+		<%= link_to "あなたの記事に#{notification.notified_type}をしました", link_through_path(notification) %>
 
 	<% end %>
 

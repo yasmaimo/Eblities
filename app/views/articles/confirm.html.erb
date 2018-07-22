@@ -13,6 +13,9 @@
 
 	            <div class="col-6 ranking-table">
 	            	<%= attachment_image_tag current_user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+	            	<span class="d-none">
+	            		<%= f.attachment_field :image %>
+	            	</span>
 	            	<span class="text-secondary">
 	            		<%= current_user.user_name %>
 	            	</span>
@@ -22,7 +25,7 @@
 	        </div>
 
 	        <div class="card-body">
-
+	        	<%= attachment_image_tag @article, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 200px; max-width: 200px;" %>
 	          <div class="row">
 	            <div class="col-12">
 	            	<h2 class="font-weight-bold text-dark mt-1">

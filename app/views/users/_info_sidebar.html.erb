@@ -1,7 +1,6 @@
 <div class="col-lg-3 col-sm-11 text-center mt-5 pt-4  bg-white">
 	<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 200px; max-width: 200px;" %>
 	<p class="mt-3"><%= @user.user_name %></p>
-	<p><%= @user.family_name %> <%= @user.given_name %></p>
 	<% if @user.web_site_url.present? %>
 		<p class="small"><%= link_to "Webサイトを訪問する", "https://#{@user.web_site_url}" %></p>
 	<% end %>

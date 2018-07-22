@@ -44,52 +44,7 @@
 
 				    	<% @keeps.each do |keep| %>
 
-					      <tr class="keep"><!-- ここでeach -->
-					        <td>
-					          <div class="card">
-					            <div class="card-header">
-					              <div class="row">
-
-					                <div class="col-6 ranking-table">
-									      		<%= attachment_image_tag keep.user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
-										    		<%= link_to keep.user.user_name, user_path(keep.user) %>
-
-					                	</span>
-					                </div>
-
-					                <div class="col-6 small text-secondary text-right align-self-center">
-					                	<span class="mx-1" >
-					                		<%= keep.article.created_at.strftime('%Y/%m/%d') %>
-					                	</span><br>
-
-					                	<span class="mx-1">
-					                		<%= fa_icon("thumbs-up") %><%= keep.article.favorites.count %>
-					                	</span>
-
-					                	<span class="mx-1">
-					                		<%= fa_icon("comments") %><%= keep.article.comments.count %>
-					                	</span>
-
-					                </div>
-
-					              </div>
-					            </div>
-
-					            <div class="card-body">
-
-				                <div class="row">
-				                  <div class="col-12">
-				                  	<span class="font-weight-bold text-dark">
-				                  		<%= link_to keep.article.title, article_path(keep.article) %>
-				                  	</span>
-				                  </div>
-
-				                </div>
-
-					            </div>
-					          </div>
-					        </td>
-					      </tr><!-- eachを終了 -->
+					      <%= render 'articles/articles', article: keep.article %>
 
 					    <% end %>
 

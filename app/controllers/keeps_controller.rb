@@ -1,5 +1,7 @@
 class KeepsController < ApplicationController
 
+  before_action :authenticate_user
+
   def index
     @search_keep = Keep.where(user_id: current_user.id).ransack(params[:q])
     @keeps = @search_keep.result.page(params[:page]).reverse_order
@@ -11,27 +13,43 @@ class KeepsController < ApplicationController
     keep.save
     @article = Article.find(keep.article_id)
     @user = User.find(@article.user_id)
-    get_ep_one
-    create_notifications
+    add_five_point
+    create_notification
+    create_post
     redirect_to article_path(path[:id])
-  end
-
-  def update
   end
 
   def destroy
     @article = Article.find(params[:article_id])
+    @user = User.find(@article.user_id)
     keep = current_user.keeps.find_by(article_id: params[:article_id])
     keep.destroy
-    @user = User.find(@article.user_id)
-    get_ep_on_release
-    destroy_notifications
+    subtract_five_point
+    destroy_notification
+    destroy_post
     redirect_to article_path(@article)
   end
 
   private
 
-  def create_notifications
+  def create_post
+    Post.create(
+                user_id: @article.user_id,
+                posted_by_id: current_user.id,
+                article_id: @article.id,
+                posted_type: "キープ")
+  end
+
+  def destroy_post
+    post = Post.find_by(
+                    user_id: @article.user_id,
+                    posted_by_id: current_user.id,
+                    article_id: @article.id,
+                    posted_type: "キープ")
+    post.destroy
+  end
+
+  def create_notification
     return if @article.user_id == current_user.id
     Notification.create(
                       user_id: @article.user_id,
@@ -40,7 +58,7 @@ class KeepsController < ApplicationController
                       notified_type: "キープ")
   end
 
-  def destroy_notifications
+  def destroy_notification
     notification = Notification.find_by(
                     user_id: @article.user_id,
                     notified_by_id: current_user.id,

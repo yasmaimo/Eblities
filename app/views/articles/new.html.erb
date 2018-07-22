@@ -42,6 +42,11 @@
           <%= f.input :body, label: false, as: :summernote, error: "本文を入力してください"  %>
         </div>
 
+        <div class="text-center">
+            記事の見出し用の画像をアップロードできます
+            <%= f.attachment_field :image, class: "small" %>
+        </div>
+
         <div class="form-actions text-center">
           <%= f.submit "確認画面へ進む", class: "btn btn-primary btn-sm", name: "confirm_article" %>
           <%= f.submit "下書きとして保存する", class: "btn border text-dark btn-sm" , name: "create_draft" %>

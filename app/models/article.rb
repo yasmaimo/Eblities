@@ -1,12 +1,14 @@
 class Article < ApplicationRecord
 
+  attachment :image
+
   acts_as_taggable
 
   # Validatoin
   validates :title,
   	presence: true,
-  	length: { maximum: 70,
-              message: "タイトルは最大70文字まで入力できます" }
+  	length: { maximum: 50,
+              message: "タイトルは最大50文字まで入力できます" }
 
   validates :body,
   	presence: true,
@@ -19,7 +21,8 @@ class Article < ApplicationRecord
   has_many :images, as: :post, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :keeps, dependent: :destroy
-  has_many :tagging, as: :taggable, dependent: :destroy
+  has_many :taggings, as: :taggable, dependent: :destroy
+  has_many :posts, dependent: :destroy
   has_many :notifications, dependent: :destroy
 
   # イイねしたかどうか

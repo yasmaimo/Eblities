@@ -33,12 +33,11 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       # t.datetime :locked_at
 
       ## 追加カラム
-      t.string :family_name, index: true
-      t.string :given_name,  index: true
-      t.string :user_name,   null: false,  index: true
+      t.string :user_name, null: false, index: true, default: "user"
       t.string :introduction
       t.string :web_site_url
       t.string :image_id
+      # t.string :image_url
       t.integer :point, index: true, default: 0
       t.integer :status, null: false, index: true, default: 0
 

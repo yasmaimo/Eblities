@@ -17,37 +17,41 @@ class ApplicationController < ActionController::Base
     @articles = @search.result.page(params[:page]).reverse_order
   end
 
-  def get_ep_on_create
+  def authenticate_user
+    redirect_to root_path unless user_signed_in?
+  end
+
+  def add_five_point
     ep = current_user.point
     ep += 5
     current_user.update(point: ep)
   end
 
-  def get_ep_on_delete
+  def subtract_five_point
     ep = current_user.point
     ep -= 5
     current_user.update(point: ep)
   end
 
-  def get_ep_on_followed
+  def add_two_point
     ep = @user.point
     ep += 2
     @user.update(point: ep)
   end
 
-  def get_ep_on_unfollowed
+  def subtract_two_point
     ep = @user.point
     ep -= 2
     @user.update(point: ep)
   end
 
-  def get_ep_one
+  def add_one_point
     ep = @user.point
     ep += 1
     @user.update(point: ep)
   end
 
-  def get_ep_on_release
+  def subtract_one_point
     ep = @user.point
     ep -= 1
     @user.update(point: ep)

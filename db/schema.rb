@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180719091030) do
+ActiveRecord::Schema.define(version: 20180707011524) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20180719091030) do
     t.integer "user_id"
     t.string "title"
     t.text "body"
+    t.string "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["body"], name: "index_articles_on_body"
@@ -130,10 +131,13 @@ ActiveRecord::Schema.define(version: 20180719091030) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "user_id"
-    t.string "post"
+    t.integer "posted_by_id"
+    t.integer "article_id"
+    t.string "posted_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["post"], name: "index_posts_on_post"
+    t.index ["article_id"], name: "index_posts_on_article_id"
+    t.index ["posted_by_id"], name: "index_posts_on_posted_by_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -145,28 +149,6 @@ ActiveRecord::Schema.define(version: 20180719091030) do
     t.index ["follower_id", "following_id"], name: "index_relationships_on_follower_id_and_following_id", unique: true
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
     t.index ["following_id"], name: "index_relationships_on_following_id"
-  end
-
-  create_table "social_profiles", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "provider", null: false
-    t.string "uid", null: false
-    t.string "access_token"
-    t.string "access_secret"
-    t.string "name"
-    t.string "nickname"
-    t.string "email"
-    t.string "url"
-    t.string "image_url"
-    t.string "description"
-    t.text "other"
-    t.text "credentials"
-    t.text "raw_info"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["provider"], name: "index_social_profiles_on_provider"
-    t.index ["uid"], name: "index_social_profiles_on_uid"
-    t.index ["user_id"], name: "index_social_profiles_on_user_id"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -211,9 +193,7 @@ ActiveRecord::Schema.define(version: 20180719091030) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
-    t.string "family_name"
-    t.string "given_name"
-    t.string "user_name", null: false
+    t.string "user_name", default: "user", null: false
     t.string "introduction"
     t.string "web_site_url"
     t.string "image_id"
@@ -230,8 +210,6 @@ ActiveRecord::Schema.define(version: 20180719091030) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email"
-    t.index ["family_name"], name: "index_users_on_family_name"
-    t.index ["given_name"], name: "index_users_on_given_name"
     t.index ["point"], name: "index_users_on_point"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["status"], name: "index_users_on_status"

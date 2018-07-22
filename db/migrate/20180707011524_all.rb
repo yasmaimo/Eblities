@@ -1,23 +1,5 @@
 class All < ActiveRecord::Migration[5.1]
   def change
-    create_table :social_profiles do |t|
-			t.integer		:user_id,   		index: true
-			t.string		:provider,   		null: false, index: true
-			t.string		:uid,   				null: false, index: true
-			t.string		:access_token
-			t.string		:access_secret
-			t.string		:name
-			t.string		:nickname
-			t.string		:email
-			t.string		:url
-			t.string		:image_url
-			t.string		:description
-			t.text			:other
-			t.text			:credentials
-			t.text			:raw_info
-      t.timestamps
-    end
-
     create_table :relationships do |t|
 			t.integer		:follower_id,   index: true
 			t.integer		:following_id,	index: true
@@ -29,6 +11,7 @@ class All < ActiveRecord::Migration[5.1]
 			t.integer		:user_id,   		index: true
 			t.string		:title,   			index: true
 			t.text			:body, 	  			index: true
+      t.string    :image_id
       t.timestamps
     end
 
@@ -80,7 +63,9 @@ class All < ActiveRecord::Migration[5.1]
 
     create_table :posts do |t|
 			t.integer		:user_id,   		index: true
-			t.string		:post,   			index: true
+      t.integer   :posted_by_id,  index: true
+      t.integer   :article_id,    index: true
+			t.string    :posted_type
       t.timestamps
     end
 
