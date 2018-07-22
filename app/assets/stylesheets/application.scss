@@ -11,15 +11,16 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_tree .
- *= require bootstrap-tagsinput
+ *= require tagsinput
  *= require_self
 
  */
 @import "bootstrap";
-@import "font-awesome";
 @import "summernote-bs4";
 @import "summernote-custom-theme";
-@import "articles";
+@import "font-awesome";
+
+@import "bootstrap-tagsinput2";
 
 @font-face{
   font-family: "makinas";

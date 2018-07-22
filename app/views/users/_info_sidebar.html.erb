@@ -1,8 +1,32 @@
+<style type="text/css" media="screen">
+
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+
+.label-info {
+  background-color: #1872dd;
+}
+
+</style>
+
 <div class="col-lg-3 col-sm-11 text-center mt-5 pt-4  bg-white">
 	<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 200px; max-width: 200px;" %>
 	<p class="mt-3"><%= @user.user_name %></p>
 	<% if @user.web_site_url.present? %>
-		<p class="small"><%= link_to "Webサイトを訪問する", "https://#{@user.web_site_url}" %></p>
+		<p class="small text-secondary mt-2">
+			ウェブサイトを訪問する<br>
+			<%= link_to "#{@user.web_site_url}", "#{@user.web_site_url}" %>
+		</p>
 	<% end %>
 	<p class="small my-3"><%= @user.introduction %></p>
 
@@ -123,3 +147,5 @@
 	</div>
 
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" crossorigin="anonymous"></script>

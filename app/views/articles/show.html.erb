@@ -37,8 +37,8 @@
         <div class="card-header">
           <div class="row">
 
-            <div class="col-6 ranking-table">
-            	<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+            <div class="col-6 ranking-table align-self-center">
+            	<%= attachment_image_tag @article.user, :image, fallback: "no_image.jpg", class: "card-img mx-1", style: "max-height: 40px; max-width: 40px;"%>
             	<span class="text-secondary">
             		<%= link_to @user.user_name, user_path(@user) %>
             	</span>
@@ -123,6 +123,28 @@
 	      </div>
 
       </div>
+
+		  <div class="row mt-3">
+		  	<div class="col-4 align-self-center">
+		  		<%= attachment_image_tag @article.user, :image, fallback: "no_image.jpg", class: "m-3 card-img", style: "max-height: 150px; max-width: 150px;" %>
+		  	</div>
+		  	<div class="col-8 mt-3">
+
+		  		<span>
+		  			<%= link_to @article.user.user_name, user_path(@article.user) %>
+	  			</span><br>
+		  		<span class="small"><%= @article.user.introduction %></span><br>
+
+		  		<% if @article.user.web_site_url.present? %>
+			  		<p class="small text-secondary mt-2">
+			  			ウェブサイトを訪問する<br>
+			  			<%= link_to "#{@user.web_site_url}", "#{@user.web_site_url}" %>
+		  			</p>
+		  		<% end %>
+
+		  	</div>
+		  </div>
+
       <div class="d-lg-block d-none">
 	  		<%= render 'articles/comment' %>
 			</div>

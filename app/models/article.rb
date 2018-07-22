@@ -21,7 +21,7 @@ class Article < ApplicationRecord
   has_many :images, as: :post, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :keeps, dependent: :destroy
-  has_many :taggings, as: :taggable, dependent: :destroy
+  has_many :tagging, as: :taggable, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :notifications, dependent: :destroy
 

@@ -1,21 +1,19 @@
-<p class="text-center my-4 text-white " style="background-color:#B40404;">コメント</p>
-
 <% if @article.comments.exists? %>
 
-  <div class="border" style="max-height: 800px; overflow: scroll;">
+  <div class="mt-4" style="max-height: 800px; overflow: scroll;">
 
-    <table class="table">
+    <table class="table bg-white">
       <tbody>
 
         <% @article.comments.each do |comment| %>
           <tr>
-            <td class="bg-white">
+            <td>
               <p class="text-dark">
-                <%= attachment_image_tag comment.user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+                <%= attachment_image_tag comment.user, :image, fallback: "no_image.jpg", class: "card-img mx-1", style: "max-height: 40px; max-width: 40px;"%>
                 <%= link_to comment.user.user_name, user_path(comment.user_id) %>
               </p>
-              <span class="text-secondary">
-                <%= comment.created_at.strftime('%Y/%m/%d') %>
+              <span class="text-secondary small">
+                <%= comment.created_at.strftime('%Y/%m/%d %R') %>
               </span>
               <div class="mt-1 small text-dark">
                 <%= raw comment.comment %>
@@ -31,7 +29,7 @@
 
 <% else %>
 
-  <div class="" style="max-height: 400px; overflow: scroll;">
+  <div class="mt-5" style="max-height: 400px; overflow: scroll;">
 
     <p class="text-center text-secondary small">コメントはありません</p>
 
@@ -40,9 +38,15 @@
 <% end %>
 
 <div class="mt-5">
+  <p>
+    <%= attachment_image_tag current_user, :image, fallback: "no_image.jpg", class: "card-img mx-1", style: "max-height: 40px; max-width: 40px;"%>
+    <span class="text-dark">コメント</span>
+  </p>
   <%= simple_form_for [@article,@comment] do |f| %>
     <%= f.input :comment, label: false, class: "form-cotrol col-12",  id: "comment", placeholder: "コメント *500文字まで", error: "コメントを入力してください", type: "text", as: :summernote %>
-    <p class="text-center"><%= f.submit "コメントする", class: "btn-sm btn-outline-success col-2 mt-2", id: "button" %></p>
+    <p class="text-center">
+      <%= f.submit "コメントを投稿する", class: "btn-sm btn-outline-success mt-2", id: "button" %>
+    </p>
   <% end %>
 </div>
 

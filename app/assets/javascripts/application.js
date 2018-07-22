@@ -10,18 +10,13 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require rails-ujs
 //= require jquery3
-//= require jquery.turbolinks
-//= require jquery_ujs
-//= require infinite-scroll.pkgd.min
-//= require articles
 //= require popper
 //= require bootstrap
-//= require bootstrap-sprockets
-//= require bootstrap-tagsinput.min
+//= require tagsinput
 //= require summernote/summernote-bs4.min
 //= require summernote/lang/summernote-ja-JP
 //= require summernote-init
 //= require turbolinks
 //= require_tree .
-//= require rails-ujs
