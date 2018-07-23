@@ -18,7 +18,6 @@ class Article < ApplicationRecord
   # Association
 	belongs_to :user
 	has_many :comments, dependent: :destroy
-  has_many :images, as: :post, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :keeps, dependent: :destroy
   has_many :tagging, as: :taggable, dependent: :destroy

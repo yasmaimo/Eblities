@@ -1,37 +1,64 @@
 <tr class="draft"><!-- ここでeach -->
   <td>
-    <div class="card">
-      <div class="card-header">
-        <div class="row">
 
-          <div class="col-6 ranking-table">
-          	<%= attachment_image_tag current_user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
-          	<span class="text-secondary">
-          		<%= current_user.user_name %>
-          	</span>
+    <div class="card card-size">
+
+      <%= attachment_image_tag draft, :image, fallback: "no_image.jpg", class: "img-trim"  %>
+      <div class="card-img-overlay article-bg-index">
+        <div>
+          <div class="row">
+
+            <div cålass="col-12 ranking-table align-self-center">
+              <%= attachment_image_tag draft.user, :image, fallback: "no_image.jpg", class: "mx-1 card-img", style: "max-height: 40px; max-width: 40px;"%>
+              <span>
+                <%= link_to draft.user.user_name, user_path(draft.user_id), class: "text-border-black border-bottom border-secondary text-white" %>
+              </span>
+            </div>
+
           </div>
+        </div>
 
-          <div class="col-6 small text-secondary text-right align-self-center">
-          	<span class="mx-1" >
-          		<%= draft.created_at.strftime('%Y/%m/%d') %>
-          	</span><br>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-12">
+              <span>
+                <%= link_to draft.title, user_draft_path(id: draft.id), class: "text-border text-white border-bottom border-secondary d-sm-inline d-none" %>
+                <%= link_to draft.title.truncate(30), user_draft_path(id: draft.id), class: "text-border text-white border-bottom border-secondary d-sm-none" %>
+              </span>
+            </div>
+
+
+            <div class="text-light" style="position: absolute; bottom: 0; right: 0; padding: 5px 5px; margin: 5px 5px; background-color: rgba(0, 0, 0, 0.4); letter-spacing: 0.4px;">
+              <span class="mx-1" >
+                <%= draft.created_at.strftime('%Y/%m/%d') %>
+              </span>
+
+            </div>
+
+            <div class="text-light" style="position: absolute; top: 0; right: 0; margin: 10px 10px; letter-spacing: 5px;">
+
+              <% if user_signed_in? %>
+
+                <%= link_to user_draft_path(id: draft) do %>
+                  <span class="text-white">
+                    <%= fa_icon("edit 2x") %>
+                  </span>
+                <% end %>
+
+                <%= link_to user_draft_path(id: draft), method: :delete, "data-confirm" => "下書き : #{draft.title} を削除しますか？" do %>
+                  <span class="text-white">
+                    <%= fa_icon("trash 2x") %>
+                  </span>
+                <% end %>
+
+              <% end %>
+
+            </div>
 
           </div>
 
         </div>
-      </div>
-
-      <div class="card-body">
-
-        <div class="row">
-          <div class="col-12">
-          	<span class="font-weight-bold text-dark">
-          		<%= link_to draft.title, user_draft_path(id: draft) %>
-          	</span>
-          </div>
-
-        </div>
-
       </div>
     </div>
   </td>

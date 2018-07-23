@@ -7,9 +7,43 @@
 			<div class="row">
 				<div class="col-12">
 
-					<p>
-						<%= link_to "#{@tag.name}の記事一覧", tags_path, class: "btn btn-danger col mt-lg-0 mt-3" %>
-					</p>
+					<div class="card mb-3 d-lg-block d-none">
+					  <div class="card-header text-white text-center font-weight-bold" style ="background-color: #125699;">
+					  	タグ : <%= link_to @tag.name, tag_path(@tag), class: "text-white berder border-bottom" %>
+					  </div>
+					  <div class="card-body">
+
+					  	<div class="small">
+					  		タグ : <%= link_to @tag.name, tag_path(@tag), class: "text-dark berder border-bottom" %>が登録されている記事の一覧です。
+					  	</div>
+
+							<table class="table table-sm bg-white card-body text-center mt-2">
+								<tbody>
+							    <tr>
+							      <th class="text-center">
+							      	関心を持つユーザー
+							      </th>
+							    </tr>
+							    <tr>
+							      <td>
+							      	<%= Tagging.where(taggable_type: "User", tag_id: @tag).count %> users
+							      </td>
+							    </tr>
+							    <tr>
+							      <th class="text-center">
+							      	タグ付けされた記事
+							      </th>
+							    </tr>
+							    <tr>
+							      <td>
+							      	<%= Tagging.where(taggable_type: "Article", tag_id: @tag).count %> posts
+							      </td>
+							    </tr>
+								</tbody>
+							</table>
+
+					  </div>
+					</div>
 
 					<p>
 						<%= link_to "タグ一覧を見る", tags_path, class: "btn btn-outline-danger btn-sm col mt-lg-0 mt-3" %>
@@ -26,48 +60,10 @@
 
 		    <% if user_signed_in? %>
 
-		    	<div class="col-12 text-center mt-3  d-lg-block d-none">
-
-						<div class="card mb-3">
-						  <div class="card-header text-white text-center font-weight-bold" style ="background-color: #125699;">
-						  	<%= @tag.name %>
-						  </div>
-						  <div class="card-body">
-
-								<table class="table table-sm bg-white card-body">
-									<tbody>
-								    <tr>
-								      <th class="text-center">
-								      	関心を持つユーザー
-								      </th>
-								    </tr>
-								    <tr>
-								      <td>
-								      	<%= Tagging.where(taggable_type: "User", tag_id: @tag).count %> users
-								      </td>
-								    </tr>
-								    <tr>
-								      <th class="text-center">
-								      	タグ付けされた記事
-								      </th>
-								    </tr>
-								    <tr>
-								      <td>
-								      	<%= Tagging.where(taggable_type: "Article", tag_id: @tag).count %> posts
-								      </td>
-								    </tr>
-									</tbody>
-								</table>
-
-						  </div>
-						</div>
-
-				  </div>
-
-					<div class="col-12 d-lg-block d-none">
+					<div class="col-12 d-lg-block d-none mt-3">
 						<div class="card mb-3">
 
-						  <div class="card-header bg-primary text-white text-center font-weight-bold">
+						  <div class="card-header text-center font-weight-bold">
 						  	"<%= @tag.name %>"に関心を持つ他のユーザー
 						  </div>
 						  <div class="card-body">

@@ -15,14 +15,21 @@ class ArticlesController < ApplicationController
   end
 
   def confirm
-    @article = Article.new(
-                          user_id: current_user.id,
-                          title: article_params[:title],
-                          body: article_params[:body],
-                          image: article_params[:image],
-                          tag_list: article_params[:tag_list])
-    if @article.invalid?
-      render :new
+    if params[:confirm_article]
+      @article = Article.new(
+                            user_id: current_user.id,
+                            title: article_params[:title],
+                            body: article_params[:body],
+                            image: article_params[:image],
+                            tag_list: article_params[:tag_list])
+      if @article.invalid?
+        render :new
+      end
+    elsif params[:create_draft]
+      @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: article_params[:image])
+      @draft.save
+      tagging_draft
+      redirect_to user_drafts_path(current_user)
     end
   end
 
@@ -36,7 +43,7 @@ class ArticlesController < ApplicationController
       end
       redirect_to article_path(@article)
     elsif params[:create_draft]
-      @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: article_params[:image])
+      @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: @article.image)
       @draft.save
       tagging_draft
       redirect_to user_drafts_path(current_user)
@@ -52,6 +59,8 @@ class ArticlesController < ApplicationController
   end
 
   def edit
+    @article = Article.find(params[:id])
+    @taggings = Tagging.where(taggable_type: "Article", taggable_id: @article.id)
   end
 
   def show
@@ -62,12 +71,36 @@ class ArticlesController < ApplicationController
     @taggings = Tagging.where(taggable_type: "Article", taggable_id: @article.id)
   end
 
-  def edit_confirm
+  def confirm_edit
+    @article = Article.find(params[:id])
   end
 
   def update
-    @article = Article.find(params[:id])
+      @article = Article.find(params[:id])
+      @article.tag_list.add(params[:article][:tag_list], parse: true)
+    if params[:confirm_article]
+      @article.update(article_params)
+      redirect_to confirm_edit_path(@article)
+    elsif params[:create_draft]
+      @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: @article.image)
+      @draft.save
+      tagging_draft
+      @article.destroy
+      redirect_to user_drafts_path(current_user)
+    elsif params[:back]
+      @article.update(article_params)
+      redirect_to edit_article_path(@article)
+    end
   end
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+    subtract_five_point
+    redirect_to user_path(current_user)
+  end
+
+  private
 
   def tagging_draft
     params[:article][:tag_list].split(",").each do |tag_name|
@@ -84,8 +117,6 @@ class ArticlesController < ApplicationController
       end
     end
   end
-
-  private
 
   def user_ranking
     @users = User.all

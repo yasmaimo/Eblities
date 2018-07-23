@@ -96,6 +96,30 @@
 
             </div>
 
+            <div class="text-light" style="position: absolute; top: 0; right: 0; margin: 10px 10px; letter-spacing: 5px;">
+
+              <% if user_signed_in? %>
+
+                <% if article.user == current_user %>
+
+                  <%= link_to edit_article_path(article) do %>
+                    <span class="text-white">
+                      <%= fa_icon("edit 2x") %>
+                    </span>
+                  <% end %>
+
+                  <%= link_to article_path(article), method: :delete, "data-confirm" => "記事 : #{article.title} を削除しますか？" do %>
+                    <span class="text-white">
+                      <%= fa_icon("trash 2x") %>
+                    </span>
+                  <% end %>
+
+                <% end %>
+
+              <% end %>
+
+            </div>
+
           </div>
 
         </div>

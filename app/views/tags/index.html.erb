@@ -1,3 +1,24 @@
+<style type="text/css" media="screen">
+
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+
+.label-info {
+  background-color: #1872dd;
+}
+
+</style>
+
 <div class="container-fluid">
 	<div class="row justify-content-center">
 
@@ -8,8 +29,47 @@
 				<div class="col-12">
 
 					<p>
-						<%= link_to "タグ一覧", tags_path, class: "btn btn-primary col mt-lg-0 mt-3" %>
+						<%= link_to "タグ一覧", tags_path, class: "btn btn-primary col mt-lg-0 mt-3 font-weight-bold" %>
 					</p>
+
+					<div class="border rounded small mb-3">
+						<div class="p-2">
+							投稿されている記事のタグの一覧です。あなたの関心のあるタグを見つけましょう。新しく自分でタグを登録することもできます。
+						</div>
+						<p class="text-center">
+						  <a class="text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+						    タグとは？
+						  </a>
+						</p>
+						<div class="collapse p-2" id="collapseExample">
+
+					    <p>
+					    	タグとは記事に関係のある分野、もしくはあなたの関心のある分野を表します。エブリティーズには、クリエイティブな事に関係があればどんな分野の記事を投稿しても大丈夫です。積極的にタグを登録しましょう！
+					    </p>
+
+				    	<ul>
+				    		<span>記事にタグを登録すると・・・</span>
+				    		<li>タグタイムラインにあなたの記事が表示されます</li>
+				    		<li>タグ検索からあなたの記事を見つけられるようになります</li>
+				    	</ul>
+
+				    	<ul>
+				    		<span>ユーザー情報にタグを登録すると・・・</span>
+				    		<li>同じタグを登録しているユーザーを見つけたり、他のユーザーがあなたを見つけられたりできるようになります</li>
+				    		<li>登録しているタグの最新記事が見られるタグタイムライン機能が使えるようになります</li>
+				    	</ul>
+
+					    <p class="text-white">
+					      <span class="text-dark">例 :</span>
+					      <span class="badge d-inline tag-color">音楽</span>
+					      <span class="badge d-inline tag-color">DTM</span>
+					      <span class="badge d-inline tag-color">イラスト</span>
+					      <span class="badge d-inline tag-color">CG</span>
+					      <span class="badge d-inline tag-color">基礎知識</span>
+					    </p>
+
+						</div>
+					</div>
 
 			    <%= search_form_for @search_tag do |f| %>
 			      <div class="form-inline my-lg-0 my-2">
@@ -25,7 +85,7 @@
 		    	<div class="col-12 text-center mt-3  d-lg-block d-none">
 
 						<div class="card mb-3">
-						  <div class="card-header text-white text-center font-weight-bold" style ="background-color: #125699;">
+						  <div class="card-header text-center font-weight-bold">
 						  	あなたが関心を持つタグ
 						  </div>
 						  <div class="card-body">
@@ -40,7 +100,7 @@
 					<div class="col-12 d-lg-block d-none">
 						<div class="card mb-3">
 
-						  <div class="card-header bg-primary text-white text-center font-weight-bold">共通のタグユーザー</div>
+						  <div class="card-header text-center font-weight-bold">共通のタグユーザー</div>
 						  <div class="card-body">
 
 								<%= render 'tags/common_users' %>
@@ -161,3 +221,5 @@
 
 	</div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" crossorigin="anonymous"></script>

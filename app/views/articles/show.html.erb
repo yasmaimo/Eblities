@@ -38,7 +38,7 @@
           <div class="row">
 
             <div class="col-6 ranking-table align-self-center">
-            	<%= attachment_image_tag @article.user, :image, fallback: "no_image.jpg", class: "card-img mx-1", style: "max-height: 40px; max-width: 40px;"%>
+            	<%= attachment_image_tag @article.user, :image, fallback: "no_image.jpg", class: "card-img mx-1", style: "max-height: 40px; max-width: 40px;" %>
             	<span class="text-secondary">
             		<%= link_to @user.user_name, user_path(@user) %>
             	</span>

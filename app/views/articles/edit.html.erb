@@ -1,13 +1,48 @@
-<h1>Articles#edit</h1>
-<p>Find me in app/views/articles/edit.html.erb</p>
+<style type="text/css" media="screen">
 
-<% a = Article.find(params[:id]) %>
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
 
-<div class="card bg-dark text-white">
-  <%= attachment_image_tag a, :image, fallback: "no_image.jpg", class: "w-100", style: "" %>
-  <div class="card-img-overlay">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    <p class="card-text">Last updated 3 mins ago</p>
+.label-info {
+  background-color: #1872dd;
+}
+
+</style>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12">
+
+      <p class="text-center my-3">
+        <span class="bg-navy text-white p-2 rounded">記事編集</span>
+      </p>
+
+      <%= simple_form_for(@article) do |f| %>
+
+        <%= render 'articles/article_form', article: @article, f: f %>
+
+      <% end %>
+
+      </div>
   </div>
 </div>
+
+<script type="text/javascript">
+var clipboadCopy = function(){
+    var tagtext = document.getElementById("tags");
+    tagtext.select();
+    document.execCommand("copy");
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" crossorigin="anonymous"></script>

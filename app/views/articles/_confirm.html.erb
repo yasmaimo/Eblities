@@ -1,4 +1,4 @@
-<%= simple_form_for(@draft , url: {action: 'update'}) do |f| %>
+<%= simple_form_for(article , url: {action: 'create'}) do |f| %>
 
 	<div class="container-fluid">
 		<div class="row justify-content-center">
@@ -28,20 +28,20 @@
 
 						<div class="card card-size">
 
-				      <%= attachment_image_tag @draft, :image, fallback: "no_image.jpg", class: "img-trim"  %>
+				      <%= attachment_image_tag article, :image, fallback: "no_image.jpg", class: "img-trim"  %>
 				      <div class="card-img-overlay article-bg-index">
 
 			          <div class="row">
 			            <div class="col-12">
 			            	<h1 class="font-weight-bold text-border text-white h3 mt-1">
-			            		<%= @draft.title %>
+			            		<%= article.title %>
 			            		<%= f.hidden_field :title %>
 			            	</h1>
 			            </div>
 			          </div>
 
 				        <div class="my-3">
-					        <% @draft.tag_list.each do |tag| %>
+					        <% article.tag_list.each do |tag| %>
 					        	<span class="badge tag-color p-1 text-white">
 					        		<%= tag %>
 				        		</span>
@@ -51,11 +51,11 @@
 				      </div>
 				    </div>
 
-		        <span class="d-none"><%= text_field_tag 'draft[tag_list]', @draft.tag_list.join(',') %></span>
+		        <span class="d-none"><%= text_field_tag 'article[tag_list]', article.tag_list.join(',') %></span>
 
 		        <p class="title-border mt-2"></p>
 		        <div class="col-sm-12 mt-4" style="overflow: scroll;">
-		            <%= raw @draft.body %>
+		            <%= raw article.body %>
 		            <%= f.hidden_field :body %>
 		        </div>
 
@@ -70,7 +70,7 @@
 
 			    <%= f.submit "修正する", name: "back", class: "list-group-item list-group-item-action nav-font mb-2" %>
 
-			    <%= f.submit "下書きとして保存する", name: "update_draft", class: "list-group-item list-group-item-action nav-font mb-2" %>
+			    <%= f.submit "下書きとして保存する", name: "create_draft", class: "list-group-item list-group-item-action nav-font mb-2" %>
 
 				</div>
 		  </div>
@@ -86,7 +86,7 @@
 			  </p>
 
 			  <p>
-			  	<%= f.submit "下書きとして保存する", name: "update_draft", class: "col btn btn-sm text-secondary border" %>
+			  	<%= f.submit "下書きとして保存する", name: "create_draft", class: "col btn btn-sm text-secondary border" %>
 			  </p>
 
 			</div>

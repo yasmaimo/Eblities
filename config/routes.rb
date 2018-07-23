@@ -82,7 +82,7 @@ Rails.application.routes.draw do
 
   get 'tag_timeline', to: 'articles#tag_timeline', as: 'tag_timeline'
 
-  get 'articles/:id/edit_confirm', to: 'articles#edit_confirm', as: 'confirm_edit_article'
+  get 'articles/:id/confirm_edit', to: 'articles#confirm_edit', as: 'confirm_edit'
 
   # keeps
   resources :keeps, only: [ :index, :create, :update, :destroy]

@@ -39,6 +39,7 @@ class All < ActiveRecord::Migration[5.1]
 			t.integer		:user_id,   		index: true
 			t.string		:title,   			index: true
 			t.text			:body, 	  			index: true
+      t.string    :image_id
       t.timestamps
     end
 
