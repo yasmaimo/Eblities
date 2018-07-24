@@ -1,0 +1,2 @@
+$("#modal-tagging-list-of-<%= @user.id %>").html("<%= j(render partial: 'modal_tagging_list', locals: {taggings: @taggings}) %>")
+$("#tagging-list-of-<%= @user.id %>").html("<%= j(render partial: 'tagging_list', locals: {taggings: @taggings, user: @user}) %>")

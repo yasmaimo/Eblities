@@ -16,9 +16,26 @@
         <%= render 'layouts/header_admin' %>
       <% elsif  user_signed_in? %>
         <%= render 'layouts/header_user' %>
+
+	      <div class="row small">
+	      	<div class="col-3 text-center" style="background-color: rgba(240, 30, 30, 0.7);">
+	      		<%= link_to "ユーザー", users_path, class: "text-white" %>
+	      	</div>
+	      	<div class="col-3 text-center" style="background-color: rgba(30, 144, 255, 0.7);">
+	      		<%= link_to "タグ", tags_path, class: "text-white" %>
+	      	</div>
+	      	<div class="col-3 text-center" style="background-color: rgba(90, 185, 144, 0.7);">
+	      		<%= link_to "キープ", keeps_path, class: "text-white" %>
+	      	</div>
+	      	<div class="col-3 text-center" style="background-color: rgba(0, 0, 0, 0.7);">
+	      		<%= link_to "投稿する", new_article_path, class: "text-white" %>
+	      	</div>
+	      </div>
+
       <% else %>
         <%= render 'layouts/header_guest' %>
       <% end %>
+
     </header>
 
     <div class="main-content">

@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row justify-content-center">
 
-		<%= render 'users/info_sidebar' %>
+		<%= render partial: 'users/info_sidebar', locals: {taggings: @taggings, tag: @tag, user: @user} %>
 
 		<div class="col-lg-9 col-sm-11">
 

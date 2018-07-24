@@ -13,7 +13,9 @@
 		      		<%= link_to comment.article.title, article_path(comment.article), class: "text-secondary" %>
 	      		</span>
 
-	      		<%= render 'relationships/follow_or_unfollow', user: comment.user %>
+	      		<span id="relationship-of-commented-<%= comment.user_id %>">
+		      		<%= render 'relationships/follow_or_unfollow', user: comment.user %>
+		      	</span>
 
 		      </td>
 		    </tr>

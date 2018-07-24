@@ -11,22 +11,20 @@ class TagsController < ApplicationController
   def create
     params[:user][:tag_list].split(",").each do |tag_name|
       if Tag.exists?(name: tag_name)
-        @tag = Tag.find_by(name: tag_name)
-        if Tagging.exists?(tag_id: @tag.id, taggable_type: "User", taggable_id: current_user.id)
+        tag = Tag.find_by(name: tag_name)
+        if Tagging.exists?(tag_id: tag.id, taggable_type: "User", taggable_id: current_user.id)
         else
-          Tagging.create(tag_id: @tag.id, taggable_type: "User", taggable_id: current_user.id, context: "tags")
-          # count = @tag.taggings_count + 1
-          # @tag.update(taggings_count: count)
+          Tagging.create(tag_id: tag.id, taggable_type: "User", taggable_id: current_user.id, context: "tags")
         end
       else
         Tag.create(name: tag_name)
-        @tag = Tag.find_by(name: tag_name)
-        Tagging.create(tag_id: @tag.id, taggable_type: "User", taggable_id: current_user.id, context: "tags")
-        # count = @tag.taggings_count + 1
-        # @tag.update(taggings_count: count)
+        tag = Tag.find_by(name: tag_name)
+        Tagging.create(tag_id: tag.id, taggable_type: "User", taggable_id: current_user.id, context: "tags")
       end
     end
-    redirect_to user_path(current_user)
+    @user = current_user
+    @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id)
+    @tag = Tag.new
   end
 
   def show

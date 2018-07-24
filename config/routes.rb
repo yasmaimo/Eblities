@@ -73,6 +73,7 @@ Rails.application.routes.draw do
     resources :comments, only: [ :index, :create, :show, :update, :destroy]
     resource :images, only: [:create, :destroy]
     resource :favorites, only: [:create, :destroy]
+    resource :keeps, only: [:create, :destroy]
     collection do
       post 'confirm'
     end
@@ -85,7 +86,7 @@ Rails.application.routes.draw do
   get 'articles/:id/confirm_edit', to: 'articles#confirm_edit', as: 'confirm_edit'
 
   # keeps
-  resources :keeps, only: [ :index, :create, :update, :destroy]
+  resources :keeps, only: [:index]
 
   # tags
   resources :tags, only: [ :index, :create, :show, :update]

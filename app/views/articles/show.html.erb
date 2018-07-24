@@ -7,9 +7,13 @@
 				<% if user_signed_in? %>
 
 					<% if @article.user_id != current_user.id %>
-						<%= render 'articles/favorite' %>
+						<span>
+							<%= render partial: 'favorites/favorite', locals: { article: @article } %>
+						</span>
 
-						<%= render 'articles/keep' %>
+						<span>
+							<%= render partial: 'keeps/keep', locals: { article: @article } %>
+						</span>
 					<% end %>
 
 					<%= link_to tag_timeline_path do %>
@@ -95,15 +99,15 @@
 
 								<% if @article.user_id != current_user.id %>
 
-									<div class="col-5 text-center mt-3">
+									<div class="col-5 text-center mt-3" id="favorite-of-<%= @article.id %>">
 
-										<%= render 'articles/favorite' %>
+										<%= render partial: 'favorites/favorite', locals: { article: @article } %>
 
 									</div>
 
-									<div class="col-5 text-center mt-3">
+									<div class="col-5 text-center mt-3" id="keep-of-<%= @article.id %>">
 
-										<%= render 'articles/keep' %>
+										<%= render partial: 'keeps/keep', locals: { article: @article } %>
 
 									</div>
 

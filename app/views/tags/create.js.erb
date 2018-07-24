@@ -1,0 +1,5 @@
+$("#tags_input_style").html("<%= j(render 'layouts/tags_input_style') %>")
+$("#modal-tagging-list-of-<%= @user.id %>").html("<%= j(render 'taggings/modal_tagging_list', taggings: @taggings) %>")
+$("#modal-tagging-form-of-<%= @user.id %>").html("<%= j(render 'taggings/modal_tagging_form', tag: @tag, user: @user ) %>")
+$("#tagging-list-of-<%= @user.id %>").html("<%= j(render 'taggings/tagging_list', taggings: @taggings, user: @user) %>")
+$("#tags_input_script").html("<%= j(render 'layouts/tags_input_script') %>")

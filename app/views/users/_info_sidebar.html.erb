@@ -1,23 +1,6 @@
-<style type="text/css" media="screen">
-
-.label {
-  display: inline;
-  padding: .2em .6em .3em;
-  font-size: 75%;
-  font-weight: bold;
-  line-height: 1;
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: .25em;
-}
-
-.label-info {
-  background-color: #1872dd;
-}
-
-</style>
+<span id="tags_input_style">
+	<%= render 'layouts/tags_input_style' %>
+</span>
 
 <div class="col-lg-3 col-sm-11 text-center mt-5 pt-4  bg-white">
 	<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 200px; max-width: 200px;" %>
@@ -36,7 +19,9 @@
 
 	<% if user_signed_in? %>
 
-		<%= render 'relationships/follow_or_unfollow', user: @user %>
+		<span id="relationship-of-<%= @user.id %>">
+			<%= render 'relationships/follow_or_unfollow', user: @user %>
+		</span>
 
 	<% end %>
 
@@ -55,75 +40,13 @@
 
 	<% end %>
 
-	<p class="small title-color text-white mt-3">関心のあるタグ</p>
+	<p class="bg-navy text-white mt-3">関心のあるタグ</p>
 
-	<div>
-		<% if Tagging.exists?(taggable_type: "User", taggable_id: @user.id) %>
+	<span id="tagging-of-<%= @user.id %>">
+		<%= render partial: 'taggings/tagging', locals: {taggings: taggings, tag: tag, user: user} %>
+	</span>
 
-			<% @taggings.each do |tagging| %>
-				<span class="badge tag-color p-1">
-					<%= link_to tagging.tag.name, tag_path(tagging.tag_id), class: "text-white" %>
-				</span>
-			<% end %>
-
-		<% else %>
-
-			<p class="text-secondary">未登録</p>
-
-		<% end %>
-
-	</div>
-
-	<% if @user == current_user %>
-
-		<button type="button" class="btn btn-secondary btn-sm mt-3" data-toggle="modal" data-target="#exampleModalLong">
-		  タグを編集する
-		</button>
-
-		<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <p class="modal-title font-weight-bold" id="exampleModalLongTitle">タグ編集</p>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-
-		      	<div>
-
-							<ul class="list-group list-group-flush">
-								<% @taggings.each do |tagging| %>
-								  <li class="list-group-item">
-								  	<%= link_to tagging_path(tagging.id), method: :delete do %>
-								  		<%= fa_icon("times", class: "text-secondary") %>
-								  	<% end %>
-								  	<span class="badge d-inline tag-color text-white"><%= tagging.tag.name %></span>
-								  </li>
-								<% end %>
-							</ul>
-
-		      	</div>
-
-						<%= form_for(@tag) do |f| %>
-					    <%= f.label :tag_list, "追加したいタグを入力", class: "small" %><br>
-					    <%= text_field_tag 'user[tag_list]', @user.tag_list.join(','), class: "col", "data-role" => "tagsinput", value: nil %>
-							<%= f.submit "タグを追加する", class: "btn btn-secondary btn-sm mt-3" %>
-		        <% end %>
-
-		      </div>
-
-		      <div class="modal-footer">
-
-		      </div>
-		    </div>
-		  </div>
-		</div>
-
-	<% end %>
-
-	<p class="small title-color text-white mt-3">実績</p>
+	<p class="bg-navy text-white mt-3">実績</p>
 
 	<div>
 
@@ -136,16 +59,38 @@
 			<% commented += article.comments.count %>
 		<% end %>
 
-		<span>投稿数</span><br>
-		<span><%= @user.articles.count %></span><br>
-		<span>イイねされた数</span><br>
-		<span><%= favorited %></span><br>
-		<span>キープされた数</span><br>
-		<span><%= kept %></span><br>
-		<span>コメントされた数</span><br>
-		<span><%= commented %></span><br>
+		<table class="table table-sm">
+			<tbody>
+				<tr class="thead-light">
+					<th scope=row>投稿数</th>
+				</tr>
+				<tr>
+					<td><%= @user.articles.count %></td>
+				</tr>
+				<tr class="thead-light">
+					<th scope=row>イイねされた数</th>
+				</tr>
+				<tr>
+					<td><%= favorited %></td>
+				</tr>
+				<tr class="thead-light">
+					<th scope=row>キープされた数</th>
+				</tr>
+				<tr>
+					<td><%= kept %></td>
+				</tr>
+				<tr class="thead-light">
+					<th scope=row>コメントされた数</th>
+				</tr>
+				<tr>
+					<td><%= commented %></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" crossorigin="anonymous"></script>
+<span id="tags_input_script">
+	<%= render 'layouts/tags_input_script' %>
+</span>

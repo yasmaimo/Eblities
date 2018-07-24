@@ -8,26 +8,23 @@ class KeepsController < ApplicationController
   end
 
   def create
-    path = Rails.application.routes.recognize_path(request.referer)
-    keep = Keep.new(article_id: path[:id].to_i, user_id: current_user.id)
+    keep = current_user.keeps.new(article_id: params[:article_id])
     keep.save
     @article = Article.find(keep.article_id)
     @user = User.find(@article.user_id)
     add_five_point
     create_notification
     create_post
-    redirect_to article_path(path[:id])
   end
 
   def destroy
-    @article = Article.find(params[:article_id])
-    @user = User.find(@article.user_id)
     keep = current_user.keeps.find_by(article_id: params[:article_id])
     keep.destroy
+    @article = Article.find(params[:article_id])
+    @user = User.find(@article.user_id)
     subtract_five_point
     destroy_notification
     destroy_post
-    redirect_to article_path(@article)
   end
 
   private

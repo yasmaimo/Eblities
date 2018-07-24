@@ -12,30 +12,6 @@ class DraftsController < ApplicationController
     @article = Article.new
   end
 
-  # def create_article
-  #   @draft = Draft.find(params[:id])
-  #   @article = Article.new(user_id: current_user.id, title: params[:article][:title], body: params[:article][:body], image_id: params[:article][:image_id])
-  #   @article.tag_list.add(params[:article][:tag_list], parse: true)
-  #   @article.save
-  #   taggings = Tagging.where(taggable_type: "Article", taggable_id: @article.id)
-  #   taggings.each do |tagging|
-  #     count = tagging.tag.taggings_count
-  #     count += 1
-  #     tag = Tag.find(tagging.tag_id)
-  #     tag.update(taggings_count: count)
-  #   end
-  #   add_five_point
-  #   create_post
-  #   redirect_to article_path(@article)
-  #   @draft.destroy
-  # end
-
-  def new
-  end
-
-  def edit
-  end
-
   def show
     @draft = Draft.find(params[:id])
     @function_name = "下書き編集"

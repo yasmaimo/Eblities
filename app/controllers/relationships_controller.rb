@@ -7,7 +7,7 @@ class RelationshipsController < ApplicationController
     current_user.follow!(@user)
     add_two_point
     create_notification
-    redirect_to @user
+    # redirect_to @user
   end
 
   def destroy
@@ -15,7 +15,7 @@ class RelationshipsController < ApplicationController
     current_user.unfollow!(@user)
     subtract_two_point
     destroy_notification
-    redirect_to @user
+    # redirect_to @user
   end
 
   private

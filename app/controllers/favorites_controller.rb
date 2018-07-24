@@ -3,25 +3,19 @@ class FavoritesController < ApplicationController
 	before_action :return_user
 
   def create
-		# @article = Article.find(params[:article_id])
-		favorite = current_user.favorites.new(article_id: @article.id)
+		favorite = current_user.favorites.new(article_id: params[:article_id])
 		favorite.save
-		# @user = User.find(@article.user_id)
 		add_one_point
 		create_notification
 		create_post
-		redirect_to article_path(@article)
   end
 
   def destroy
-		# @article = Article.find(params[:article_id])
 		favorite = current_user.favorites.find_by(article_id: params[:article_id])
 		favorite.destroy
-		# @user = User.find(@article.user_id)
 		subtract_one_point
 		destroy_notification
 		destroy_post
-		redirect_to article_path(@article)
   end
 
 	private
@@ -54,7 +48,6 @@ class FavoritesController < ApplicationController
 	end
 
 	def create_notification
-		# return if @article.user_id == current_user.id
 		Notification.create(
 		                  user_id: @article.user_id,
 		                  notified_by_id: current_user.id,

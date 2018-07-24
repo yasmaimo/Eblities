@@ -19,7 +19,9 @@
 
           <div class="col-6 small text-secondary text-right align-self-center">
 
-            <%= render 'relationships/follow_or_unfollow', user: user %>
+            <span id="relationship-of-<%= user.id %>">
+              <%= render 'relationships/follow_or_unfollow', user: user %>
+            </span>
 
             <span class="mx-1 d-md-inline d-none">
               <%= fa_icon("paperclip") %><%= user.articles.count %>個の記事
