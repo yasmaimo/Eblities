@@ -13,6 +13,12 @@
 					  </div>
 					  <div class="card-body">
 
+	            <div class="text-center" id="tag-mark-of-<%= @tag.id %>">
+
+	              <%= render partial: 'tags/tag_mark', locals: {tag: @tag} %>
+
+	            </div>
+
 					  	<div class="small">
 					  		タグ : <%= link_to @tag.name, tag_path(@tag), class: "text-dark berder border-bottom" %>が登録されている記事の一覧です。
 					  	</div>
@@ -26,7 +32,11 @@
 							    </tr>
 							    <tr>
 							      <td>
-							      	<%= Tagging.where(taggable_type: "User", tag_id: @tag).count %> users
+							      	<span class="text-secondary"><%= fa_icon("users") %></span>
+							      	<span id="tagging-users-count-of-<%= @tag.id %>">
+								      	<%= render partial: 'tags/tagging_users_count', locals: {tagging_users: @tagging_users} %>
+							      	</span>
+							      	<span class="small">名が登録</span>
 							      </td>
 							    </tr>
 							    <tr>
@@ -36,11 +46,21 @@
 							    </tr>
 							    <tr>
 							      <td>
-							      	<%= Tagging.where(taggable_type: "Article", tag_id: @tag).count %> posts
+							      	<span class="text-secondary"><%= fa_icon("pencil") %></span>
+							      	<span id="tagging-articles-count">
+								      	<%= render partial: 'tags/tagging_articles_count', locals: {tagging_articles: @tagging_articles} %>
+								      </span>
+							      	<span class="small">件の記事</span>
 							      </td>
 							    </tr>
 								</tbody>
 							</table>
+
+	            <div class="text-center" id="tag-button-of-<%= @tag.id %>">
+
+	              <%= render partial: 'tags/tag_button', locals: {tag: @tag, new_tag: @new_tag} %>
+
+	            </div>
 
 					  </div>
 					</div>
@@ -127,7 +147,7 @@
 						    </tr>
 						    <tr>
 						      <td>
-						      	<%= @taggings.count %> users
+						      	<%= @tagging_users.count %> users
 						      </td>
 						    </tr>
 						    <tr>
@@ -137,7 +157,7 @@
 						    </tr>
 						    <tr>
 						      <td>
-						      	<%= @taggings.count %> posts
+						      	<%= @tagging_articles.count %> posts
 						      </td>
 						    </tr>
 							</tbody>
@@ -196,7 +216,12 @@
 					  <thead>
 					    <tr>
 					    	<th>
-				    			<span><%= link_to @tag.name, tag_path(@tag), class: "text-white rounded px-1 tag-color" %></span> がタグ付けされた記事一覧 : <%= @tag_article.count %>件
+				    			<span>
+				    				<%= link_to @tag.name, tag_path(@tag), class: "text-white rounded px-1 tag-color" %>
+				    			</span>がタグ付けされた記事一覧 :
+					      	<span id="tagging-articles-count">
+						      	<%= render partial: 'tags/tagging_articles_count', locals: {tagging_articles: @tagging_articles} %>件
+						      </span>
 					    	</th>
 					    </tr>
 					  </thead>
@@ -207,12 +232,9 @@
 		    			<% end %>
 		    		<% end %>
 
-				    <tbody class="page">
-				    	<% @tag_article.each do |article| %>
+				    <tbody class="page" id="tag-articles">
 
-				    		<%= render 'articles/articles', article: article %>
-
-					    <% end %>
+				    	<%= render partial: 'articles/articles', locals: {articles: @tag_articles} %>
 
 					  </tbody>
 					</table>
@@ -236,7 +258,7 @@
 	    <% end %>
 
 	    <div class="row justify-content-center">
-	    		<p class="col-12"><%= paginate @tag_article %></p>
+	    		<p class="col-12"><%= paginate @tag_articles %></p>
 	    </div>
 
 	  </div>

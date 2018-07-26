@@ -36,13 +36,9 @@
 		    			<% end %>
 		    		<% end %>
 
-				    <tbody class="page">
+				    <tbody class="page" id="user-articles">
 
-				    	<% @user_article.each do |article| %>
-
-				    		<%= render 'articles/articles', article: article %>
-
-					    <% end %>
+				    	<%= render partial: 'articles/articles', locals: {articles: @user_articles} %>
 
 				    </tbody>
 				  </table>
@@ -60,7 +56,7 @@
 	    <% end %>
 
 	    <div class="row justify-content-center">
-	    		<p class="col-12"><%= paginate @user_article %></p>
+	    		<p class="col-12"><%= paginate @user_articles %></p>
 	    </div>
 
 		</div>

@@ -3,7 +3,13 @@
 	<%= link_to article_keeps_path(article), style: "text-decoration: none;" , method: :delete, id: "keep_link", remote: true do %>
 
 		<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
-			<%= fa_icon("folder-open 2x") %>
+			<div class="font-weight-bold d-md-none d-block">
+				<%= article.keeps.count %>
+			</div>
+			<span class="h5"><%= fa_icon("folder-open") %></span>
+			<span class="font-weight-bold d-md-inline d-none">
+				<%= article.keeps.count %>
+			</span>
 		</span>
 
 	<% end %>
@@ -13,7 +19,13 @@
 	<%= link_to article_keeps_path(article), style: "text-decoration: none;" , method: :post, id: "keep_link", remote: true do %>
 
 		<span class="list-group-item list-group-item-action nav-font mb-2">
-			<%= fa_icon("folder-open 2x") %>
+			<div class="font-weight-bold d-md-none d-block">
+				<%= article.keeps.count %>
+			</div>
+			<span class="h5"><%= fa_icon("folder-open") %></span>
+			<span class="font-weight-bold d-md-inline d-none">
+				<%= article.keeps.count %>
+			</span>
 		</span>
 
 	<% end %>

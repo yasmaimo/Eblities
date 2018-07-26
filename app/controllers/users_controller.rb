@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @tag = Tag.new
     @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id)
     @search_user_article = Article.where(user_id: @user.id).ransack(params[:q])
-    @user_article = @search_user_article.result.page(params[:page]).reverse_order
+    @user_articles = @search_user_article.result.page(params[:page]).reverse_order
   end
 
   def account
@@ -32,8 +32,23 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def unsubscribe_confirm
+  def confirm_unsubscribe
     @user = User.find(params[:id])
+  end
+
+  def unsubscribe
+    @user = User.find(params[:id])
+    status = params[:user][:status].to_i
+    if status == 0
+      redirect_to confirm_unsubscribe_path(current_user)
+      flash[:failed] = "チェックを入れてください"
+    elsif status == 1
+      notifications = Notification.where(notified_by_id: @user.id)
+      notifications.destroy_all
+      @user.destroy
+      redirect_to logout_path
+      flash[:succeeded] = "退会処理が完了しました。ご利用ありがとうございました。"
+    end
   end
 
   def update
@@ -67,7 +82,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:family_name, :given_name, :user_name, :introduction, :web_site_url, :image, :email, :password, :point, :status, :tag_list)
+    params.require(:user).permit(:user_name, :introduction, :web_site_url, :image, :email, :password, :point, :status, :tag_list, :all_delete)
   end
 
 end

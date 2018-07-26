@@ -70,11 +70,11 @@ class User < ApplicationRecord
   has_many :followings, through: :following_relationships
   has_many :follower_relationships, foreign_key: "following_id", class_name: "Relationship", dependent: :destroy
   has_many :followers, through: :follower_relationships
-  has_many :articles
+  has_many :articles, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :keeps, dependent: :destroy
-  has_many :tagging, as: :taggable
+  has_many :tagging, as: :taggable, dependent: :destroy
   has_many :notifications, dependent: :destroy
 
   # omniauth_callback

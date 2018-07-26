@@ -8,7 +8,7 @@
       クリエイターの知識をシェアするサイト
     </span>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #125699;">
+    <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -28,18 +28,6 @@
       <ul class="navbar-nav ml-auto text-right">
         <li class="nav-item dropdown my-2">
           <%= render 'notifications/notification_dropdown' %>
-        </li>
-        <li class="nav-item dropdown my-2">
-          <a class="nav-link dropdown-toggle text-white nav-font" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            メニュー
-          </a>
-          <div class="dropdown-menu text-right  dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <%= link_to "ユーザーを探す", users_path, class: "dropdown-item nav-font my-3" %>
-            <%= link_to "タグから記事を探す", tags_path, class: "dropdown-item nav-font my-3" %>
-            <%= link_to "キープ一覧", keeps_path, class: "dropdown-item nav-font my-3" %>
-            <%= link_to "下書き一覧", user_drafts_path(current_user), class: "dropdown-item nav-font my-3" %>
-            <%= link_to "投稿する", new_article_path, class: "dropdown-item nav-font my-3" %>
-          </div>
         </li>
         <li class="nav-item my-2">
           <%= link_to "マイページ", user_path(current_user), class: "nav-link text-white nav-font" %>

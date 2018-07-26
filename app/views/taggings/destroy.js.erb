@@ -1,2 +1,7 @@
 $("#modal-tagging-list-of-<%= @user.id %>").html("<%= j(render partial: 'modal_tagging_list', locals: {taggings: @taggings}) %>")
 $("#tagging-list-of-<%= @user.id %>").html("<%= j(render partial: 'tagging_list', locals: {taggings: @taggings, user: @user}) %>")
+$("#common-users-of-<%= @user.id %>").html("<%= j(render 'tags/common_users') %>")
+$("#tag-button-of-<%= @find_tag.id %>").html("<%= j(render 'tags/tag_button', tag: @find_tag, new_tag: @tag ) %>")
+$("#tagging-users-count-of-<%= @find_tag.id %>").html("<%= j(render 'tags/tagging_users_count', tagging_users: @tagging_users ) %>")
+$("#tagging-articles-count").html("<%= j(render 'tags/tagging_articles_count', tagging_articles: @tagging_articles ) %>")
+$("#tag-mark-of-<%= @find_tag.id %>").html("<%= j(render 'tags/tag_mark', tag: @find_tag ) %>")

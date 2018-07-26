@@ -18,7 +18,9 @@
 			      <% end %>
 		      <% end %>
 
-		      <%= render 'relationships/follow_or_unfollow', user: user %>
+		      <span id="relationship-of-<%= user.id %>">
+			      <%= render 'relationships/follow_or_unfollow', user: user %>
+			    </span>
 
 	      </td>
 	    </tr>

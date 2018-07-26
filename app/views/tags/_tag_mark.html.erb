@@ -1,0 +1,5 @@
+<% if tag.taggings.exists?(taggable_type: "User", taggable_id: current_user.id) %>
+  <span class="badge badge-primary">
+    登録中
+  </span>
+<% end %>

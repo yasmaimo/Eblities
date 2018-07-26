@@ -97,7 +97,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @article.destroy
     subtract_five_point
-    redirect_to user_path(current_user)
+    redirect_to user_path(@article.user_id)
   end
 
   private

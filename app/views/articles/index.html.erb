@@ -1,7 +1,11 @@
 <div class="container-fluid">
 	<div class="row justify-content-center">
 
-		<div class="left-sidebar col-lg-2 d-none d-lg-block">
+		<div class="col-12 text-center text-success">
+			<%= flash[:succeeded] %>
+		</div>
+
+		<div class="left-sidebar col-lg-2">
 
 			<%= render 'articles/nav_bar' %>
 
@@ -9,11 +13,9 @@
 
 		<div class="col-lg-6 col-sm-10">
 
-			<p class="d-lg-block d-none blank-margin"></p>
+			<div class="short-margin">
 
-			<div class="d-lg-none d-sm-block">
-
-				<%= render 'articles/nav_bar' %>
+				<%= render 'articles/nav_tag' %>
 
 			</div>
 
@@ -28,13 +30,9 @@
 				    </tr>
 				  </thead>
 
-			    <tbody class="page" >
+			    <tbody class="page" id="all-articles" >
 
-			    	<% @articles.each do |article| %>
-
-				      <%= render 'articles/articles',article: article %>
-
-				    <% end %>
+			    	<%= render 'articles/articles', articles: @articles %>
 
 			    </tbody>
 			  </table>

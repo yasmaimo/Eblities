@@ -1,23 +1,6 @@
-<style type="text/css" media="screen">
-
-.label {
-  display: inline;
-  padding: .2em .6em .3em;
-  font-size: 75%;
-  font-weight: bold;
-  line-height: 1;
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: .25em;
-}
-
-.label-info {
-  background-color: #1872dd;
-}
-
-</style>
+<span id="tags_input_style">
+	<%= render 'layouts/tags_input_style' %>
+</span>
 
 <div class="container-fluid">
 	<div class="row justify-content-center">
@@ -89,8 +72,8 @@
 						  	あなたが関心を持つタグ
 						  </div>
 						  <div class="card-body">
-
-						  	<%= render 'tags/my_tags' %>
+						  	<% @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id) %>
+						  	<%= render partial: 'taggings/tagging', locals: {taggings: @taggings, tag: @tag, user: @user} %>
 
 						  </div>
 						</div>
@@ -101,7 +84,7 @@
 						<div class="card mb-3">
 
 						  <div class="card-header text-center font-weight-bold">共通のタグユーザー</div>
-						  <div class="card-body">
+						  <div class="card-body" id="common-users-of-<%= @user.id %>">
 
 								<%= render 'tags/common_users' %>
 
@@ -174,13 +157,9 @@
 		    			<% end %>
 		    		<% end %>
 
-				    <tbody class="page">
+				    <tbody class="page" id="all-tags">
 
-				    	<% @tags.each do |tag| %>
-
-				    		<%= render 'tags/tags', tag: tag %>
-
-				    	<% end %>
+				    	<%= render partial: 'tags/tags', locals: {tags: @tags, new_tag: @tag, user: @user} %>
 
 				    </tbody>
 				  </table>
@@ -222,4 +201,6 @@
 	</div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" crossorigin="anonymous"></script>
+<span id="tags_input_script">
+	<%= render 'layouts/tags_input_script' %>
+</span>
