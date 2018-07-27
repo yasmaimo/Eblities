@@ -13,9 +13,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+    Notification.create(user_id: current_user.id, notified_type: "サインアップ")
+  end
 
   # GET /resource/edit
   # def edit

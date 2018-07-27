@@ -1,5 +1,7 @@
 class Draft < ApplicationRecord
 
+  attachment :image
+
   acts_as_taggable
 
   # Validatoin
@@ -13,6 +15,6 @@ class Draft < ApplicationRecord
 
   # Association
 	belongs_to :user
-  has_many :images, as: :post, dependent: :destroy
   has_many :tagging, as: :taggable, dependent: :destroy
+
 end

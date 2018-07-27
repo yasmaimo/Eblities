@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
 
+  before_action :authenticate_user
+
   def index
   end
 
@@ -16,10 +18,10 @@ class CommentsController < ApplicationController
                                           :users => @users,
                                           :taggings => @taggings}
       return
-      # flash[:failed] = "500文字までのコメントを入力してください"
     end
     if @comment.save
-      create_notifications
+      create_notification
+      create_post
       redirect_to article_path(@article)
       flash[:succeeded] = "コメントを投稿しました"
     end
@@ -36,13 +38,39 @@ class CommentsController < ApplicationController
 
   private
 
-  def create_notifications
+  def create_post
+    Post.create(
+                user_id: @article.user_id,
+                posted_by_id: current_user.id,
+                article_id: @article.id,
+                posted_type: "コメント")
+  end
+
+  def destroy_post
+    post = Post.find_by(
+                    user_id: @article.user_id,
+                    posted_by_id: current_user.id,
+                    article_id: @article.id,
+                    posted_type: "コメント")
+    post.destroy
+  end
+
+  def create_notification
     return if @article.user_id == current_user.id
     Notification.create(
                       user_id: @article.user_id,
                       notified_by_id: current_user.id,
                       article_id: @article.id,
                       notified_type: "コメント")
+  end
+
+  def destroy_notification
+    notification = Notification.find_by(
+                    user_id: @article.user_id,
+                    notified_by_id: current_user.id,
+                    article_id: @article.id,
+                    notified_type: "コメント")
+    notification.destroy
   end
 
   def comment_params

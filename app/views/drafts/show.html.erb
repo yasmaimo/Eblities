@@ -1,25 +1,48 @@
+<style type="text/css" media="screen">
+
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+
+.label-info {
+  background-color: #1872dd;
+}
+
+</style>
+
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-12">
 
-      <%= simple_form_for(@draft, url: {:controller => :drafts, action: 'update'}) do |f| %>
-        <%= f.error_notification %>
+      <p class="text-center my-3">
+        <span class="bg-navy text-white p-2 rounded"><%= "#{@function_name}" %></span>
+      </p>
 
-        <div class="field my-3">
-          <%= text_field_tag 'draft[tag_list]', @draft.tag_list.join(','), class: "form-control", "data-role" => "tagsinput" %>
-        </div>
+      <%= simple_form_for(@draft, url: {action: 'update'}) do |f| %>
 
-        <div>
-          <%= f.input :title, label: false, placeholder: "タイトル", error: "タイトルを入力してください" %>
-          <%= f.input :body, label: false, as: :summernote, error: "本文を入力してください" %>
-        </div>
+        <%= render 'drafts/draft_form', draft: @draft, f: f %>
 
-        <div class="form-actions text-center">
-          <%= f.submit "確認画面へ進む", class: "btn btn-primary btn-sm", name: "confirm_draft" %>
-          <%= f.submit "下書きとして保存する", class: "btn border text-dark btn-sm", name: "update_draft" %>
-        </div>
       <% end %>
 
       </div>
   </div>
 </div>
+
+<script type="text/javascript">
+var clipboadCopy = function(){
+    var tagtext = document.getElementById("tags");
+    tagtext.select();
+    document.execCommand("copy");
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" crossorigin="anonymous"></script>

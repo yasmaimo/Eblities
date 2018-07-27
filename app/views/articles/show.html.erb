@@ -1,44 +1,14 @@
 <div class="container-fluid">
 	<div class="row justify-content-center">
 
-		<div class="left-sidebar col-lg-1 d-none d-lg-block">
-			<div class="list-group left-sidebar-link">
-
-				<% if user_signed_in? %>
-
-					<% if @article.user_id != current_user.id %>
-						<%= render 'articles/favorite' %>
-
-						<%= render 'articles/keep' %>
-					<% end %>
-
-					<%= link_to tag_timeline_path do %>
-						<span class="list-group-item list-group-item-action nav-font mb-2" >
-							<%= fa_icon("twitter 2x") %>
-						</span>
-					<% end %>
-
-					<%= link_to tag_timeline_path do %>
-						<span class="list-group-item list-group-item-action nav-font" >
-							<%= fa_icon("facebook 2x") %>
-						</span>
-					<% end %>
-
-				<% end %>
-
-			</div>
-		</div>
-
-		<div class="col-lg-7 col-sm-10">
-
-			<p class="blank-margin"></p>
+		<div class="col-lg-8 col-sm-11 content-margin">
 
       <div class="card">
         <div class="card-header">
           <div class="row">
 
-            <div class="col-6 ranking-table">
-            	<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+            <div class="col-6 ranking-table align-self-center">
+            	<%= attachment_image_tag @article.user, :image, fallback: "no_image.jpg", class: "card-img mx-1", style: "max-height: 40px; max-width: 40px;" %>
             	<span class="text-secondary">
             		<%= link_to @user.user_name, user_path(@user) %>
             	</span>
@@ -48,10 +18,6 @@
             	<span class="mx-1" >
             		<%= @article.created_at.strftime('%Y/%m/%d') %>
             	</span><br>
-
-            	<span class="mx-1">
-            		<%= fa_icon("folder-open") %><%= @article.keeps.count %>
-            	</span>
 
             	<span class="mx-1">
             		<%= fa_icon("comments") %><%= @article.comments.count %>
@@ -64,50 +30,64 @@
 
         <div class="card-body">
 
-          <div class="row">
-            <div class="col-12">
-            	<h2 class="font-weight-bold text-dark mt-1">
-            		<%= @article.title %>
-            	</h2>
-            </div>
-          </div>
+					<div class="card card-size">
 
-	        <div class="my-3">
-		        <% @taggings.each do |tagging| %>
-		        	<span class="badge tag-color p-1">
-		        		<%= link_to tagging.tag.name, tag_path(tagging.tag), class: "text-white" %>
-	        		</span>
-		        <% end %>
-	        </div>
+			      <%= attachment_image_tag @article, :image, fallback: "no_image.jpg", class: "img-trim"  %>
+			      <div class="card-img-overlay article-bg-index">
 
-					<div class="d-lg-none d-sm-block">
-						<div class="row justify-content-center">
+		          <div class="row">
+		            <div class="col-12">
+		            	<h1 class="font-weight-bold text-border text-white h3 mt-1">
+		            		<%= @article.title %>
+		            	</h1>
+		            </div>
+		          </div>
 
-							<% if user_signed_in? %>
+							<div class="row w-100 justify-content-end" style="position: absolute; bottom: 0;">
 
-								<% if @article.user_id != current_user.id %>
+                <% if user_signed_in? %>
+                	<% if @article.user_id != current_user.id %>
 
-									<div class="col-5 text-center">
+                    <div class="col-3 text-center" id="favorite-of-<%= @article.id %>">
+                      <%= render partial: 'favorites/favorite', locals: { article: @article } %>
+                    </div>
 
-										<%= render 'articles/favorite' %>
+                    <div class="col-3 text-center" id="keep-of-<%= @article.id %>">
+											<%= render partial: 'keeps/keep', locals: { article: @article } %>
+                    </div>
 
-									</div>
+                  <% end %>
 
-									<div class="col-5 text-center">
+                <% else %>
 
-										<%= render 'articles/keep' %>
+                  <span class="mx-1">
+                    <%= fa_icon("thumbs-up") %><%= @article.favorites.count %>
+                  </span>
 
-									</div>
+                  <span class="mx-1">
+                    <%= fa_icon("folder-open") %><%= @article.keeps.count %>
+                  </span>
 
-								<% end %>
+                  <span class="mx-1">
+                    <%= fa_icon("comments") %><%= @article.comments.count %>
+                  </span>
 
-							<% end %>
+                <% end %>
 
-						</div>
+              </div>
 
-					</div>
+			        <div class="my-3">
+				        <% @taggings.each do |tagging| %>
+				        	<span class="badge tag-color p-1">
+				        		<%= link_to tagging.tag.name, tag_path(tagging.tag), class: "text-white" %>
+			        		</span>
+				        <% end %>
+			        </div>
 
-	        <p class="title-border"></p>
+			      </div>
+			    </div>
+
+	        <p class="title-border mt-2"></p>
 	        <div class="col-sm-12 mt-4" style="overflow: scroll;">
 	            <%= raw @article.body %>
 	        </div>
@@ -115,18 +95,44 @@
 	      </div>
 
       </div>
+
+      <p class="mt-3 text-center bg-navy text-white">投稿者プロフィール</p>
+
+		  <div class="row mt-3">
+		  	<div class="col-4 align-self-center">
+		  		<%= attachment_image_tag @article.user, :image, fallback: "no_image.jpg", class: "m-3 card-img", style: "max-height: 150px; max-width: 150px;" %>
+		  	</div>
+		  	<div class="col-8 mt-3">
+
+		  		<span>
+		  			<%= link_to @article.user.user_name, user_path(@article.user) %>
+	  			</span><br>
+		  		<span class="small"><%= @article.user.introduction %></span><br>
+
+		  		<% if @article.user.web_site_url.present? %>
+			  		<p class="small text-secondary mt-2">
+			  			ウェブサイトを訪問する<br>
+			  			<%= link_to "#{@user.web_site_url}", "#{@user.web_site_url}" %>
+		  			</p>
+		  		<% end %>
+
+		  	</div>
+		  </div>
+
+		  <p class="mt-3 text-center bg-navy text-white">コメント</p>
+
       <div class="d-lg-block d-none">
 	  		<%= render 'articles/comment' %>
 			</div>
 	  </div>
 
-	  <div class="d-lg-none d-sm-block col-sm-10">
+	  <div class="d-lg-none d-sm-block col-sm-11">
 
 	  	<%= render 'articles/comment' %>
 
 	  </div>
 
-	  <div class="col-lg-3 col-sm-10 right-sidebar">
+	  <div class="col-lg-3 col-sm-11 content-margin">
 
 				<table class="table bg-white">
 

@@ -7,21 +7,23 @@
 </thead>
 <tbody>
   <% Tag.order("taggings_count DESC").limit(10).each do |tag| %>
-    <tr>
-      <td class="right-sidebar-link">
-      	<span class="mr-1 font-weight-bold"><%= rank %></span>
-        <span class="badge tag-color p-1">
-          <%= link_to tag.name, tag_path(tag), class: "text-white" %>
-        </span>
-      </td>
-      <td class="text-right">
-      	<span class="font-weight-bold"><%= tag.taggings_count %></span><br>
-      	<span class="small text-secondary">
-      		taggings
-      	</span>
-      </td>
-    </tr>
-    <% rank += 1 %>
+    <% if tag.taggings_count > 0 %>
+      <tr>
+        <td class="right-sidebar-link">
+        	<span class="mr-1 font-weight-bold"><%= rank %></span>
+          <span class="badge tag-color p-1">
+            <%= link_to tag.name, tag_path(tag), class: "text-white" %>
+          </span>
+        </td>
+        <td class="text-right">
+        	<span class="font-weight-bold"><%= tag.taggings_count %></span><br>
+        	<span class="small text-secondary">
+        		articles
+        	</span>
+        </td>
+      </tr>
+      <% rank += 1 %>
+    <% end %>
   <% end %>
 
 </tbody>

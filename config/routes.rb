@@ -51,7 +51,13 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'users/:id/favorites', to: 'users#favorites', as: 'favorites'
+
+  get 'users/:id/comments', to: 'users#comments', as: 'comments'
+
   get 'users/:id/followers', to: 'users#followers', as: 'followers'
+
+  get 'users/:id/followings', to: 'users#followings', as: 'followings'
 
   get 'users/:id/account', to: 'users#account', as: 'user_account'
 
@@ -61,9 +67,11 @@ Rails.application.routes.draw do
 
   get 'users/:id/two_factor_authentication', to: 'users#two_factor_authentication', as: 'user_two_factor_authentication'
 
-  get 'users/:id/two_factor_authentication_setting', to: 'users#two_factor_authentication_setting', as: 'users_two_factor_authentication_setting'
+  get 'users/:id/two_factor_authentication_setting', to: 'users#two_factor_authentication_setting', as: 'user_two_factor_authentication_setting'
 
-  get 'users/:id/unsubscribe_confirm', to: 'users#unsubscribe_confirm', as: 'users_unsubscribe_confirm'
+  get 'users/:id/confirm_unsubscribe', to: 'users#confirm_unsubscribe', as: 'confirm_unsubscribe'
+
+  patch 'users/:id/unsubscribe', to: 'users#unsubscribe', as: 'unsubscribe'
 
   # relationships
   resources :relationships, only: [:create, :destroy]
@@ -73,6 +81,7 @@ Rails.application.routes.draw do
     resources :comments, only: [ :index, :create, :show, :update, :destroy]
     resource :images, only: [:create, :destroy]
     resource :favorites, only: [:create, :destroy]
+    resource :keeps, only: [:create, :destroy]
     collection do
       post 'confirm'
     end
@@ -82,13 +91,17 @@ Rails.application.routes.draw do
 
   get 'tag_timeline', to: 'articles#tag_timeline', as: 'tag_timeline'
 
-  get 'articles/:id/edit_confirm', to: 'articles#edit_confirm', as: 'confirm_edit_article'
+  get 'articles/:id/confirm_edit', to: 'articles#confirm_edit', as: 'confirm_edit'
 
   # keeps
-  resources :keeps, only: [ :index, :create, :update, :destroy]
+  resources :keeps, only: [:index]
 
   # tags
-  resources :tags, only: [ :index, :create, :show, :update]
+  resources :tags, only: [ :index, :create, :show, :update] do
+    collection do
+      post 'add'
+    end
+  end
 
   # taggings
   resources :taggings, only: [ :destroy]

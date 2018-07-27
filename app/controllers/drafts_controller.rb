@@ -3,10 +3,8 @@ class DraftsController < ApplicationController
     @user = current_user
     @tag = Tag.new
     @taggings = Tagging.where(taggable_type: "User", taggable_id: current_user.id)
-    # @drafts = Draft.where(user_id: current_user.id)
     @search_draft = Draft.where(user_id: current_user.id).ransack(params[:q])
     @drafts = @search_draft.result.page(params[:page]).reverse_order
-
   end
 
   def confirm
@@ -14,48 +12,56 @@ class DraftsController < ApplicationController
     @article = Article.new
   end
 
-  def create_article
-    @draft = Draft.find(params[:id])
-    @article = Article.new(user_id: current_user.id, title: params[:article][:title], body: params[:article][:body])
-    @article.tag_list.add(params[:article][:tag_list], parse: true)
-    @article.save
-    taggings = Tagging.where(taggable_type: "Article", taggable_id: @article.id)
-    taggings.each do |tagging|
-      count = tagging.tag.taggings_count
-      count += 1
-      tag = Tag.find(tagging.tag_id)
-      tag.update(taggings_count: count)
-    end
-    get_ep_on_create
-    post_timeline
-    redirect_to article_path(@article)
-    @draft.destroy
-  end
-
-  def new
-  end
-
-  def edit
-  end
-
   def show
     @draft = Draft.find(params[:id])
+    @function_name = "下書き編集"
   end
 
   def update
     @draft = Draft.find(params[:id])
+    if params[:back]
+      redirect_to user_draft_path(id: @draft) and return
+    elsif params[:create_article]
+      @article = Article.new(user_id: current_user.id, title: params[:draft][:title], body: params[:draft][:body], image: @draft.image)
+      @article.tag_list.add(params[:draft][:tag_list], parse: true)
+      @article.save
+      taggings = Tagging.where(taggable_type: "Article", taggable_id: @article.id)
+      taggings.each do |tagging|
+        count = tagging.tag.taggings_count
+        count += 1
+        tag = Tag.find(tagging.tag_id)
+        tag.update(taggings_count: count)
+      end
+      add_five_point
+      create_post
+      redirect_to article_path(@article)
+      @draft.destroy and return
+    end
     @taggings = Tagging.where(taggable_type: "Draft", taggable_id: @draft.id)
     @taggings.destroy_all
-    @draft.update(title: params[:draft][:title], body: params[:draft][:body])
+    @draft.update(title: params[:draft][:title], body: params[:draft][:body], image: params[:draft][:image])
     tagging_draft
-    if params[:update_draft]
-      redirect_to user_drafts_path(current_user)
-    elsif params[:confirm_draft]
+    if params[:confirm_article]
       redirect_to confirm_user_draft_path
+    elsif params[:update_draft]
+      redirect_to user_drafts_path(current_user)
     end
   end
 
   def destroy
+    @draft = Draft.find(params[:id])
+    @draft.destroy
+    redirect_to user_path(current_user)
+  end
+
+  private
+
+  def create_post
+    Post.create(
+                user_id: @article.user_id,
+                posted_by_id: current_user.id,
+                article_id: @article.id,
+                posted_type: "投稿")
   end
 
   def tagging_draft
@@ -74,18 +80,8 @@ class DraftsController < ApplicationController
     end
   end
 
-  private
-
-  def post_timeline
-    Post.create(
-                user_id: current_user.id,
-                post:
-                "#{current_user.user_name}さんが新しい記事を投稿しました。
-                【#{@article.title}】")
-  end
-
   def draft_params
-    params.require(:draft).permit(:user_id, :title, :body, :tag_list)
+    params.require(:draft).permit(:user_id, :title, :body, :image ,:tag_list)
   end
 
 end

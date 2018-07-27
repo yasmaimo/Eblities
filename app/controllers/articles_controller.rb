@@ -1,34 +1,49 @@
 class ArticlesController < ApplicationController
   before_action :user_ranking
   before_action :tag_ranking
+  before_action :authenticate_user, except: [:index, :show]
 
   def index
   end
 
   def user_timeline
+    @search_post = Post.ransack(params[:q])
+    @posts = @search_post.result.page(params[:page]).reverse_order
   end
 
   def tag_timeline
   end
 
   def confirm
-    @article = Article.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body])
-    if @article.invalid?
-      render :new
+    if params[:confirm_article]
+      @article = Article.new(
+                            user_id: current_user.id,
+                            title: article_params[:title],
+                            body: article_params[:body],
+                            image: article_params[:image],
+                            tag_list: article_params[:tag_list])
+      if @article.invalid?
+        render :new
+      end
+    elsif params[:create_draft]
+      @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: article_params[:image])
+      @draft.save
+      tagging_draft
+      redirect_to user_drafts_path(current_user)
     end
   end
 
   def create
     if params[:create_article]
-      @article = Article.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body])
+      @article = Article.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: article_params[:image])
       @article.tag_list.add(article_params[:tag_list], parse: true)
       if @article.save
-        get_ep_on_create
-        post_timeline
+        add_five_point
+        create_post
       end
       redirect_to article_path(@article)
     elsif params[:create_draft]
-      @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body])
+      @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: @article.image)
       @draft.save
       tagging_draft
       redirect_to user_drafts_path(current_user)
@@ -44,6 +59,8 @@ class ArticlesController < ApplicationController
   end
 
   def edit
+    @article = Article.find(params[:id])
+    @taggings = Tagging.where(taggable_type: "Article", taggable_id: @article.id)
   end
 
   def show
@@ -54,20 +71,36 @@ class ArticlesController < ApplicationController
     @taggings = Tagging.where(taggable_type: "Article", taggable_id: @article.id)
   end
 
-  def edit_confirm
-  end
-
-  def update
+  def confirm_edit
     @article = Article.find(params[:id])
   end
 
-  def user_ranking
-    @users = User.all
+  def update
+      @article = Article.find(params[:id])
+      @article.tag_list.add(params[:article][:tag_list], parse: true)
+    if params[:confirm_article]
+      @article.update(article_params)
+      redirect_to confirm_edit_path(@article)
+    elsif params[:create_draft]
+      @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: @article.image)
+      @draft.save
+      tagging_draft
+      @article.destroy
+      redirect_to user_drafts_path(current_user)
+    elsif params[:back]
+      @article.update(article_params)
+      redirect_to edit_article_path(@article)
+    end
   end
 
-  def tag_ranking
-    @tags = Tag.all
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+    subtract_five_point
+    redirect_to user_path(@article.user_id)
   end
+
+  private
 
   def tagging_draft
     params[:article][:tag_list].split(",").each do |tag_name|
@@ -85,18 +118,33 @@ class ArticlesController < ApplicationController
     end
   end
 
-  private
+  def user_ranking
+    @users = User.all
+  end
 
-  def post_timeline
+  def tag_ranking
+    @tags = Tag.all
+  end
+
+  def create_post
     Post.create(
-                user_id: current_user.id,
-                post:
-                "#{current_user.user_name}さんが新しい記事を投稿しました。
-                【#{@article.title}】")
+                user_id: @article.user_id,
+                posted_by_id: current_user.id,
+                article_id: @article.id,
+                posted_type: "投稿")
+  end
+
+  def destroy_post
+    post = Post.find_by(
+                    user_id: @article.user_id,
+                    posted_by_id: current_user.id,
+                    article_id: @article.id,
+                    posted_type: "投稿")
+    post.destroy
   end
 
   def article_params
-    params.require(:article).permit(:user_id, :title, :body, :tag_list)
+    params.require(:article).permit(:user_id, :title, :body, :image, :tag_list)
   end
 
 end

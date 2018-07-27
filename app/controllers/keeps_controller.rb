@@ -1,37 +1,52 @@
 class KeepsController < ApplicationController
 
+  before_action :authenticate_user
+
   def index
     @search_keep = Keep.where(user_id: current_user.id).ransack(params[:q])
     @keeps = @search_keep.result.page(params[:page]).reverse_order
   end
 
   def create
-    path = Rails.application.routes.recognize_path(request.referer)
-    keep = Keep.new(article_id: path[:id].to_i, user_id: current_user.id)
+    keep = current_user.keeps.new(article_id: params[:article_id])
     keep.save
     @article = Article.find(keep.article_id)
     @user = User.find(@article.user_id)
-    get_ep_one
-    create_notifications
-    redirect_to article_path(path[:id])
-  end
-
-  def update
+    add_five_point
+    create_notification
+    create_post
   end
 
   def destroy
-    @article = Article.find(params[:article_id])
     keep = current_user.keeps.find_by(article_id: params[:article_id])
     keep.destroy
+    @article = Article.find(params[:article_id])
     @user = User.find(@article.user_id)
-    get_ep_on_release
-    destroy_notifications
-    redirect_to article_path(@article)
+    subtract_five_point
+    destroy_notification
+    destroy_post
   end
 
   private
 
-  def create_notifications
+  def create_post
+    Post.create(
+                user_id: @article.user_id,
+                posted_by_id: current_user.id,
+                article_id: @article.id,
+                posted_type: "キープ")
+  end
+
+  def destroy_post
+    post = Post.find_by(
+                    user_id: @article.user_id,
+                    posted_by_id: current_user.id,
+                    article_id: @article.id,
+                    posted_type: "キープ")
+    post.destroy
+  end
+
+  def create_notification
     return if @article.user_id == current_user.id
     Notification.create(
                       user_id: @article.user_id,
@@ -40,7 +55,7 @@ class KeepsController < ApplicationController
                       notified_type: "キープ")
   end
 
-  def destroy_notifications
+  def destroy_notification
     notification = Notification.find_by(
                     user_id: @article.user_id,
                     notified_by_id: current_user.id,

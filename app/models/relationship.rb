@@ -5,6 +5,7 @@ class Relationship < ApplicationRecord
 	validates :following_id, presence: true
 
 	# Association
+	has_many :notifications
 	belongs_to :follower, class_name: "User"
 	belongs_to :following, class_name: "User"
 

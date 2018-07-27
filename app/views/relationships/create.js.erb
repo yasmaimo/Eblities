@@ -1,0 +1,4 @@
+$("#relationship-of-<%= @user.id %>").html("<%= j(render partial: 'follow_or_unfollow', locals: { user: @user }) %>")
+$("#relationship-of-favorited-<%= @user.id %>").html("<%= j(render partial: 'follow_or_unfollow', locals: { user: @user }) %>")
+$("#relationship-of-kept-<%= @user.id %>").html("<%= j(render partial: 'follow_or_unfollow', locals: { user: @user }) %>")
+$("#relationship-of-commented-<%= @user.id %>").html("<%= j(render partial: 'follow_or_unfollow', locals: { user: @user }) %>")

@@ -6,7 +6,6 @@ class UploadsController < ApplicationController
     respond_to do |format|
       format.json { render :json => { url: @upload.image.url, upload_id: @upload.id } }
     end
-    binding.pry
   end
 
   def destroy

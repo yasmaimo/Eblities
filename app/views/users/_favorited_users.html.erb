@@ -13,7 +13,9 @@
 		      		<%= link_to favorite.article.title, article_path(favorite.article), class: "text-secondary" %>
 	      		</span>
 
-	    			<%= render 'relationships/follow_or_unfollow', user: favorite.user %>
+	      		<span id="relationship-of-favorited-<%= favorite.user_id %>">
+		    			<%= render 'relationships/follow_or_unfollow', user: favorite.user %>
+		    		</span>
 
 		      </td>
 		    </tr>

@@ -1,11 +1,11 @@
-<%= simple_form_for(@article, url: {:controller => :drafts, action: 'create_article'}) do |f| %>
+<%= simple_form_for(@draft , url: {action: 'update'}) do |f| %>
 
 	<div class="container-fluid">
 		<div class="row justify-content-center">
 
 			<div class="col-lg-9 col-sm-10">
 
-				<p class="blank-margin"></p>
+				<p class="text-center h3 font-weight-bold my-2">確認画面</p>
 
 	      <div class="card">
 	        <div class="card-header">
@@ -13,6 +13,9 @@
 
 	            <div class="col-6 ranking-table">
 	            	<%= attachment_image_tag current_user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+	            	<span class="d-none">
+	            		<%= f.attachment_field :image %>
+	            	</span>
 	            	<span class="text-secondary">
 	            		<%= current_user.user_name %>
 	            	</span>
@@ -23,27 +26,37 @@
 
 	        <div class="card-body">
 
-	          <div class="row">
-	            <div class="col-12">
-	            	<h2 class="font-weight-bold text-dark mt-1">
-	            		<%= @draft.title %>
-	            		<%= f.hidden_field :title, :value => @draft.title %>
-	            	</h2>
-	            </div>
-	          </div>
+						<div class="card card-size">
 
-		        <div class="my-3">
-			        <% @draft.tag_list.each do |tag| %>
-			        	<span class="badge d-inline tag-color"><%= tag %></span>
-			        <% end %>
-		        </div>
+				      <%= attachment_image_tag @draft, :image, fallback: "no_image.jpg", class: "img-trim"  %>
+				      <div class="card-img-overlay article-bg-index">
 
-		        <span class="d-none"><%= text_field_tag 'article[tag_list]', @draft.tag_list.join(',') %></span>
+			          <div class="row">
+			            <div class="col-12">
+			            	<h1 class="font-weight-bold text-border text-white h3 mt-1">
+			            		<%= @draft.title %>
+			            		<%= f.hidden_field :title %>
+			            	</h1>
+			            </div>
+			          </div>
 
-		        <p class="title-border"></p>
+				        <div class="my-3">
+					        <% @draft.tag_list.each do |tag| %>
+					        	<span class="badge tag-color p-1 text-white">
+					        		<%= tag %>
+				        		</span>
+					        <% end %>
+				        </div>
+
+				      </div>
+				    </div>
+
+		        <span class="d-none"><%= text_field_tag 'draft[tag_list]', @draft.tag_list.join(',') %></span>
+
+		        <p class="title-border mt-2"></p>
 		        <div class="col-sm-12 mt-4" style="overflow: scroll;">
 		            <%= raw @draft.body %>
-		            <%= f.hidden_field :body, :value => @draft.body %>
+		            <%= f.hidden_field :body %>
 		        </div>
 
 		      </div>
@@ -53,11 +66,11 @@
 		  <div class="left-sidebar col-lg-3 d-lg-block d-sm-none">
 		  	<div class="list-group left-sidebar-link d-lg-block d-none">
 
-			    <%= f.submit "投稿する", name: "#{@draft.id}", class: "list-group-item list-group-item-action nav-font bg-danger text-white mb-2" %>
+			    <%= f.submit "投稿する", name: "create_article", class: "list-group-item list-group-item-action nav-font bg-danger text-white mb-2" %>
 
-			    <%= link_to "修正する", user_draft_path(@draft), class: "list-group-item list-group-item-action nav-font mb-2" %>
+			    <%= f.submit "修正する", name: "back", class: "list-group-item list-group-item-action nav-font mb-2" %>
 
-			    <%= link_to "下書き一覧に戻る", user_drafts_path(current_user), class: "list-group-item list-group-item-action nav-font mb-2" %>
+			    <%= f.submit "下書きとして保存する", name: "update_draft", class: "list-group-item list-group-item-action nav-font mb-2" %>
 
 				</div>
 		  </div>
@@ -69,11 +82,11 @@
 			  </p>
 
 			  <p>
-			  	<%= link_to "修正する", user_draft_path(@draft), class: "col bg-white btn btn-sm text-dark border" %>
+			  	<%= f.submit "修正する", name: "back", class: "col btn btn-sm text-secondary border" %>
 			  </p>
 
 			  <p>
-			  	<%= link_to "下書き一覧に戻る", user_drafts_path(current_user), class: "col bg-white btn btn-sm text-dark border" %>
+			  	<%= f.submit "下書きとして保存する", name: "update_draft", class: "col btn btn-sm text-secondary border" %>
 			  </p>
 
 			</div>

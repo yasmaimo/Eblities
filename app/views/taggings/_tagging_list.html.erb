@@ -1,0 +1,13 @@
+<% if Tagging.exists?(taggable_type: "User", taggable_id: user.id) %>
+
+	<% taggings.each do |tagging| %>
+		<span class="badge tag-color p-1">
+			<%= link_to tagging.tag.name, tag_path(tagging.tag_id), class: "text-white" %>
+		</span>
+	<% end %>
+
+<% else %>
+
+	<p class="text-secondary">未登録</p>
+
+<% end %>

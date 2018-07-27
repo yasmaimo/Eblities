@@ -3,7 +3,7 @@
 
 		<%= render 'users/setting_sidebar' %>
 
-		<div class="col-lg-10 col-sm-12 mt-lg-5">
+		<div class="col-lg-10 col-sm-12 content-margin">
 
 			<div class="card">
 	      <div class="card-header">
@@ -51,24 +51,6 @@
 
 		        	<p class="col-12 text-center small">登録すると公開されますのでご注意ください</p>
 
-		          <div class="col-lg-4 col-sm-12">
-		          	<span class="small text-secondary">
-		          		姓
-		          	</span><br>
-		          	<span>
-		          		<%= f.text_field :family_name, placeholder: "姓" %>
-		          	</span><br>
-		          </div>
-
-		          <div class="col-lg-4 col-sm-12">
-		          	<span class="small text-secondary">
-		          		名
-		          	</span><br>
-		          	<span>
-		          		<%= f.text_field :given_name, placeholder: "名" %>
-		          	</span><br>
-		          </div>
-
 		          <div class="col-12">
 		          	<span class="small text-secondary">
 		          		自分のブログ、WEBサイト
@@ -89,6 +71,10 @@
 
 		          <div class="col-12 mt-3 text-center">
 		          	<%= f.submit "登録・変更", class: "btn btn-primary btn-sm" %>
+		          </div>
+
+		          <div class="col-12 mt-3 text-center">
+		          	<%= link_to "退会する", confirm_unsubscribe_path, class: "text-secondary small" %>
 		          </div>
 
 		        </div>

@@ -1,0 +1,45 @@
+<div id="tagging-list-of-<%= @user.id %>">
+
+	<%= render partial: 'taggings/tagging_list', locals: {taggings: taggings, user: user} %>
+
+</div>
+
+<% if user == current_user %>
+
+	<button type="button" class="btn btn-secondary btn-sm mt-3" data-toggle="modal" data-target="#exampleModalLong">
+	  タグを編集する
+	</button>
+
+	<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <p class="modal-title font-weight-bold" id="exampleModalLongTitle">タグ編集</p>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+
+	      	<div id="modal-tagging-list-of-<%= user.id %>">
+
+	      		<%= render partial: 'taggings/modal_tagging_list', locals: {taggings: taggings} %>
+
+	      	</div>
+
+	      	<div id="modal-tagging-form-of-<%= user.id %>">
+
+	      		<%= render partial: 'taggings/modal_tagging_form', locals: {tag: tag, user: user} %>
+
+	      	</div>
+
+	      </div>
+
+	      <div class="modal-footer">
+
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+<% end %>

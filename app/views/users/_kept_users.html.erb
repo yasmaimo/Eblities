@@ -13,7 +13,9 @@
 		      		<%= link_to keep.article.title, article_path(keep.article), class: "text-secondary" %>
 	      		</span>
 
-	      		<%= render 'relationships/follow_or_unfollow', user: keep.user %>
+	      		<span id="relationship-of-kept-<%= keep.user_id %>">
+		      		<%= render 'relationships/follow_or_unfollow', user: keep.user %>
+		      	</span>
 
 		      </td>
 		    </tr>

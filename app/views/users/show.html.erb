@@ -1,9 +1,13 @@
-<div class="container">
-	<div class="row">
+<div class="container-fluid">
+	<div class="row justify-content-center">
 
-		<%= render 'users/info_sidebar' %>
+		<div class="left-sidebar col-lg-2 d-none d-lg-block">
 
-		<div class="col-lg-9 col-sm-11">
+			<%= render 'articles/nav_bar' %>
+
+		</div>
+
+		<div class="col-lg-7 col-sm-11">
 
 			<%= render 'users/nav_bar' %>
 
@@ -36,13 +40,9 @@
 		    			<% end %>
 		    		<% end %>
 
-				    <tbody class="page">
+				    <tbody class="page" id="user-articles">
 
-				    	<% @user_article.each do |article| %>
-
-				    		<%= render 'articles/articles', article: article %>
-
-					    <% end %>
+				    	<%= render partial: 'articles/articles', locals: {articles: @user_articles} %>
 
 				    </tbody>
 				  </table>
@@ -60,10 +60,12 @@
 	    <% end %>
 
 	    <div class="row justify-content-center">
-	    		<p class="col-12"><%= paginate @user_article %></p>
+	    		<p class="col-12"><%= paginate @user_articles %></p>
 	    </div>
 
 		</div>
+
+		<%= render partial: 'users/info_sidebar', locals: {taggings: @taggings, tag: @tag, user: @user} %>
 
 	</div>
 </div>
