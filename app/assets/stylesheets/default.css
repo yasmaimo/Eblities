@@ -11,16 +11,19 @@ body {
 
 .left-sidebar {
   position: absolute;
-  top: 46px;
+  top: 23px;
 }
 
 .left-sidebar-link {
   position: fixed;
 }
 
+.content-margin {
+  margin-top: 21px;
+}
+
 .right-sidebar {
-  margin-top: 47px;
-  min-width:320px;
+  margin-top: 41px;
 }
 
 .right-sidebar-link {
@@ -60,8 +63,16 @@ footer {
   font-weight: bolder;
 }
 
+.nav-no-select {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 .nav-font {
   font-size: 14px;
+}
+
+.tab-font {
+  font-size: 11px;
 }
 
 .category {

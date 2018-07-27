@@ -18,18 +18,38 @@
         <%= render 'layouts/header_user' %>
         <div class="container-fluid">
 		      <div class="row small">
-		      	<div class="col-3 d-lg-block d-none text-center" style="background-color: rgba(0, 0, 0, 0.7);">
-		      		<%= link_to "最新記事", articles_path, class: "text-white" %>
-		      	</div>
-		      	<div class="col-3 d-lg-block d-none text-center" style="background-color: rgba(240, 30, 30, 0.7);">
-		      		<%= link_to "ユーザータイムライン", user_timeline_path, class: "text-white" %>
-		      	</div>
-		      	<div class="col-3 d-lg-block d-none text-center" style="background-color: rgba(30, 144, 255, 0.7);">
-		      		<%= link_to "タグタイムライン", tag_timeline_path, class: "text-white" %>
-		      	</div>
-		      	<div class="col-3 d-lg-block d-none text-center" style="background-color: rgba(90, 185, 144, 0.7);">
-		      		<%= link_to "キープ一覧", keeps_path, class: "text-white" %>
-		      	</div>
+
+		      	<% if controller.controller_name == "articles" && controller.action_name == "index" %>
+			      	<div class="col-3 d-lg-block d-none text-center border border-bottom-0" style="background-color: rgba(100, 100, 100, 0.7);">
+			      <% else %>
+			      	<div class="col-3 d-lg-block d-none text-center nav-no-select">
+			      <% end %>
+			      		<%= link_to "最新記事", articles_path, class: "text-white" %>
+			      	</div>
+
+		      	<% if controller.controller_name == "articles" && controller.action_name == "user_timeline" %>
+			      	<div class="col-3 d-lg-block d-none text-center border border-bottom-0" style="background-color: rgba(240, 30, 30, 0.7);">
+			      <% else %>
+			      	<div class="col-3 d-lg-block d-none text-center nav-no-select">
+			      <% end %>
+			      		<%= link_to "ユーザータイムライン", user_timeline_path, class: "text-white" %>
+			      	</div>
+
+			      <% if controller.controller_name == "articles" && controller.action_name == "tag_timeline" %>
+			      	<div class="col-3 d-lg-block d-none text-center border border-bottom-0" style="background-color: rgba(30, 144, 255, 0.7);">
+			      <% else %>
+			      	<div class="col-3 d-lg-block d-none text-center nav-no-select">
+			      <% end %>
+			      		<%= link_to "タグタイムライン", tag_timeline_path, class: "text-white" %>
+			      	</div>
+
+			      <% if controller.controller_name == "keeps" && controller.action_name == "index" %>
+			      	<div class="col-3 d-lg-block d-none text-center border border-bottom-0" style="background-color: rgba(90, 185, 144, 0.7);">
+			      <% else %>
+			      	<div class="col-3 d-lg-block d-none text-center nav-no-select">
+			      <% end %>
+			      		<%= link_to "キープ一覧", keeps_path, class: "text-white" %>
+			      	</div>
 
 		      	<div class="col-12 d-lg-none">
 			      	<div class="row">
@@ -110,6 +130,11 @@
 			<nav class="navbar navbar-expand-sm navbar-light">
 			  <%= link_to "Eblities", root_path, class: "h3 logo text-secondary", style: "text-decoration: none;"%>
 
+<%
+=begin
+%>
+
+
 			  <div class="navbar navbar-light ml-auto">
 
 			    <ul class="navbar-nav">
@@ -125,6 +150,10 @@
 			    </ul>
 
 			  </div>
+<%
+=end
+%>
+
 			</nav>
 		</footer>
 

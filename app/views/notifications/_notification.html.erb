@@ -1,18 +1,37 @@
 <li class="small my-1 text-center">
 
-	<% user = User.find(notification.notified_by_id) %>
+	<% if notification.notified_by_id.present? %>
+		<% user = User.find(notification.notified_by_id) %>
 
-	<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 30px; max-width: 30px;"%>
+		<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 30px; max-width: 30px;"%>
 
-	<%= link_to "#{user.user_name}", user_path(notification.user_id) %>さん<br>
+		<%= link_to "#{user.user_name}", user_path(notification.user_id) %>さん<br>
+	<% end %>
 
-	<% if "#{notification.notified_type}" == "キープ" %>
+	<% if "#{notification.notified_type}" == "サインアップ" %>
+		<p class="h5">
+			ようこそEblitiesへ！
+		</p>
+
+		<p>
+			プロフィール登録がお済みでない方は<br>
+			<%= link_to "プロフィール設定", user_profile_path(current_user) %><br>
+			で登録しましょう。
+		</p>
+
+		<p>
+			アカウントのセキュリティを高めるために<br>
+			<%= link_to "二段階認証の設定", user_two_factor_authentication_path(current_user) %><br>
+			をオススメしています。
+		</p>
+
+	<% elsif "#{notification.notified_type}" == "キープ" %>
 
 		<%= link_to "あなたの記事を#{notification.notified_type}しました", link_through_path(notification) %>
 
 	<% elsif "#{notification.notified_type}" == "フォロー" %>
 
-		<%= link_to "あなたを#{notification.notified_type}しました", link_through_path(notification) %>
+		<%= link_to "あなたを#{notification.notified_type}しました", followers_path(current_user) %>
 
 	<% else %>
 

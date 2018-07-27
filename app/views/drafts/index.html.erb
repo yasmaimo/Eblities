@@ -1,9 +1,13 @@
-<div class="container">
+<div class="container-fluid">
 	<div class="row">
 
-		<%= render partial: 'users/info_sidebar', locals: {taggings: @taggings, tag: @tag, user: @user} %>
+		<div class="left-sidebar col-lg-2 d-none d-lg-block">
 
-		<div class="col-lg-9 col-sm-11">
+			<%= render 'articles/nav_bar' %>
+
+		</div>
+
+		<div class="col-lg-7 col-sm-11">
 
 			<%= render 'users/nav_bar' %>
 
@@ -65,6 +69,8 @@
 	    </div>
 
 		</div>
+
+		<%= render partial: 'users/info_sidebar', locals: {taggings: @taggings, tag: @tag, user: @user} %>
 
 	</div>
 </div>

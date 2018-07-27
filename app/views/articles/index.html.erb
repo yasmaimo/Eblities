@@ -11,31 +11,42 @@
 
 		</div>
 
-		<div class="col-lg-6 col-sm-10">
-
-			<div class="short-margin">
-
-				<%= render 'articles/nav_tag' %>
-
-			</div>
+		<div class="col-lg-7 col-sm-11 content-margin">
 
 			<% if Article.exists? %>
+				<% if @search.result.count > 0 %>
 
-			  <table class="table bg-white" id="articles">
-				  <thead>
-				    <tr>
-				    	<th>
-			    			<span>最新の記事</span>
-				    	</th>
-				    </tr>
-				  </thead>
+				  <table class="table bg-white" id="articles">
+					  <thead>
+					    <tr>
+					    	<th>
+				    			<span><%= @articles.count %>件の記事</span>
+					    	</th>
+					    </tr>
+					  </thead>
 
-			    <tbody class="page" id="all-articles" >
+		    		<% if params[:q].present? %>
+		    			<% if params[:q][:title_or_body_cont] != "" %>
+			    			<p class="text-center font-weight-bold my-3">"<%= params[:q][:title_or_body_cont] %>"の検索結果</p>
+		    			<% end %>
+		    		<% end %>
 
-			    	<%= render 'articles/articles', articles: @articles %>
+				    <tbody class="page" id="all-articles" >
 
-			    </tbody>
-			  </table>
+				    	<%= render 'articles/articles', articles: @articles %>
+
+				    </tbody>
+				  </table>
+
+			  <% elsif @search.result.count == 0 %>
+
+			  	<p class="text-center font-weight-bold mt-3">"<%= params[:q][:title_or_body_cont] %>"を含む記事はありません</p>
+
+	        <p class="text-center mt-2">
+	          <%= link_to "記事一覧へ戻る", articles_path, class: "border-bottom" %>
+	        </p>
+
+			 	<% end %>
 
 	    <% else %>
 
@@ -57,19 +68,31 @@
 
 	  </div>
 
-	  <div class="col-lg-3 col-md-10 col-sm-10 right-sidebar">
+	  <div class="col-lg-3 col-sm-11 content-margin">
 
-				<table class="table bg-white">
+      <div class="border rounded small bg-white">
 
-					<%= render 'articles/user_ranking' %>
+        <h5 class="text-center mt-2">
+          <%= link_to "最新記事", articles_path, class: "border-bottom" %>
+        </h5>
 
-				</table>
+        <div class="px-2 pb-3">
+          このページでは、投稿された最新の記事を見ることができます。
+        </div>
 
-				<table class="table bg-white">
+      </div>
 
-					<%= render 'articles/tag_ranking' %>
+			<table class="table bg-white mt-3">
 
-				</table>
+				<%= render 'articles/user_ranking' %>
+
+			</table>
+
+			<table class="table bg-white">
+
+				<%= render 'articles/tag_ranking' %>
+
+			</table>
 
 		</div>
 

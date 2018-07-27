@@ -51,7 +51,13 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'users/:id/favorites', to: 'users#favorites', as: 'favorites'
+
+  get 'users/:id/comments', to: 'users#comments', as: 'comments'
+
   get 'users/:id/followers', to: 'users#followers', as: 'followers'
+
+  get 'users/:id/followings', to: 'users#followings', as: 'followings'
 
   get 'users/:id/account', to: 'users#account', as: 'user_account'
 
@@ -61,7 +67,7 @@ Rails.application.routes.draw do
 
   get 'users/:id/two_factor_authentication', to: 'users#two_factor_authentication', as: 'user_two_factor_authentication'
 
-  get 'users/:id/two_factor_authentication_setting', to: 'users#two_factor_authentication_setting', as: 'users_two_factor_authentication_setting'
+  get 'users/:id/two_factor_authentication_setting', to: 'users#two_factor_authentication_setting', as: 'user_two_factor_authentication_setting'
 
   get 'users/:id/confirm_unsubscribe', to: 'users#confirm_unsubscribe', as: 'confirm_unsubscribe'
 

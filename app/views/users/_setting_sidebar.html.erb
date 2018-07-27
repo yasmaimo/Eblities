@@ -13,6 +13,10 @@
 				</span>
 		<% end %>
 
+<%
+=begin
+%>
+
 		<%= link_to user_account_path(@user) do %>
 
 			<% if controller.action_name == "account" %>
@@ -24,6 +28,11 @@
 					<%= fa_icon("users", text: "SNS連携") %>
 				</span>
 		<% end %>
+
+<%
+=end
+%>
+
 
 		<%= link_to user_two_factor_authentication_path(@user) do %>
 			<% if controller.action_name == "two_factor_authentication" %>

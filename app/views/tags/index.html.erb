@@ -5,139 +5,26 @@
 <div class="container-fluid">
 	<div class="row justify-content-center">
 
-		<p class="col-12 d-lg-block d-none"></p>
+		<div class="left-sidebar col-lg-2 d-none d-lg-block">
 
-		<div class="col-lg-3 col-sm-11">
-			<div class="row">
-				<div class="col-12">
+			<%= render 'articles/nav_bar' %>
 
-					<p>
-						<%= link_to "タグ一覧", tags_path, class: "btn btn-primary col mt-lg-0 mt-3 font-weight-bold" %>
-					</p>
+		</div>
 
-					<div class="border rounded small mb-3">
-						<div class="p-2">
-							投稿されている記事のタグの一覧です。あなたの関心のあるタグを見つけましょう。新しく自分でタグを登録することもできます。
-						</div>
-						<p class="text-center">
-						  <a class="text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-						    タグとは？
-						  </a>
-						</p>
-						<div class="collapse p-2" id="collapseExample">
+		<div class="d-lg-none col-sm-11 content-margin">
 
-					    <p>
-					    	タグとは記事に関係のある分野、もしくはあなたの関心のある分野を表します。エブリティーズには、クリエイティブな事に関係があればどんな分野の記事を投稿しても大丈夫です。積極的にタグを登録しましょう！
-					    </p>
+			<%= render 'description_of_tags_index' %>
 
-				    	<ul>
-				    		<span>記事にタグを登録すると・・・</span>
-				    		<li>タグタイムラインにあなたの記事が表示されます</li>
-				    		<li>タグ検索からあなたの記事を見つけられるようになります</li>
-				    	</ul>
+		</div>
 
-				    	<ul>
-				    		<span>ユーザー情報にタグを登録すると・・・</span>
-				    		<li>同じタグを登録しているユーザーを見つけたり、他のユーザーがあなたを見つけられたりできるようになります</li>
-				    		<li>登録しているタグの最新記事が見られるタグタイムライン機能が使えるようになります</li>
-				    	</ul>
+		<div class="col-lg-7 col-sm-11 content-margin">
 
-					    <p class="text-white">
-					      <span class="text-dark">例 :</span>
-					      <span class="badge d-inline tag-color">音楽</span>
-					      <span class="badge d-inline tag-color">DTM</span>
-					      <span class="badge d-inline tag-color">イラスト</span>
-					      <span class="badge d-inline tag-color">CG</span>
-					      <span class="badge d-inline tag-color">基礎知識</span>
-					    </p>
-
-						</div>
-					</div>
-
-			    <%= search_form_for @search_tag do |f| %>
-			      <div class="form-inline my-lg-0 my-2">
-			        <%= f.text_field :name_cont, class: "col-sm-10 col-xs-12 form-control", placeholder: 'タグを検索' %>
-			        <%= f.button fa_icon("search"), class: 'col-sm-2 col-xs-12 btn btn-outline-dark my-lg-0 my-2'%>
-			      </div>
-			    <% end %>
-
-				</div>
-
-		    <% if user_signed_in? %>
-
-		    	<div class="col-12 text-center mt-3  d-lg-block d-none">
-
-						<div class="card mb-3">
-						  <div class="card-header text-center font-weight-bold">
-						  	あなたが関心を持つタグ
-						  </div>
-						  <div class="card-body">
-						  	<% @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id) %>
-						  	<%= render partial: 'taggings/tagging', locals: {taggings: @taggings, tag: @tag, user: @user} %>
-
-						  </div>
-						</div>
-
-				  </div>
-
-					<div class="col-12 d-lg-block d-none">
-						<div class="card mb-3">
-
-						  <div class="card-header text-center font-weight-bold">共通のタグユーザー</div>
-						  <div class="card-body" id="common-users-of-<%= @user.id %>">
-
-								<%= render 'tags/common_users' %>
-
-						  </div>
-						</div>
-
-					</div>
-
-				<% end %>
-
-			</div>
-
-			<% if user_signed_in? %>
-
-				<div class="accordion d-lg-none d-block mb-3" id="accordionExample">
-				  <div class="card">
-				    <div class="card-header card-header text-center" id="headingOne" style ="background-color: #125699;">
-				      <h5 class="mb-0">
-				        <button class="btn btn-link collapsed font-weight-bold text-white" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-				          あなたが関心を持つタグ <%= fa_icon("caret-down", text: "") %>
-				        </button>
-				      </h5>
-				    </div>
-
-				    <div id="collapseOne" class="collapse card-body text-center" aria-labelledby="headingOne" data-parent="#accordionExample">
-
-			      	<%= render 'tags/my_tags' %>
-
-				    </div>
-				  </div>
-
-				  <div class="card">
-				    <div class="card-header bg-primary text-center" id="headingTwo">
-				      <h5 class="mb-0">
-				        <button class="btn btn-link collapsed font-weight-bold text-white" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-				          共通のタグユーザー <%= fa_icon("caret-down", text: "") %>
-				        </button>
-				      </h5>
-				    </div>
-				    <div id="collapseTwo" class="collapse card-body" aria-labelledby="headingTwo" data-parent="#accordionExample">
-
-				      <%= render 'tags/common_users' %>
-
-				    </div>
-				  </div>
-
-				</div>
-
-			<% end %>
-
-	  </div>
-
-		<div class="col-lg-6 col-sm-11">
+	    <%= search_form_for @search_tag do |f| %>
+	      <div class="form-inline mb-2">
+	        <%= f.text_field :name_cont, class: "col-sm-10 col-xs-12 form-control", placeholder: 'タグを検索' %>
+	        <%= f.button fa_icon("search"), class: 'col-sm-2 col-xs-12 btn btn-outline-dark my-lg-0 my-2'%>
+	      </div>
+	    <% end %>
 
 			<% if Tag.exists? %>
 				<% if @search_tag.result.count > 0 %>
@@ -182,7 +69,51 @@
 
 		</div>
 
-		<div class="col-lg-3 col-sm-11">
+		<div class="col-lg-3 col-sm-11 content-margin">
+
+			<div class="row">
+				<div class="col-12 d-lg-block d-none">
+
+					<%= render 'tags/description_of_tags_index' %>
+
+				</div>
+
+		    <% if user_signed_in? %>
+
+		    	<div class="col-12 text-center mt-3">
+
+						<div class="card mb-3">
+						  <div class="card-header text-center font-weight-bold">
+						  	あなたが関心を持つタグ
+						  </div>
+						  <div class="card-body">
+						  	<% @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id) %>
+						  	<%= render partial: 'taggings/tagging', locals: {taggings: @taggings, tag: @tag, user: @user} %>
+
+						  </div>
+						</div>
+
+				  </div>
+
+				  <a name="link"></a>
+
+					<div class="col-12">
+						<div class="card mb-3">
+
+						  <div class="card-header text-center font-weight-bold">共通のタグユーザー</div>
+						  <div class="card-body" id="common-users-of-<%= @user.id %>">
+
+								<%= render 'tags/common_users' %>
+
+						  </div>
+						</div>
+
+					</div>
+
+				<% end %>
+
+			</div>
+
 			<div class="row">
 
 				<div class="col-12">
@@ -195,9 +126,8 @@
 
 				</div>
 			</div>
+
 		</div>
-
-
 	</div>
 </div>
 

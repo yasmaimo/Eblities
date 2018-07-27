@@ -1,106 +1,26 @@
 <div class="container-fluid">
 	<div class="row justify-content-center">
 
-		<p class="col-12 d-lg-block d-none"></p>
+		<div class="left-sidebar col-lg-2">
 
-		<div class="col-lg-3 col-sm-11">
+			<%= render 'articles/nav_bar' %>
 
-			<p>
-				<%= link_to "ユーザー一覧", users_path, class: "btn btn-danger col mt-lg-0 mt-3" %>
-			</p>
+		</div>
 
-			<div class="border rounded small mb-3">
-				<div class="p-2">
-					登録しているユーザーの一覧です。現在<%= User.count %>名のユーザーがいます。ユーザーをフォローするとイイことがあるかも？
-				</div>
-				<p class="text-center">
-				  <a class="text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-				    フォローって？イイことって？
-				  </a>
-				</p>
-				<div class="collapse p-2" id="collapseExample">
+		<div class="d-lg-none col-sm-11 content-margin">
 
-			    <p>
-			    	ユーザーをフォローすると、ユーザータイムライン機能が使えるようになります。ユーザータイムラインには下記のイイことがあります。
-			    </p>
+			<%= render 'description_of_users_index' %>
 
-		    	<ul>
-		    		<span>フォローしたユーザーの・・・</span>
-		    		<li>投稿した記事を見る</li>
-		    		<li>イイねした記事を見る</li>
-		    		<li>キープした記事を見る</li>
-		    		<li>コメントした記事を見る</li>
-		    	</ul>
+		</div>
 
-			    <p>
-			    	興味のあるユーザーをフォローすれば、あなたにとって有益な記事を見つけやすくなります。積極的にフォローしましょう！
-			    </p>
-
-				</div>
-			</div>
+		<div class="col-lg-7 col-sm-11 content-margin">
 
 	    <%= search_form_for @search_user do |f| %>
-	      <div class="form-inline my-lg-0 my-2">
+	      <div class="form-inline mb-2">
 	        <%= f.text_field :user_name_cont, class: "col-sm-10 col-xs-12 form-control", placeholder: 'ユーザーを検索' %>
 	        <%= f.button fa_icon("search"), class: 'col-sm-2 col-xs-12 btn btn-outline-dark my-lg-0 my-2'%>
 	      </div>
 	    <% end %>
-
-		  <% if user_signed_in? %>
-
-				<div class="accordion my-3" id="accordionExample">
-				  <div class="card">
-				    <div class="favorite-bg-color text-center" id="headingOne">
-				      <p class="mb-0">
-				        <button class="btn btn-link collapsed text-white" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="font-size: 14px;">
-				          最近イイねしてくれたユーザー <%= fa_icon("caret-down", text: "") %>
-				        </button>
-				      </p>
-				    </div>
-
-				    <div id="collapseOne" class="collapse card-body" aria-labelledby="headingOne" data-parent="#accordionExample">
-
-			      	<%= render 'users/favorited_users' %>
-
-				    </div>
-				  </div>
-
-				  <div class="card">
-				    <div class="keep-bg-color text-center" id="headingTwo">
-				      <p class="mb-0">
-				        <button class="btn btn-link collapsed text-white" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="font-size: 14px;">
-				          最近キープしてくれたユーザー <%= fa_icon("caret-down", text: "") %>
-				        </button>
-				      </p>
-				    </div>
-				    <div id="collapseTwo" class="collapse card-body" aria-labelledby="headingTwo" data-parent="#accordionExample">
-
-				      <%= render 'users/kept_users' %>
-
-				    </div>
-				  </div>
-
-				  <div class="card">
-				    <div class="comment-bg-color text-center" id="headingThree">
-				      <p class="mb-0">
-				        <button class="btn btn-link collapsed text-white" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="font-size: 14px;">
-				          最近コメントをくれたユーザー <%= fa_icon("caret-down", text: "") %>
-				        </button>
-				      </p>
-				    </div>
-				    <div id="collapseThree" class="collapse card-body" aria-labelledby="headingThree" data-parent="#accordionExample">
-
-							<%= render 'users/commented_users' %>
-
-				    </div>
-				  </div>
-				</div>
-
-			<% end %>
-
-		</div>
-
-		<div class="col-lg-9 col-sm-11">
 
 			<% if User.exists? %>
 				<% if @search_user.result.count > 0 %>
@@ -156,5 +76,70 @@
 	    </div>
 
 		</div>
+
+		<div class="col-lg-3 col-sm-11 content-margin">
+
+			<span class="d-lg-block d-none">
+				<%= render 'description_of_users_index' %>
+			</span>
+
+		  <% if user_signed_in? %>
+
+		  	<div class="bg-navy text-white text-center">
+			  	<a name="link">最近繋がりがあったユーザー</a>
+			  </div>
+
+				<div class="accordion my-3" id="accordion">
+				  <div class="card">
+				    <div class="favorite-bg-color text-center" id="headingOne">
+				      <p class="mb-0">
+				        <button class="btn btn-link collapsed text-white" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="font-size: 14px;">
+				          最近イイねしてくれたユーザー <%= fa_icon("caret-down", text: "") %>
+				        </button>
+				      </p>
+				    </div>
+
+				    <div id="collapseOne" class="collapse card-body show" aria-labelledby="headingOne" data-parent="#accordion">
+
+			      	<%= render 'users/favorited_users' %>
+
+				    </div>
+				  </div>
+
+				  <div class="card">
+				    <div class="keep-bg-color text-center" id="headingTwo">
+				      <p class="mb-0">
+				        <button class="btn btn-link collapsed text-white" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="font-size: 14px;">
+				          最近キープしてくれたユーザー <%= fa_icon("caret-down", text: "") %>
+				        </button>
+				      </p>
+				    </div>
+				    <div id="collapseTwo" class="collapse card-body" aria-labelledby="headingTwo" data-parent="#accordion">
+				      <%= render 'users/kept_users' %>
+
+				    </div>
+				  </div>
+
+				  <div class="card">
+				    <div class="comment-bg-color text-center" id="headingThree">
+				      <p class="mb-0">
+				        <button class="btn btn-link collapsed text-white" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="font-size: 14px;">
+				          最近コメントをくれたユーザー <%= fa_icon("caret-down", text: "") %>
+				        </button>
+				      </p>
+				    </div>
+				    <div id="collapseThree" class="collapse card-body" aria-labelledby="headingThree" data-parent="#accordion">
+
+							<%= render 'users/commented_users' %>
+
+				    </div>
+				  </div>
+				</div>
+
+			<% end %>
+
+		</div>
+
+
 	</div>
 </div>

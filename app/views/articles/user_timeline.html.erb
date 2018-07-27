@@ -7,13 +7,7 @@
 
 		</div>
 
-		<div class="col-lg-6 col-sm-10">
-
-			<div class="short-margin">
-
-				<%= render 'articles/nav_tag' %>
-
-			</div>
+		<div class="col-lg-7 col-sm-11 content-margin">
 
 			<% if current_user.followings.present? %>
 
@@ -22,10 +16,7 @@
 				    <tr>
 				    	<th>
 					    	<div class="row">
-					    		<div class="col-5">
-					    			<span>タイムライン</span>
-					    		</div>
-					    		<div class="col-7 text-right">
+					    		<div class="col-12">
 					    			<span>フォロー<%= current_user.followings.count %></span>
 					    			/
 					    			<span>フォロワー<%= current_user.followers.count %></span>
@@ -70,7 +61,7 @@
 
 			    <tbody>
 			    	<% @posts.each do |post| %>
-				    	<% if Relationship.find_by(follower_id: post.posted_by_id) %>
+				    	<% if Relationship.find_by(following_id: post.posted_by_id) %>
 				    		<% if post.posted_by_id != current_user.id && post.user_id != current_user.id %>
 
 					    		<% user = User.find(post.posted_by_id) %>
@@ -259,7 +250,7 @@
 				  <thead>
 				    <tr>
 				    	<th class="text-center">
-			    			<span>タイムライン</span>
+			    			<span>ユーザータイムライン</span>
 				    	</th>
 				    </tr>
 				  </thead>
@@ -273,19 +264,43 @@
 
 	  </div>
 
-	  <div class="col-lg-3 col-md-10 col-sm-10 right-sidebar">
+	  <div class="col-lg-3 col-sm-11 content-margin">
 
-				<table class="table bg-white">
+			<div class="border rounded small bg-white">
 
-					<%= render 'articles/user_ranking' %>
+				<h5 class="text-center mt-2">
+					<%= link_to "ユーザータイムライン", user_timeline_path, class: "border-bottom" %>
+				</h5>
 
-				</table>
+				<div class="px-2">
+					ユーザータイムラインでは、あなたがフォローしているユーザーの投稿、イイね、キープ、コメントした記事を見ることができます。
+				</div>
+				<p class="text-center mt-2">
+				  <a class="text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+				    もっと詳しく!
+				  </a>
+				</p>
+				<div class="collapse p-2" id="collapseExample">
 
-				<table class="table bg-white">
+			    <p>
+			    	"<%= link_to "最新記事", articles_path %>"や"<%= link_to "タグを探す", tags_path %>"で良い記事を投稿しているユーザーを見つけたり、
+			    	"<%= link_to "ユーザーを探す", users_path %>"で興味のあるユーザーを見つけたらフォローしてみましょう。あなたのユーザータイムラインにフォローしているユーザーの投稿、イイね、キープ、コメントした記事が表示されます。
+			    </p>
 
-					<%= render 'articles/tag_ranking' %>
+		    	<ul>
+		    		<span>あなたがフォローされると・・・</span>
+		    		<li>2EP入手できます。</li>
+		    		<li>フォロワー(あなたをフォローしているユーザー)のタイムラインにあなたの投稿、イイね、キープ、コメントした記事が表示されるので、あなたの記事が多くの人に読んでもらえるかもしれません。</li>
+		    	</ul>
 
-				</table>
+				</div>
+			</div>
+
+			<table class="table bg-white mt-3">
+
+				<%= render 'articles/user_ranking' %>
+
+			</table>
 
 		</div>
 

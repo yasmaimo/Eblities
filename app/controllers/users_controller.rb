@@ -64,10 +64,30 @@ class UsersController < ApplicationController
     end
   end
 
-  def following
+  def favorites
     @user  = User.find(params[:id])
-    @users = @user.followings
-    render 'show_follow'
+    @search_favorite = @user.favorites.ransack(params[:q])
+    @favorites = @search_favorite.result.page(params[:page]).reverse_order
+    @tag = Tag.new
+    @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id)
+  end
+
+  def comments
+    @user  = User.find(params[:id])
+    @search_comment = @user.comments.ransack(params[:q])
+    @comments = @search_comment.result.page(params[:page]).reverse_order
+    @tag = Tag.new
+    @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id)
+    @articles = Article.where(user_id: @user.id)
+  end
+
+  def followings
+    @user  = User.find(params[:id])
+    @search_following = @user.followings.ransack(params[:q])
+    @followings = @search_following.result.page(params[:page]).reverse_order
+    @tag = Tag.new
+    @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id)
+    @articles = Article.where(user_id: @user.id)
   end
 
   def followers

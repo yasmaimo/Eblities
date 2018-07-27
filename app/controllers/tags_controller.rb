@@ -8,7 +8,6 @@ class TagsController < ApplicationController
     end
     @user = current_user
     @tag = Tag.new
-    # @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id)
   end
 
   def create
