@@ -15,11 +15,11 @@
       <% if admin_signed_in? %>
         <%= render 'layouts/header_admin' %>
       <% elsif  user_signed_in? %>
-        <%= render 'layouts/header_user' %>
+        <%= render 'layouts/header_user', search: @search %>
         <div class="container-fluid">
 		      <div class="row small">
 
-		      	<% if controller.controller_name == "articles" && controller.action_name == "index" %>
+		      	<% if controller_name == "articles" && action_name == "index" %>
 			      	<div class="col-3 d-lg-block d-none text-center border border-bottom-0" style="background-color: rgba(100, 100, 100, 0.7);">
 			      <% else %>
 			      	<div class="col-3 d-lg-block d-none text-center nav-no-select">
@@ -27,7 +27,7 @@
 			      		<%= link_to "最新記事", articles_path, class: "text-white" %>
 			      	</div>
 
-		      	<% if controller.controller_name == "articles" && controller.action_name == "user_timeline" %>
+		      	<% if controller_name == "articles" && action_name == "user_timeline" %>
 			      	<div class="col-3 d-lg-block d-none text-center border border-bottom-0" style="background-color: rgba(240, 30, 30, 0.7);">
 			      <% else %>
 			      	<div class="col-3 d-lg-block d-none text-center nav-no-select">
@@ -35,7 +35,7 @@
 			      		<%= link_to "ユーザータイムライン", user_timeline_path, class: "text-white" %>
 			      	</div>
 
-			      <% if controller.controller_name == "articles" && controller.action_name == "tag_timeline" %>
+			      <% if controller_name == "articles" && action_name == "tag_timeline" %>
 			      	<div class="col-3 d-lg-block d-none text-center border border-bottom-0" style="background-color: rgba(30, 144, 255, 0.7);">
 			      <% else %>
 			      	<div class="col-3 d-lg-block d-none text-center nav-no-select">
@@ -43,7 +43,7 @@
 			      		<%= link_to "タグタイムライン", tag_timeline_path, class: "text-white" %>
 			      	</div>
 
-			      <% if controller.controller_name == "keeps" && controller.action_name == "index" %>
+			      <% if controller_name == "keeps" && action_name == "index" %>
 			      	<div class="col-3 d-lg-block d-none text-center border border-bottom-0" style="background-color: rgba(90, 185, 144, 0.7);">
 			      <% else %>
 			      	<div class="col-3 d-lg-block d-none text-center nav-no-select">
@@ -76,10 +76,6 @@
 
 						        <li class="ml-3 my-2">
 						          <%= link_to "記事作成", new_article_path, class: "nav-link text-white nav-font" %>
-						        </li>
-
-						        <li class="ml-3 my-2">
-						          <%= link_to "下書き一覧", user_drafts_path(current_user), class: "nav-link text-white nav-font" %>
 						        </li>
 
 						    	</ul>

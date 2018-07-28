@@ -1,6 +1,6 @@
 <% any_elements.each do |any| %>
 
-  <tr class="article"><!-- ここでeach -->
+  <tr class="article">
     <td>
 
       <div class="card card-size">
@@ -31,7 +31,7 @@
               </div>
 
 
-              <div class="text-light" style="position: absolute; bottom: 0; right: 0; padding: 5px 5px; margin: 5px 5px; background-color: rgba(0, 0, 0, 0.4); letter-spacing: 0.4px;">
+              <div class="text-light article-info">
                 <span class="mx-1" >
                   <%= any.article.created_at.strftime('%Y/%m/%d') %>
                 </span>
@@ -98,7 +98,7 @@
 
               </div>
 
-              <div class="text-light" style="position: absolute; top: 0; right: 0; margin: 10px 10px; letter-spacing: 5px;">
+              <div class="text-light article-edit-button">
 
                 <% if user_signed_in? %>
 
@@ -122,6 +122,6 @@
         </div>
       </div>
     </td>
-  </tr><!-- eachを終了 -->
+  </tr>
 
 <% end %>

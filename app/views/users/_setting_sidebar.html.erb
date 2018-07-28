@@ -1,7 +1,7 @@
 <div class="left-sidebar col-lg-2 d-none d-lg-block">
 	<div class="list-group left-sidebar-link d-lg-block d-none">
 
-		<%= link_to user_profile_path(@user) do %>
+		<%= link_to user_profile_path(user) do %>
 
 			<% if controller.action_name == "profile" %>
 				<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
@@ -17,7 +17,7 @@
 =begin
 %>
 
-		<%= link_to user_account_path(@user) do %>
+		<%= link_to user_account_path(user) do %>
 
 			<% if controller.action_name == "account" %>
 				<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
@@ -34,7 +34,7 @@
 %>
 
 
-		<%= link_to user_two_factor_authentication_path(@user) do %>
+		<%= link_to user_two_factor_authentication_path(user) do %>
 			<% if controller.action_name == "two_factor_authentication" %>
 				<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2" >
 			<% else %>
@@ -45,7 +45,7 @@
 				</span>
 		<% end %>
 
-		<%= link_to user_password_setting_path(@user) do %>
+		<%= link_to user_password_setting_path(user) do %>
 			<% if controller.action_name == "password" %>
 				<span class="list-group-item list-group-item-action nav-font bg-danger text-white" >
 			<% else %>
@@ -61,7 +61,7 @@
 
 <div class="col-10 d-lg-none d-sm-block text-center">
 
-	<%= link_to user_profile_path(@user) do %>
+	<%= link_to user_profile_path(user) do %>
 		<% if controller.action_name == "profile" %>
 			<p class="col-8 btn btn-danger text-white my-2">
 		<% else %>
@@ -72,7 +72,11 @@
 			</p>
 	<% end %>
 
-	<%= link_to user_account_path(@user) do %>
+<%
+=begin
+%>
+
+	<%= link_to user_account_path(user) do %>
 		<% if controller.action_name == "account" %>
 			<p class="col-8 btn btn-danger text-white mb-2">
 		<% else %>
@@ -83,7 +87,11 @@
 			</p>
 	<% end %>
 
-	<%= link_to user_two_factor_authentication_path(@user) do %>
+<%
+=end
+%>
+
+	<%= link_to user_two_factor_authentication_path(user) do %>
 			<% if controller.action_name == "two_factor_authentication" %>
 				<p class="col-8 btn btn-danger text-white mb-2">
 			<% else %>
@@ -94,7 +102,7 @@
 			</p>
 	<% end %>
 
-	<%= link_to user_password_setting_path(@user) do %>
+	<%= link_to user_password_setting_path(user) do %>
 			<% if controller.action_name == "password" %>
 				<p class="col-8 btn btn-danger text-white">
 			<% else %>

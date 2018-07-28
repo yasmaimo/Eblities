@@ -51,7 +51,7 @@ class DraftsController < ApplicationController
   def destroy
     @draft = Draft.find(params[:id])
     @draft.destroy
-    redirect_to user_path(current_user)
+    redirect_to user_drafts_path(current_user)
   end
 
   private

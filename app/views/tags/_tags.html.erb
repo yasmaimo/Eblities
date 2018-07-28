@@ -3,7 +3,7 @@
   <% tagging_articles = Tagging.where(tag_id: tag.id, taggable_type: "Article") %>
   <% tagging_users = Tagging.where(tag_id: tag.id, taggable_type: "User") %>
 
-  <tr class="tag"><!-- ここでeach -->
+  <tr class="tag">
     <td>
       <div class="card">
         <div class="card-header">
@@ -16,13 +16,13 @@
 
               <% if tagging_articles.present? %>
 
-                <span class="small" style="font-weight: bold; font-size: 14px;">
+                <span class="small tag-title-font">
                   の最新記事
                 </span>
 
               <% else %>
 
-                <span class="small" style="font-weight: bold; font-size: 14px;">
+                <span class="small tag-title-font">
                   の記事はまだありません
                 </span>
 
@@ -46,124 +46,37 @@
 
             </div>
 
-            <div class="col-6" id="tag-button-of-<%= tag.id %>">
+            <% if controller_name == "tags" %>
 
-              <%= render partial: 'tags/tag_button', locals: {tag: tag, new_tag: new_tag} %>
+              <div class="col-6" id="tag-button-of-<%= tag.id %>">
 
-            </div>
+                <%= render partial: 'tags/tag_button', locals: {tag: tag, new_tag: new_tag} %>
 
-            <div class="col-6 text-right" id="tag-mark-of-<%= tag.id %>">
+              </div>
 
-              <%= render partial: 'tags/tag_mark', locals: {tag: tag} %>
+              <div class="col-6 text-right" id="tag-mark-of-<%= tag.id %>">
 
-            </div>
+                <%= render partial: 'tags/tag_mark', locals: {tag: tag} %>
+
+              </div>
+
+            <% end %>
 
           </div>
         </div>
 
         <% tagging_articles.last(1).each do |tagging_article| %>
 
-        <div class="card-body">
+          <div class="card-body">
 
-          <div class="row justify-content-center">
-
-            <div class="tag-bar-color" style="width: 2%; height: 200px; ">
-            </div>
-
-            <div style="width: 92%; margin: 0 5px;">
-
-              <div class="card card-size">
-
-                <%= attachment_image_tag tagging_article.taggable, :image, fallback: "no_image.jpg", class: "img-trim"  %>
-                <div class="card-img-overlay article-bg-index" style="">
-                  <div>
-                    <div class="row">
-
-                      <div class="col-12 ranking-table align-self-center">
-                        <%= attachment_image_tag tagging_article.taggable.user, :image, fallback: "no_image.jpg", class: "mx-1 card-img", style: "max-height: 40px; max-width: 40px;"%>
-                        <span>
-                          <%= link_to tagging_article.taggable.user.user_name, user_path(tagging_article.taggable.user_id), class: "text-border-black border-bottom border-secondary text-white" %>
-                        </span>
-                      </div>
-
-                    </div>
-                  </div>
-
-                  <div class="card-body">
-
-                    <div class="row">
-                      <div class="col-12">
-                        <span>
-                          <%= link_to tagging_article.taggable.title, article_path(tagging_article.taggable), class: "text-border text-white border-bottom border-secondary d-sm-inline d-none" %>
-                          <%= link_to tagging_article.taggable.title.truncate(30), article_path(tagging_article.taggable), class: "text-border text-white border-bottom border-secondary d-sm-none" %>
-                        </span>
-                      </div>
-
-
-                      <div class="text-light" style="position: absolute; bottom: 0; right: 0; padding: 5px 5px; margin: 5px 5px; background-color: rgba(0, 0, 0, 0.4); letter-spacing: 0.4px;">
-                        <% if tagging_article.taggable.favorited_by?(current_user) %>
-
-                          <span class="mx-1 favorite-color">
-                            <%= fa_icon("thumbs-up") %><%= tagging_article.taggable.favorites.count %>
-                          </span>
-
-                        <% else %>
-
-                          <span class="mx-1">
-                            <%= fa_icon("thumbs-up") %><%= tagging_article.taggable.favorites.count %>
-                          </span>
-
-                        <% end %>
-
-                        <% if tagging_article.taggable.kept_by?(current_user) %>
-
-                          <span class="mx-1 keep-color"">
-                            <%= fa_icon("folder-open") %><%= tagging_article.taggable.keeps.count %>
-                          </span>
-
-                        <% else %>
-
-                          <span class="mx-1">
-                            <%= fa_icon("folder-open") %><%= tagging_article.taggable.keeps.count %>
-                          </span>
-
-                        <% end %>
-
-                        <% if tagging_article.taggable.comments.where(user_id: current_user.id).exists? %>
-
-                          <span class="mx-1 comment-color">
-                            <%= fa_icon("comments") %><%= tagging_article.taggable.comments.count %>
-                          </span>
-
-                        <% else %>
-
-                          <span class="mx-1">
-                            <%= fa_icon("comments") %><%= tagging_article.taggable.comments.count %>
-                          </span>
-
-                        <% end %>
-                      </div>
-
-                    </div>
-
-
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="tag-bar-color" style="width: 2%; height: 200px; ">
-            </div>
+            <%= render 'articles/including_article', article: tagging_article.taggable %>
 
           </div>
-
-        </div>
 
         <% end %>
 
       </div>
     </td>
-  </tr><!-- eachを終了 -->
+  </tr>
 
 <% end %>

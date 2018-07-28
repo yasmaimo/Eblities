@@ -9,7 +9,7 @@
 
 		<div class="col-lg-7 col-sm-11">
 
-			<%= render 'users/nav_bar' %>
+			<%= render 'users/nav_bar', user: @user %>
 
 	    <%= search_form_for @search_draft, url: user_drafts_path do |f| %>
 	      <div class="form-inline my-lg-0 my-2">
@@ -21,7 +21,7 @@
 	    <% if Draft.exists?(user_id: @user) %>
 	    	<% if @search_draft.result.count > 0 %>
 
-				  <table class="table bg-white" id="drafts">
+				  <table class="table bg-white" id="articles">
 					  <thead>
 					    <tr>
 					    	<th>
@@ -42,11 +42,7 @@
 
 				    <tbody class="page">
 
-				    	<% @drafts.each do |draft| %>
-
-				    		<%= render 'drafts/drafts',draft: draft %>
-
-					    <% end %>
+			    		<%= render 'articles/articles', articles: @drafts %>
 
 				    </tbody>
 

@@ -2,7 +2,7 @@
 	<ul class="nav nav-tabs">
 
 	  <li class="nav-item">
-			<%= link_to user_path(@user) do %>
+			<%= link_to user_path(user) do %>
 
 				<% if controller.action_name == "show" %>
 					<span class="nav-link active tab-font bg-danger text-white">
@@ -15,9 +15,9 @@
 			<% end %>
 	  </li>
 
-	  <% if @user == current_user %>
+	  <% if user == current_user %>
 		  <li class="nav-item">
-				<%= link_to user_drafts_path(@user) do %>
+				<%= link_to user_drafts_path(user) do %>
 
 					<% if controller.action_name == "index" %>
 						<span class="nav-link active tab-font bg-danger text-white">
@@ -32,7 +32,7 @@
 		<% end %>
 
 	  <li class="nav-item">
-			<%= link_to favorites_path(@user) do %>
+			<%= link_to favorites_path(user) do %>
 
 					<% if controller.action_name == "favorites" %>
 						<span class="nav-link active tab-font bg-danger text-white">
@@ -46,7 +46,7 @@
 	  </li>
 
 	  <li class="nav-item">
-			<%= link_to comments_path(@user) do %>
+			<%= link_to comments_path(user) do %>
 
 					<% if controller.action_name == "comments" %>
 						<span class="nav-link active tab-font bg-danger text-white">
@@ -60,7 +60,7 @@
 	  </li>
 
 	  <li class="nav-item">
-			<%= link_to followings_path(@user) do %>
+			<%= link_to followings_path(user) do %>
 
 					<% if controller.action_name == "followings" %>
 						<span class="nav-link active tab-font bg-danger text-white">
@@ -74,7 +74,7 @@
 	  </li>
 
 	  <li class="nav-item">
-			<%= link_to followers_path(@user) do %>
+			<%= link_to followers_path(user) do %>
 
 					<% if controller.action_name == "followers" %>
 						<span class="nav-link active tab-font bg-danger text-white">
@@ -92,7 +92,7 @@
 
 <div class="d-lg-none text-center">
 
-	<%= link_to user_path(@user) do %>
+	<%= link_to user_path(user) do %>
 		<% if controller.action_name == "show" %>
 			<p class="col-8 btn btn-danger text-white my-2">
 		<% else %>
@@ -104,8 +104,8 @@
 	<% end %>
 
 
-	<% if @user == current_user %>
-		<%= link_to user_drafts_path(@user) do %>
+	<% if user == current_user %>
+		<%= link_to user_drafts_path(user) do %>
 			<% if controller.action_name == "index" %>
 				<p class="col-8 btn btn-danger text-white mb-2">
 			<% else %>
@@ -117,7 +117,7 @@
 		<% end %>
 	<% end %>
 
-	<%= link_to favorites_path(@user) do %>
+	<%= link_to favorites_path(user) do %>
 			<% if controller.action_name == "favorites" %>
 				<p class="col-8 btn btn-danger text-white mb-2">
 			<% else %>
@@ -128,7 +128,7 @@
 			</p>
 	<% end %>
 
-	<%= link_to comments_path(@user) do %>
+	<%= link_to comments_path(user) do %>
 			<% if controller.action_name == "comments" %>
 				<p class="col-8 btn btn-danger text-white">
 			<% else %>
@@ -139,7 +139,7 @@
 			</p>
 	<% end %>
 
-	<%= link_to followings_path(@user) do %>
+	<%= link_to followings_path(user) do %>
 			<% if controller.action_name == "followings" %>
 				<p class="col-8 btn btn-danger text-white">
 			<% else %>
@@ -150,7 +150,7 @@
 			</p>
 	<% end %>
 
-	<%= link_to followers_path(@user) do %>
+	<%= link_to followers_path(user) do %>
 			<% if controller.action_name == "followers" %>
 				<p class="col-8 btn btn-danger text-white">
 			<% else %>

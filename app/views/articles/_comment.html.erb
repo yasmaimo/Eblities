@@ -1,11 +1,11 @@
-<% if @article.comments.exists? %>
+<% if article.comments.exists? %>
 
   <div class="mt-4" style="max-height: 800px; overflow: scroll;">
 
     <table class="table bg-white">
       <tbody>
 
-        <% @article.comments.each do |comment| %>
+        <% article.comments.each do |comment| %>
           <tr>
             <td>
               <p class="text-dark">
@@ -42,28 +42,10 @@
     <%= attachment_image_tag current_user, :image, fallback: "no_image.jpg", class: "card-img mx-1", style: "max-height: 40px; max-width: 40px;"%>
     <span class="text-dark">コメント</span>
   </p>
-  <%= simple_form_for [@article,@comment] do |f| %>
+  <%= simple_form_for [article,comment] do |f| %>
     <%= f.input :comment, label: false, class: "form-cotrol col-12",  id: "comment", placeholder: "コメント *500文字まで", error: "コメントを入力してください", type: "text", as: :summernote %>
     <p class="text-center">
       <%= f.submit "コメントを投稿する", class: "btn-sm btn-outline-success mt-2", id: "button" %>
     </p>
   <% end %>
 </div>
-
-<script>
-$(function() {
-
-  var text = document.getElementById('#comment');
-
-  $('#comment').change(function() {
-
-      if ( text == null ){ 
-        $('#button').prop('disabled', true);
-
-      } else { 
-
-        $('#button').prop('disabled', false); 
-      }
-  });
-});
-</script>

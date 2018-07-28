@@ -3,15 +3,9 @@ class ArticlesController < ApplicationController
   before_action :tag_ranking
   before_action :authenticate_user, except: [:index, :show]
 
-  def index
-  end
-
   def user_timeline
     @search_post = Post.ransack(params[:q])
     @posts = @search_post.result.page(params[:page]).reverse_order
-  end
-
-  def tag_timeline
   end
 
   def confirm
@@ -37,13 +31,12 @@ class ArticlesController < ApplicationController
     if params[:create_article]
       @article = Article.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: article_params[:image])
       @article.tag_list.add(article_params[:tag_list], parse: true)
-      if @article.save
-        add_five_point
-        create_post
-      end
+      @article.save
+      add_five_point
+      create_post
       redirect_to article_path(@article)
     elsif params[:create_draft]
-      @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: @article.image)
+      @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: article_params[:image])
       @draft.save
       tagging_draft
       redirect_to user_drafts_path(current_user)
@@ -76,11 +69,14 @@ class ArticlesController < ApplicationController
   end
 
   def update
-      @article = Article.find(params[:id])
-      @article.tag_list.add(params[:article][:tag_list], parse: true)
+    @article = Article.find(params[:id])
+    @article.tag_list.add(params[:article][:tag_list], parse: true)
     if params[:confirm_article]
       @article.update(article_params)
       redirect_to confirm_edit_path(@article)
+    elsif params[:create_article]
+      @article.update(article_params)
+      redirect_to article_path(@article)
     elsif params[:create_draft]
       @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: @article.image)
       @draft.save
@@ -88,7 +84,6 @@ class ArticlesController < ApplicationController
       @article.destroy
       redirect_to user_drafts_path(current_user)
     elsif params[:back]
-      @article.update(article_params)
       redirect_to edit_article_path(@article)
     end
   end

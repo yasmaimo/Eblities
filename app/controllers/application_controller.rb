@@ -21,6 +21,11 @@ class ApplicationController < ActionController::Base
     redirect_to root_path unless user_signed_in?
   end
 
+  def get_controller_and_action_name
+    controller_name = controller_name
+    action_name = action_name
+  end
+
   def add_five_point
     ep = current_user.point
     ep += 5
