@@ -36,6 +36,10 @@ class CommentsController < ApplicationController
   def destroy
   end
 
+
+
+
+
   private
 
   def create_post

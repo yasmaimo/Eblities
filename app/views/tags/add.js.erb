@@ -1,6 +1,6 @@
 $("#tags_input_style").html("<%= j(render 'layouts/tags_input_style') %>")
 $("#modal-tagging-list-of-<%= @user.id %>").html("<%= j(render 'taggings/modal_tagging_list', taggings: @taggings) %>")
-$("#modal-tagging-form-of-<%= @user.id %>").html("<%= j(render 'taggings/modal_tagging_form', tag: @tag, user: @user ) %>")
+$("#modal-tagging-form-of-<%= @user.id %>").html("<%= j(render 'taggings/modal_tagging_form', new_tag: @new_tag, user: @user ) %>")
 $("#tagging-list-of-<%= @user.id %>").html("<%= j(render 'taggings/tagging_list', taggings: @taggings, user: @user) %>")
 $("#common-users-of-<%= @user.id %>").html("<%= j(render partial: 'common_users') %>")
 $("#tag-users").html("<%= j(render partial: 'tag_users', locals: {tag: @find_tag} ) %>")

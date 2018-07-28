@@ -46,7 +46,7 @@
 
 				    <tbody class="page" id="all-tags">
 
-				    	<%= render partial: 'tags/tags', locals: {tags: @tags, new_tag: @tag, user: @user} %>
+				    	<%= render partial: 'tags/tags', locals: {tags: @tags, new_tag: @new_tag, user: @user} %>
 
 				    </tbody>
 				  </table>
@@ -88,7 +88,7 @@
 						  </div>
 						  <div class="card-body">
 						  	<% @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id) %>
-						  	<%= render partial: 'taggings/tagging', locals: {taggings: @taggings, tag: @tag, user: @user} %>
+						  	<%= render partial: 'taggings/tagging', locals: {taggings: @taggings, new_tag: @new_tag, user: @user} %>
 
 						  </div>
 						</div>

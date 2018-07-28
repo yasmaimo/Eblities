@@ -27,6 +27,10 @@ class KeepsController < ApplicationController
     destroy_post
   end
 
+
+
+
+
   private
 
   def create_post

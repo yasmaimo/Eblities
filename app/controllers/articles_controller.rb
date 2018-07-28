@@ -1,7 +1,10 @@
 class ArticlesController < ApplicationController
+
   before_action :user_ranking
   before_action :tag_ranking
   before_action :authenticate_user, except: [:index, :show]
+  before_action :find_article, only: [:edit, :show, :confirm_edit, :update, :destroy]
+  before_action :judge_user_id, only: [:edit, :confirm_edit, :update, :destroy]
 
   def user_timeline
     @search_post = Post.ransack(params[:q])
@@ -10,39 +13,28 @@ class ArticlesController < ApplicationController
 
   def confirm
     if params[:confirm_article]
-      @article = Article.new(
-                            user_id: current_user.id,
-                            title: article_params[:title],
-                            body: article_params[:body],
-                            image: article_params[:image],
-                            tag_list: article_params[:tag_list])
+      new_article
       if @article.invalid?
         render :new
       end
     elsif params[:create_draft]
-      @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: article_params[:image])
-      @draft.save
-      tagging_draft
+      create_draft
       redirect_to user_drafts_path(current_user)
     end
   end
 
   def create
     if params[:create_article]
-      @article = Article.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: article_params[:image])
-      @article.tag_list.add(article_params[:tag_list], parse: true)
+      new_article
       @article.save
       add_five_point
       create_post
       redirect_to article_path(@article)
     elsif params[:create_draft]
-      @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: article_params[:image])
-      @draft.save
-      tagging_draft
+      create_draft
       redirect_to user_drafts_path(current_user)
     elsif params[:back]
-      @article = Article.new(article_params)
-      @article.tag_list.add(article_params[:tag_list], parse: true)
+      new_article
       render :new
     end
   end
@@ -52,24 +44,16 @@ class ArticlesController < ApplicationController
   end
 
   def edit
-    @article = Article.find(params[:id])
     @taggings = Tagging.where(taggable_type: "Article", taggable_id: @article.id)
   end
 
   def show
-    @article = Article.find(params[:id])
-    @user = User.find(@article.user_id)
-    @user.id = @article.user_id
-    @comment = Comment.new
     @taggings = Tagging.where(taggable_type: "Article", taggable_id: @article.id)
-  end
-
-  def confirm_edit
-    @article = Article.find(params[:id])
+    @user = User.find(@article.user_id)
+    @comment = Comment.new
   end
 
   def update
-    @article = Article.find(params[:id])
     @article.tag_list.add(params[:article][:tag_list], parse: true)
     if params[:confirm_article]
       @article.update(article_params)
@@ -89,13 +73,54 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
+    destroy_post
     @article.destroy
     subtract_five_point
     redirect_to user_path(@article.user_id)
   end
 
+
+
+
+
   private
+
+  def find_article
+    if Article.exists?(params[:id])
+      @article = Article.find(params[:id])
+    else
+      redirect_to root_path
+    end
+  end
+
+  def judge_user_id
+    unless @article.user_id == current_user.id
+      redirect_to root_path(current_user)
+    end
+  end
+
+  def user_ranking
+    @users = User.all
+  end
+
+  def tag_ranking
+    @tags = Tag.all
+  end
+
+  def new_article
+    @article = Article.new( user_id: current_user.id,
+                            title: article_params[:title],
+                            body: article_params[:body],
+                            image: article_params[:image],
+                            tag_list: article_params[:tag_list] )
+    @article.tag_list.add(article_params[:tag_list], parse: true)
+  end
+
+  def create_draft
+    @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: article_params[:image])
+    @draft.save
+    tagging_draft
+  end
 
   def tagging_draft
     params[:article][:tag_list].split(",").each do |tag_name|
@@ -111,14 +136,6 @@ class ArticlesController < ApplicationController
         Tagging.create(tag_id: @tag.id, taggable_type: "Draft", taggable_id: @draft.id, context: "tags")
       end
     end
-  end
-
-  def user_ranking
-    @users = User.all
-  end
-
-  def tag_ranking
-    @tags = Tag.all
   end
 
   def create_post

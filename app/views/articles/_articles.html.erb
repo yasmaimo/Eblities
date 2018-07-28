@@ -25,8 +25,19 @@
             <div class="row">
               <div class="col-12">
                 <span>
-                  <%= link_to article.title, article_path(article), class: "text-border text-white border-bottom border-secondary d-sm-inline d-none" %>
-                  <%= link_to article.title.truncate(30), article_path(article), class: "text-border text-white border-bottom border-secondary d-sm-none" %>
+
+                  <% if controller_name == "drafts" %>
+
+                    <%= link_to article.title, user_draft_path(id: article), class: "text-border text-white border-bottom border-secondary d-sm-inline d-none" %>
+                    <%= link_to article.title.truncate(30), user_draft_path(id: article), class: "text-border text-white border-bottom border-secondary d-sm-none" %>
+
+                  <% else %>
+
+                    <%= link_to article.title, article_path(article), class: "text-border text-white border-bottom border-secondary d-sm-inline d-none" %>
+                    <%= link_to article.title.truncate(30), article_path(article), class: "text-border text-white border-bottom border-secondary d-sm-none" %>
+
+                  <% end %>
+
                 </span>
               </div>
 

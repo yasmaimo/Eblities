@@ -1,7 +1,7 @@
 <%= simple_form_for(@article , url: {action: 'update'}) do |f| %>
 
 	<%= render 'articles/confirm',  article: @article,
-																	f: f
+																	f: f,
 	                                article_type: "article",
 	                                submit_label: "下書きとして投稿を取り下げる",
 	                                submit_name: "create_draft" %>

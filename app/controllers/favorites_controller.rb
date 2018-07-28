@@ -18,6 +18,10 @@ class FavoritesController < ApplicationController
 		destroy_post
   end
 
+
+
+
+
 	private
 
 	def return_user

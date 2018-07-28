@@ -1,24 +1,22 @@
 class DraftsController < ApplicationController
+
+  before_action :authenticate_user
+  before_action :judge_user_id
+  before_action :find_draft, only: [:confirm, :show, :update, :destroy]
+
   def index
     @user = current_user
-    @tag = Tag.new
+    @new_tag = Tag.new
     @taggings = Tagging.where(taggable_type: "User", taggable_id: current_user.id)
     @search_draft = Draft.where(user_id: current_user.id).ransack(params[:q])
     @drafts = @search_draft.result.page(params[:page]).reverse_order
   end
 
   def confirm
-    @draft = Draft.find(params[:id])
     @article = Article.new
   end
 
-  def show
-    @draft = Draft.find(params[:id])
-    @function_name = "下書き編集"
-  end
-
   def update
-    @draft = Draft.find(params[:id])
     if params[:back]
       redirect_to user_draft_path(id: @draft) and return
     elsif params[:create_article]
@@ -49,19 +47,28 @@ class DraftsController < ApplicationController
   end
 
   def destroy
-    @draft = Draft.find(params[:id])
     @draft.destroy
     redirect_to user_drafts_path(current_user)
   end
 
+
+
+
+
   private
 
-  def create_post
-    Post.create(
-                user_id: @article.user_id,
-                posted_by_id: current_user.id,
-                article_id: @article.id,
-                posted_type: "投稿")
+  def judge_user_id
+    unless params[:user_id].to_i == current_user.id
+      redirect_to user_drafts_path(current_user)
+    end
+  end
+
+  def find_draft
+    if Draft.exists?(params[:id])
+      @draft = Draft.find(params[:id])
+    else
+      redirect_to user_drafts_path(current_user)
+    end
   end
 
   def tagging_draft
@@ -78,6 +85,14 @@ class DraftsController < ApplicationController
         Tagging.create(tag_id: @tag.id, taggable_type: "Draft", taggable_id: @draft.id, context: "tags")
       end
     end
+  end
+
+  def create_post
+    Post.create(
+                user_id: @article.user_id,
+                posted_by_id: current_user.id,
+                article_id: @article.id,
+                posted_type: "投稿")
   end
 
   def draft_params

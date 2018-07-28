@@ -2,12 +2,11 @@ class RelationshipsController < ApplicationController
 
   before_action :authenticate_user
 
-   def create
+  def create
     @user = User.find(params[:relationship][:following_id])
     current_user.follow!(@user)
     add_two_point
     create_notification
-    # redirect_to @user
   end
 
   def destroy
@@ -15,8 +14,11 @@ class RelationshipsController < ApplicationController
     current_user.unfollow!(@user)
     subtract_two_point
     destroy_notification
-    # redirect_to @user
   end
+
+
+
+
 
   private
 
