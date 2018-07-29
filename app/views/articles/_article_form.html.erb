@@ -45,13 +45,13 @@
 <p class="text-center small text-white mt-3 title-color">タイトル（70文字まで）</p>
 
 <div>
-  <%= f.input :title, label: false, placeholder: "タイトル", error: "タイトルを入力してください" %>
+  <%= f.input :title, label: false, placeholder: "タイトル", error: "70文字までのタイトルを入力してください" %>
 </div>
 
 <p class="text-center small text-white mt-3 title-color">本文（10,000文字まで）</p>
 
 <div>
-  <%= f.input :body, label: false, as: :summernote, error: "本文を入力してください"  %>
+  <%= f.input :body, label: false, as: :summernote, error: "10,000文字までの本文を入力してください"  %>
 </div>
 
 <div class="text-center my-2">

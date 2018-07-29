@@ -59,9 +59,11 @@ class TagsController < ApplicationController
   private
 
   def set_user_info
-    @user = current_user
-    @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id)
-    @new_tag = Tag.new
+    if user_signed_in?
+      @user = current_user
+      @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id)
+      @new_tag = Tag.new
+    end
   end
 
   def find_taggings

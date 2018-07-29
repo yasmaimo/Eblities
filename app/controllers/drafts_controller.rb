@@ -33,22 +33,43 @@ class DraftsController < ApplicationController
       add_five_point
       create_post
       redirect_to article_path(@article)
+      flash[:article_created] = "記事を投稿しました"
       @draft.destroy and return
+    end
+    @draft.title = draft_params[:title]
+    @draft.body = draft_params[:body]
+    if @draft.invalid?
+      flash.now[:invalid_article] = "入力内容を確認してください"
+      render :show
+      return
     end
     @taggings = Tagging.where(taggable_type: "Draft", taggable_id: @draft.id)
     @taggings.destroy_all
     @draft.update(title: params[:draft][:title], body: params[:draft][:body], image: params[:draft][:image])
     tagging_draft
     if params[:confirm_article]
-      redirect_to confirm_user_draft_path
+      if @draft.invalid?
+        redirect_to user_draft_path(id: @draft)
+        flash[:invalid_article] = "入力内容を確認してください"
+      elsif @draft.title.blank?
+        redirect_to user_draft_path(id: @draft)
+        flash[:invalid_article] = "記事を投稿する場合はタイトルを入力してください"
+      elsif @draft.body.blank? || @draft.body == "<p><br></p>"
+        redirect_to user_draft_path(id: @draft)
+        flash[:invalid_article] = "記事を投稿する場合は本文を入力してください"
+      else
+        redirect_to confirm_user_draft_path
+      end
     elsif params[:update_draft]
       redirect_to user_drafts_path(current_user)
+      flash[:draft_created] = "下書きを保存しました"
     end
   end
 
   def destroy
     @draft.destroy
     redirect_to user_drafts_path(current_user)
+    flash[:draft_deleted] = "下書きを削除しました"
   end
 
 

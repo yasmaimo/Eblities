@@ -40,11 +40,50 @@
             </div>
 
             <div class="text-light article-info">
-              <% if article.favorited_by?(current_user) %>
 
-                <span class="mx-1 favorite-color">
-                  <%= fa_icon("thumbs-up") %><%= article.favorites.count %>
-                </span>
+              <% if user_signed_in? %>
+
+                <% if article.favorited_by?(current_user) %>
+
+                  <span class="mx-1 favorite-color">
+                    <%= fa_icon("thumbs-up") %><%= article.favorites.count %>
+                  </span>
+
+                <% else %>
+
+                  <span class="mx-1">
+                    <%= fa_icon("thumbs-up") %><%= article.favorites.count %>
+                  </span>
+
+                <% end %>
+
+                <% if article.kept_by?(current_user) %>
+
+                  <span class="mx-1 keep-color"">
+                    <%= fa_icon("folder-open") %><%= article.keeps.count %>
+                  </span>
+
+                <% else %>
+
+                  <span class="mx-1">
+                    <%= fa_icon("folder-open") %><%= article.keeps.count %>
+                  </span>
+
+                <% end %>
+
+                <% if article.comments.where(user_id: current_user.id).exists? %>
+
+                  <span class="mx-1 comment-color">
+                    <%= fa_icon("comments") %><%= article.comments.count %>
+                  </span>
+
+                <% else %>
+
+                  <span class="mx-1">
+                    <%= fa_icon("comments") %><%= article.comments.count %>
+                  </span>
+
+                <% end %>
 
               <% else %>
 
@@ -52,35 +91,16 @@
                   <%= fa_icon("thumbs-up") %><%= article.favorites.count %>
                 </span>
 
-              <% end %>
-
-              <% if article.kept_by?(current_user) %>
-
-                <span class="mx-1 keep-color"">
-                  <%= fa_icon("folder-open") %><%= article.keeps.count %>
-                </span>
-
-              <% else %>
-
                 <span class="mx-1">
                   <%= fa_icon("folder-open") %><%= article.keeps.count %>
                 </span>
-
-              <% end %>
-
-              <% if article.comments.where(user_id: current_user.id).exists? %>
-
-                <span class="mx-1 comment-color">
-                  <%= fa_icon("comments") %><%= article.comments.count %>
-                </span>
-
-              <% else %>
 
                 <span class="mx-1">
                   <%= fa_icon("comments") %><%= article.comments.count %>
                 </span>
 
               <% end %>
+
             </div>
 
           </div>

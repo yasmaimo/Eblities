@@ -1,5 +1,7 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
+  # prepend_before_action :check_captcha, only: [:facebook][:twitter][:google]
+
   # callback for facebook
   def facebook
     callback_for(:facebook)
@@ -22,7 +24,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       if @user.otp_required_for_login == true
         authenticate_with_two_factor
       else
-        sign_in_and_redirect @user, event: :authentication #this will throw if @user is not activated
+        sign_in_and_redirect @user, event: :authentication
         set_flash_message(:notice, :success, kind: "#{provider}".capitalize) if is_navigational_format?
       end
     else
@@ -42,5 +44,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     session[:otp_user_id] = @user.id
     render 'users/sessions/two_factor' and return
   end
+
+  # reCAPTCHA_validation
+  # def check_captcha
+  #   self.resource = resource_class.new sign_up_params
+  #   resource.validate
+  #   unless verify_recaptcha(model: resource)
+  #     respond_with_navigational(resource) { render :new }
+  #   end
+  # end
 
 end

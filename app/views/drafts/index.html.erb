@@ -1,6 +1,14 @@
 <div class="container-fluid">
 	<div class="row">
 
+		<div class="col-12 text-center text-success animated flash">
+			<%= flash[:draft_created] %>
+		</div>
+
+		<div class="col-12 text-center text-danger animated flash">
+			<%= flash[:draft_deleted] %>
+		</div>
+
 		<div class="left-sidebar col-lg-2 d-none d-lg-block">
 
 			<%= render 'articles/nav_bar' %>

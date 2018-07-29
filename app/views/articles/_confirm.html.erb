@@ -1,9 +1,11 @@
 <div class="container-fluid">
 	<div class="row justify-content-center">
 
-		<div class="col-lg-8 col-sm-11">
+		<p class="col-12 text-center h3 font-weight-bold my-3">確認画面</p>
 
-			<p class="text-center h3 font-weight-bold my-2">確認画面</p>
+		<p class="col-12 text-center h5 font-weight-bold">この内容で投稿しますか？</p>
+
+		<div class="col-lg-8 col-sm-11">
 
       <div class="card">
         <div class="card-header">
@@ -64,7 +66,7 @@
 	  <div class="left-sidebar col-lg-3 d-lg-block d-sm-none">
 	  	<div class="list-group left-sidebar-link d-lg-block d-none">
 
-		    <%= f.submit "投稿する", name: "create_article", class: "list-group-item list-group-item-action nav-font bg-danger text-white mb-2" %>
+		    <%= f.submit "投稿する", name: "create_article", class: "list-group-item list-group-item-action nav-font mb-2" %>
 
 		    <%= f.submit "修正する", name: "back", class: "list-group-item list-group-item-action nav-font mb-2" %>
 
@@ -77,7 +79,7 @@
 		<div class="mt-2 d-lg-none d-sm-block">
 
 		  <p>
-				<%= f.submit "投稿する", name: "create_article", class: "col btn btn-danger btn-sm text-white" %>
+				<%= f.submit "投稿する", name: "create_article", class: "col btn btn-sm text-secondary border" %>
 		  </p>
 
 		  <p>

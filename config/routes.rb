@@ -63,6 +63,8 @@ Rails.application.routes.draw do
 
   get 'users/:id/password', to: 'users#password', as: 'user_password_setting'
 
+  patch 'users/:id/update_password', to: 'users#update_password', as: 'update_password'
+
   get 'users/:id/profile', to: 'users#profile', as: 'user_profile'
 
   get 'users/:id/two_factor_authentication', to: 'users#two_factor_authentication', as: 'user_two_factor_authentication'

@@ -17,6 +17,12 @@ class User < ApplicationRecord
   acts_as_taggable
 
   # Validatoin
+
+  validates :user_name,
+    presence: true,
+    length: { in: 2..16,
+              message: "2~16文字までのユーザーネームを入力してください" }
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email,
   	presence: true,
@@ -44,14 +50,14 @@ class User < ApplicationRecord
     on: :update,
     allow_blank: true
 
-  # validates :status,
-  #   presence: true,
-  #   format: { with: /\A\d[0-2]\z/,
-  #             message: "無効な入力です" },
-  #   on: :update
+  # Validation on update_password
+  validates :password,
+    length: { in: 6..20,
+              message: "6〜20文字までのパスワードを入力してください" },
+    on: :update_password
 
   def update_without_current_password(params, *options)
-    if action_name != "password"
+    if action_name != "password" && action_name != "update_password"
       params.delete(:current_password)
 
       if params[:password].blank?

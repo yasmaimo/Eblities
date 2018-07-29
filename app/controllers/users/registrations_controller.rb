@@ -14,8 +14,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    super
-    Notification.create(user_id: current_user.id, notified_type: "サインアップ")
+    resource = User.new(customize_sign_up_params)
+    if User.find_by(email: params[:user][:email])
+      flash.now[:sign_up_failed] = "入力内容を確認してください"
+      flash.now[:used_email] = "すでに使用されているメールアドレスです"
+      render :new
+      return
+    elsif resource.invalid?
+      flash.now[:sign_up_failed] = "入力内容を確認してください"
+      flash.now[:email_error] = "有効なメールアドレスを入力してください"
+      render :new
+      return
+    else
+      super
+    end
   end
 
   # GET /resource/edit
@@ -65,6 +77,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   private
+
   def customize_sign_up_params
     devise_parameter_sanitizer.permit :sign_up, keys: [:user_name, :email, :password, :password_confirmation, :remember_me]
   end
@@ -74,7 +87,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     self.resource = resource_class.new sign_up_params
     resource.validate
     unless verify_recaptcha(model: resource)
+      flash.now[:verify_failed] = "reCAPTCHA認証に失敗しました"
       respond_with_navigational(resource) { render :new }
     end
   end
+
 end

@@ -18,14 +18,30 @@ class UsersController < ApplicationController
   end
 
   def update
-    path = Rails.application.routes.recognize_path(request.referer)
     if @user.update(user_params)
-      sign_in(@user, bypass: true)
-      redirect_to action: path[:action]
-      flash[:succeeded] = "変更を保存しました"
+      redirect_to user_profile_path(current_user)
+      flash[:profile_updated] = "プロフィールを変更しました"
     else
-      redirect_to action: path[:action]
-      flash[:failed] = "6~16文字のパスワードを入力してください"
+      flash.now[:profile_update_failed] = "入力内容を確認してください"
+      render 'profile'
+    end
+  end
+
+  def update_password
+    respond_to do |format|
+      if user_params[:password].blank?
+        flash[:password_update_failed] = "入力に誤りがあります"
+        format.html { redirect_to user_password_setting_path(current_user) }
+      else
+        if current_user.update_with_password(user_params)
+          sign_in(current_user, bypass: true)
+          flash[:password_updated] = "パスワードを変更しました"
+          format.html { redirect_to user_password_setting_path(current_user) }
+        else
+          flash[:password_update_failed] = "入力に誤りがあります"
+          format.html { redirect_to user_password_setting_path(current_user) }
+        end
+      end
     end
   end
 
@@ -89,7 +105,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:user_name, :introduction, :web_site_url, :image, :email, :password, :point, :status, :tag_list)
+    params.require(:user).permit(:user_name, :introduction, :web_site_url, :image, :email, :current_password, :password, :password_confirmation, :point, :status, :tag_list)
   end
 
 end

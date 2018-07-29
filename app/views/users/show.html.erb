@@ -1,6 +1,10 @@
 <div class="container-fluid">
 	<div class="row justify-content-center">
 
+		<div class="col-12 text-center text-danger animated flash">
+			<%= flash[:article_deleted] %>
+		</div>
+
 		<div class="left-sidebar col-lg-2 d-none d-lg-block">
 
 			<%= render 'articles/nav_bar' %>

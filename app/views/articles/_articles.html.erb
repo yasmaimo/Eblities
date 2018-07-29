@@ -10,7 +10,7 @@
           <div>
             <div class="row">
 
-              <div cålass="col-12 ranking-table align-self-center">
+              <div class="col-12 ranking-table align-self-center">
                 <%= attachment_image_tag article.user, :image, fallback: "no_image.jpg", class: "mx-1 card-img", style: "max-height: 40px; max-width: 40px;"%>
                 <span>
                   <%= link_to article.user.user_name, user_path(article.user_id), class: "text-border-black border-bottom border-secondary text-white" %>
@@ -41,6 +41,11 @@
                 </span>
               </div>
 
+              <div class="text-light" style="position: absolute; bottom: 32px; left: 0; margin: 0 0 5px 5px;  padding: 0 0 5px 5px;">
+                <% article.taggings.each do |tagging| %>
+                  <%= link_to tagging.tag.name, tag_path(tagging.tag), class: "badge badge-primary" %>
+                <% end %>
+              </div>
 
               <div class="text-light article-info">
                 <span class="mx-1" >

@@ -11,20 +11,22 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    if user = User.find_by(email: params[:user][:email])
-      if user.status == 1
-        redirect_to new_user_session_path
-        flash[:failed] = "退会済みのアカウントです。"
-      elsif user.status == 2
-        redirect_to new_user_session_path
-        flash[:failed] = "このアカウントは管理者によって強制退会となったため、ご利用いただけません。"
-      else
-        super
-      end
-    else
-      redirect_to new_user_session_path
-      flash[:failed] = "入力内容を確認してください"
-    end
+    user_params = params.require(:user).permit(:email, :password, :remember_me, :otp_attempt)
+    # if user = User.find_by(email: user_params[:email])
+    #   if user.password != user_params[:password]
+    #     flash[:sign_in_failed] = "メールアドレスかパスワードが違います"
+    #     redirect_to new_user_session_path and return
+    #   end
+    # else
+    #   flash[:sign_in_failed] = "メールアドレスかパスワードが違います"
+    #   redirect_to new_user_session_path and return
+    # end
+    self.resource = warden.authenticate!(auth_options)
+    sign_in(resource_name, resource)
+    yield resource if block_given?
+    flash[:sign_in_succeeded] = "ログインしました"
+    respond_with resource, location: after_sign_in_path_for(resource)
+    binding.pry
   end
 
   # DELETE /resource/sign_out
@@ -78,7 +80,7 @@ class Users::SessionsController < Devise::SessionsController
         sign_in(user) and return
       else
         # 認証コード入力画面を再度レンダリング
-        flash.now[:alert] = 'Invalid two-factor code.'
+        flash.now[:alert] = '認証コードが違います'
         render :two_factor and return
       end
     end
