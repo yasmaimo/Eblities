@@ -7,6 +7,8 @@ class RelationshipsController < ApplicationController
     current_user.follow!(@user)
     add_two_point
     create_notification
+    flash.now[:flash_message] = "#{@user.user_name}さんをフォローしました"
+    @flash_message = flash.now[:flash_message]
   end
 
   def destroy
@@ -14,6 +16,8 @@ class RelationshipsController < ApplicationController
     current_user.unfollow!(@user)
     subtract_two_point
     destroy_notification
+    flash.now[:flash_message] = "#{@user.user_name}さんのフォローを解除しました"
+    @flash_message = flash.now[:flash_message]
   end
 
 

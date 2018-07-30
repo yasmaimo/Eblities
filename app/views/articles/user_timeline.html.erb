@@ -9,6 +9,12 @@
 
 		<div class="col-lg-7 col-sm-11 content-margin">
 
+			<div class="border rounded small bg-white d-lg-none mb-lg-0 mb-3">
+
+				<%= render 'articles/description_of_user_timeline' %>
+
+			</div>
+
 			<% if current_user.followings.present? %>
 
 			  <table class="table bg-white">
@@ -177,7 +183,7 @@
 
 	  <div class="col-lg-3 col-sm-11 content-margin">
 
-			<div class="border rounded small bg-white">
+			<div class="border rounded small bg-white d-lg-block d-none">
 
 				<h5 class="text-center mt-2">
 					<%= link_to "ユーザータイムライン", user_timeline_path, class: "border-bottom" %>
@@ -187,24 +193,25 @@
 					ユーザータイムラインでは、あなたがフォローしているユーザーの投稿、イイね、キープ、コメントした記事を見ることができます。
 				</div>
 				<p class="text-center mt-2">
-				  <a class="text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+				  <a class="text-secondary" data-toggle="collapse" href="#collapseUsertimeline" role="button" aria-expanded="false" aria-controls="collapseUsertimeline">
 				    もっと詳しく!
 				  </a>
 				</p>
-				<div class="collapse p-2" id="collapseExample">
+				<div class="collapse p-2" id="collapseUsertimeline">
 
-			    <p>
-			    	"<%= link_to "最新記事", articles_path %>"や"<%= link_to "タグを探す", tags_path %>"で良い記事を投稿しているユーザーを見つけたり、
-			    	"<%= link_to "ユーザーを探す", users_path %>"で興味のあるユーザーを見つけたらフォローしてみましょう。あなたのユーザータイムラインにフォローしているユーザーの投稿、イイね、キープ、コメントした記事が表示されます。
-			    </p>
+				  <p>
+				  	"<%= link_to "最新記事", articles_path %>"や"<%= link_to "タグを探す", tags_path %>"で良い記事を投稿しているユーザーを見つけたり、
+				  	"<%= link_to "ユーザーを探す", users_path %>"で興味のあるユーザーを見つけたらフォローしてみましょう。あなたのユーザータイムラインにフォローしているユーザーの投稿、イイね、キープ、コメントした記事が表示されます。
+				  </p>
 
-		    	<ul>
-		    		<span>あなたがフォローされると・・・</span>
-		    		<li>2EP入手できます。</li>
-		    		<li>フォロワー(あなたをフォローしているユーザー)のタイムラインにあなたの投稿、イイね、キープ、コメントした記事が表示されるので、あなたの記事が多くの人に読んでもらえるかもしれません。</li>
-		    	</ul>
+					<ul>
+						<span>あなたがフォローされると・・・</span>
+						<li>2EP入手できます。</li>
+						<li>フォロワー(あなたをフォローしているユーザー)のタイムラインにあなたの投稿、イイね、キープ、コメントした記事が表示されるので、あなたの記事が多くの人に読んでもらえるかもしれません。</li>
+					</ul>
 
 				</div>
+
 			</div>
 
 			<table class="table bg-white mt-3">

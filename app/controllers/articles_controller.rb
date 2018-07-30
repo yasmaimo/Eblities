@@ -6,15 +6,6 @@ class ArticlesController < ApplicationController
   before_action :find_article, only: [:edit, :show, :confirm_edit, :update, :destroy]
   before_action :judge_user_id, only: [:edit, :confirm_edit, :update, :destroy]
 
-def index
-  if user_signed_in?
-    unless Notification.exists?(user_id: current_user.id, notified_type: "サインアップ")
-      Notification.create(user_id: current_user.id, notified_type: "サインアップ")
-    end
-  end
-  path = Rails.application.routes.recognize_path(request.referer)
-end
-
   def user_timeline
     @search_post = Post.ransack(params[:q])
     @posts = @search_post.result.page(params[:page]).reverse_order
@@ -24,17 +15,16 @@ end
     if params[:confirm_article]
       new_article
       if @article.invalid?
-        flash[:invalid_article] = "入力内容を確認してください"
+        flash.now[:invalid_article] = "入力内容を確認してください"
         render :new
       elsif @article.body == "<p><br></p>"
-        flash[:invalid_article] = "本文を入力してください"
+        flash.now[:invalid_article] = "本文を入力してください"
         render :new
       end
-      flash[:invalid_article] = ""
     elsif params[:create_draft]
       create_draft
+      flash[:flash_message] = "下書きを保存しました"
       redirect_to user_drafts_path(current_user)
-      flash[:draft_created] = "下書きを保存しました"
     end
   end
 
@@ -44,12 +34,12 @@ end
       @article.save
       add_five_point
       create_post
+      flash[:flash_message] = "記事を投稿しました"
       redirect_to article_path(@article)
-      flash[:article_created] = "記事を投稿しました"
     elsif params[:create_draft]
       create_draft
+      flash[:flash_message] = "下書きを保存しました"
       redirect_to user_drafts_path(current_user)
-      flash[:draft_created] = "下書きを保存しました"
     elsif params[:back]
       new_article
       render :new
@@ -76,27 +66,26 @@ end
       @article.title = article_params[:title]
       @article.body = article_params[:body]
       if @article.invalid?
-        flash[:invalid_article] = "入力内容を確認してください"
+        flash.now[:invalid_article] = "入力内容を確認してください"
         render :edit
       elsif @article.body == "<p><br></p>"
-        flash[:invalid_article] = "本文を入力してください"
+        flash.now[:invalid_article] = "本文を入力してください"
         render :edit
       else
         @article.update(article_params)
         redirect_to confirm_edit_path(@article)
       end
-      flash[:invalid_article] = ""
     elsif params[:create_article]
       @article.update(article_params)
+      flash[:flash_message] = "記事を投稿しました"
       redirect_to article_path(@article)
-      flash[:article_created] = "記事を投稿しました"
     elsif params[:create_draft]
       @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: @article.image)
       @draft.save
       tagging_draft
       @article.destroy
+      flash[:flash_message] = "下書きとして投稿を取り下げました"
       redirect_to user_drafts_path(current_user)
-      flash[:draft_created] = "下書きを保存しました"
     elsif params[:back]
       redirect_to edit_article_path(@article)
     end
@@ -106,8 +95,8 @@ end
     destroy_post
     @article.destroy
     subtract_five_point
+    flash[:flash_message] = "記事を削除しました"
     redirect_to user_path(@article.user_id)
-    flash[:article_deleted] = "記事を削除しました"
   end
 
 

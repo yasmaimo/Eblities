@@ -10,4 +10,5 @@ $("#tagging-users-count-of-<%= @find_tag.id %>").html("<%= j(render partial: 'ta
 $("#tagging-users-count-of-<%= @find_tag.id %>-sm").html("<%= j(render partial: 'tagging_users_count', locals: {tagging_users: @tagging_users }) %>")
 $("#tag-mark-of-<%= @find_tag.id %>").html("<%= j(render partial: 'tag_mark', locals: {tag: @find_tag} ) %>")
 $("#tag-mark-of-<%= @find_tag.id %>-sm").html("<%= j(render partial: 'tag_mark', locals: {tag: @find_tag} ) %>")
+$("#flash-message").html("<%= j(render 'layouts/flash_message', flash_message: @flash_message) %>")
 $("#tags_input_script").html("<%= j(render 'layouts/tags_input_script') %>")

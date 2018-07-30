@@ -19,8 +19,8 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to user_profile_path(current_user)
       flash[:profile_updated] = "プロフィールを変更しました"
+      redirect_to user_profile_path(current_user)
     else
       flash.now[:profile_update_failed] = "入力内容を確認してください"
       render 'profile'
@@ -68,14 +68,14 @@ class UsersController < ApplicationController
   def unsubscribe
     status = params[:user][:status].to_i
     if status == 0
-      redirect_to confirm_unsubscribe_path(current_user)
       flash[:failed] = "チェックを入れてください"
+      redirect_to confirm_unsubscribe_path(current_user)
     elsif status == 1
       notifications = Notification.where(notified_by_id: @user.id)
       notifications.destroy_all
       @user.destroy
-      redirect_to logout_path
-      flash[:succeeded] = "退会処理が完了しました。ご利用ありがとうございました。"
+      flash[:flash_message] = "退会処理が完了しました。ご利用ありがとうございました。"
+      redirect_to root_path
     end
   end
 

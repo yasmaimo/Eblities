@@ -9,6 +9,12 @@
 
 		<div class="col-lg-7 col-sm-11 content-margin">
 
+			<div class="border rounded small bg-white d-lg-none mb-lg-0 mb-3">
+
+				<%= render 'keeps/description_of_keeps_index' %>
+
+			</div>
+
 	    <%= search_form_for @search_keep do |f| %>
 	      <div class="form-inline mb-2">
 	        <%= f.text_field :article_title_or_article_body_cont, class: "col-sm-10 col-xs-12 form-control", placeholder: 'キープした記事を検索' %>
@@ -65,7 +71,7 @@
 			<div class="row">
 				<div class="col-12">
 
-					<div class="border rounded small bg-white">
+					<div class="border rounded small bg-white d-lg-block d-none">
 
 						<h5 class="text-center mt-2">
 							<%= link_to "キープ一覧", keeps_path, class: "border-bottom" %>
@@ -75,28 +81,29 @@
 							あなたがキープしている記事の一覧です。
 						</div>
 						<p class="text-center mt-2">
-						  <a class="text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+						  <a class="text-secondary" data-toggle="collapse" href="#collapseKeeps" role="button" aria-expanded="false" aria-controls="collapseKeeps">
 						    キープとは？
 						  </a>
 						</p>
-						<div class="collapse p-2" id="collapseExample">
+						<div class="collapse p-2" id="collapseKeeps">
 
-					    <p>
-					    	キープとは、あなたがもう一度読みたいと思った記事、後で読みたい記事を保存しておける機能です。
-					    </p>
+						  <p>
+						  	キープとは、あなたがもう一度読みたいと思った記事、後で読みたい記事を保存しておける機能です。
+						  </p>
 
-				    	<ul>
-				    		<span>記事をキープすると・・・</span>
-				    		<li>ユーザータイムラインにあなたのキープした記事が投稿されます。</li>
-				    	</ul>
+							<ul>
+								<span>記事をキープすると・・・</span>
+								<li>ユーザータイムラインにあなたのキープした記事が投稿されます。</li>
+							</ul>
 
-				    	<ul>
-				    		<span>あなたの記事がキープされると・・・</span>
-				    		<li>2EP入手できます。</li>
-				    		<li>キープしてくれた人のタイムラインにあなたの記事が投稿されるので、あなたの記事が多くの人に読んでもらえるかもしれません。</li>
-				    	</ul>
+							<ul>
+								<span>あなたの記事がキープされると・・・</span>
+								<li>2EP入手できます。</li>
+								<li>キープしてくれた人のタイムラインにあなたの記事が投稿されるので、あなたの記事が多くの人に読んでもらえるかもしれません。</li>
+							</ul>
 
 						</div>
+
 					</div>
 
 				</div>

@@ -92,6 +92,22 @@
 
 <div class="d-lg-none text-center">
 
+	<div>
+
+		<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 40px; max-width: 40px;" %>
+
+		<%= @user.user_name %>
+
+	</div>
+
+	<% if user_signed_in? %>
+
+		<div class="my-2">
+			<a href="#link">ユーザーの詳細を見る</a>
+		</div>
+
+	<% end %>
+
 	<%= link_to user_path(user) do %>
 		<% if controller.action_name == "show" %>
 			<p class="col-8 btn btn-danger text-white my-2">
@@ -102,7 +118,6 @@
 				<%= fa_icon("book", text: "投稿履歴") %>
 			</p>
 	<% end %>
-
 
 	<% if user == current_user %>
 		<%= link_to user_drafts_path(user) do %>

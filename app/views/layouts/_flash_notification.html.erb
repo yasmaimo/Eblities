@@ -1,0 +1,26 @@
+<% if defined? flash_notification %>
+	<% if controller_name != "notifications" && unread_notifications.count > 0 %>
+	  <div class="animated fadeInRight text-white p-2 rounded" id="notification-delete"
+	  		 style="position: fixed; top: 95px; right: 15px; margin-left: 15px; z-index: 1000; background-color: rgba(18, 86, 153, 0.8); word-break: break-all;">
+	  	<%= flash_notification %>
+	  	<%= link_to "確認する", notifications_path, class: "btn btn-light btn-sm mx-2" %>
+			<%= link_to "全て既読にする", update_notification_path, method: :patch, remote: true, class: "btn btn-light btn-sm" %>
+	  </div>
+  <% elsif flash_notification == "通知を全て既読にしました" %>
+	  <div class="animated fadeInRight text-white p-2 rounded" id="notification-delete"
+	  		 style="position: fixed; top: 95px; right: 15px; margin-left: 15px; z-index: 99999; background-color: rgba(18, 86, 153, 0.8); word-break: break-all;">
+	  	<%= flash_notification %>
+	  </div>
+  <%end %>
+<% end %>
+
+<script>
+$(function(){
+    $("#notification-delete").on({
+        "click":function(){
+            $(this).addClass("fadeOutRight");
+        }
+    });
+});
+</script>
+

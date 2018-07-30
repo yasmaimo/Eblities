@@ -4,4 +4,5 @@ $("#modal-tagging-form-of-<%= @user.id %>").html("<%= j(render 'taggings/modal_t
 $("#tagging-list-of-<%= @user.id %>").html("<%= j(render 'taggings/tagging_list', taggings: @taggings, user: @user) %>")
 $("#common-users-of-<%= @user.id %>").html("<%= j(render partial: 'common_users') %>")
 $("#all-tags").html("<%= j(render partial: 'tags/tags', locals: {tags: @tags, new_tag: @new_tag, user: @user} ) %>")
+$("#flash-message").html("<%= j(render 'layouts/flash_message', flash_message: @flash_message) %>")
 $("#tags_input_script").html("<%= j(render 'layouts/tags_input_script') %>")

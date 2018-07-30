@@ -11,28 +11,25 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    user_params = params.require(:user).permit(:email, :password, :remember_me, :otp_attempt)
-    # if user = User.find_by(email: user_params[:email])
-    #   if user.password != user_params[:password]
-    #     flash[:sign_in_failed] = "メールアドレスかパスワードが違います"
-    #     redirect_to new_user_session_path and return
-    #   end
-    # else
-    #   flash[:sign_in_failed] = "メールアドレスかパスワードが違います"
-    #   redirect_to new_user_session_path and return
-    # end
-    self.resource = warden.authenticate!(auth_options)
-    sign_in(resource_name, resource)
-    yield resource if block_given?
-    flash[:sign_in_succeeded] = "ログインしました"
-    respond_with resource, location: after_sign_in_path_for(resource)
-    binding.pry
+    if warden.authenticate?(auth_options)
+      self.resource = warden.authenticate!(auth_options)
+      sign_in(resource_name, resource)
+      yield resource if block_given?
+      flash[:flash_message] = "ログインしました"
+      respond_with resource, location: after_sign_in_path_for(resource)
+    else
+      flash[:sign_in_failed] = "メールアドレスかパスワードが違います"
+      redirect_to new_user_session_path
+    end
   end
 
   # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def destroy
+    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+    flash[:flash_message] = "ログアウトしました" if signed_out
+    yield if block_given?
+    respond_to_on_destroy
+  end
 
   # protected
 
@@ -77,6 +74,7 @@ class Users::SessionsController < Devise::SessionsController
         # セッションのユーザーIDを削除して、サインイン
         session.delete(:otp_user_id)
         # 認証済みのユーザーのサインインをするDeviseのメソッド
+        flash[:flash_message] = "ログインしました"
         sign_in(user) and return
       else
         # 認証コード入力画面を再度レンダリング

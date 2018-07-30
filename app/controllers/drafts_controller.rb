@@ -32,8 +32,8 @@ class DraftsController < ApplicationController
       end
       add_five_point
       create_post
+      flash[:flash_message] = "記事を投稿しました"
       redirect_to article_path(@article)
-      flash[:article_created] = "記事を投稿しました"
       @draft.destroy and return
     end
     @draft.title = draft_params[:title]
@@ -49,27 +49,27 @@ class DraftsController < ApplicationController
     tagging_draft
     if params[:confirm_article]
       if @draft.invalid?
-        redirect_to user_draft_path(id: @draft)
         flash[:invalid_article] = "入力内容を確認してください"
+        redirect_to user_draft_path(id: @draft)
       elsif @draft.title.blank?
-        redirect_to user_draft_path(id: @draft)
         flash[:invalid_article] = "記事を投稿する場合はタイトルを入力してください"
-      elsif @draft.body.blank? || @draft.body == "<p><br></p>"
         redirect_to user_draft_path(id: @draft)
+      elsif @draft.body.blank? || @draft.body == "<p><br></p>"
         flash[:invalid_article] = "記事を投稿する場合は本文を入力してください"
+        redirect_to user_draft_path(id: @draft)
       else
         redirect_to confirm_user_draft_path
       end
     elsif params[:update_draft]
+      flash[:flash_message] = "下書きを保存しました"
       redirect_to user_drafts_path(current_user)
-      flash[:draft_created] = "下書きを保存しました"
     end
   end
 
   def destroy
     @draft.destroy
+    flash[:flash_message] = "下書きを削除しました"
     redirect_to user_drafts_path(current_user)
-    flash[:draft_deleted] = "下書きを削除しました"
   end
 
 

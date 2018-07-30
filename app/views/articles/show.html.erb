@@ -3,6 +3,11 @@
 
 		<div class="col-12 text-center text-success animated flash">
 			<%= flash[:article_created] %>
+			<%= flash[:comment_created] %>
+		</div>
+
+		<div class="col-12 text-center text-danger animated shake">
+			<%= flash[:comment_create_failed] %>
 		</div>
 
 		<div class="col-lg-8 col-sm-11 content-margin">

@@ -23,6 +23,8 @@ class TagsController < ApplicationController
         Tagging.create(tag_id: tag.id, taggable_type: "User", taggable_id: current_user.id, context: "tags")
       end
     end
+    flash.now[:flash_message] = "タグリストを更新しました"
+    @flash_message = flash.now[:flash_message]
   end
 
   def add
@@ -39,6 +41,8 @@ class TagsController < ApplicationController
     end
     @find_tag = Tag.find_by(name: tag_name)
     find_taggings
+    flash.now[:flash_message] = "#{@find_tag.name}をあなたのタグリストに登録しました"
+    @flash_message = flash.now[:flash_message]
   end
 
   def show

@@ -14,20 +14,47 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    resource = User.new(customize_sign_up_params)
-    if User.find_by(email: params[:user][:email])
-      flash.now[:sign_up_failed] = "入力内容を確認してください"
-      flash.now[:used_email] = "すでに使用されているメールアドレスです"
-      render :new
-      return
-    elsif resource.invalid?
-      flash.now[:sign_up_failed] = "入力内容を確認してください"
-      flash.now[:email_error] = "有効なメールアドレスを入力してください"
-      render :new
-      return
+    build_resource(sign_up_params)
+
+    if resource.save
+
+      yield resource if block_given?
+      if resource.persisted?
+        if resource.active_for_authentication?
+          sign_up(resource_name, resource)
+          flash[:flash_message] = "ご登録ありがとうございます！Eblitiesからあなたへのご挨拶を送りました。右上の通知ボタンからご覧いただけます。"
+          Notification.create(user_id: current_user.id, notified_type: "サインアップ")
+          respond_with resource, location: after_sign_up_path_for(resource)
+        else
+          set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
+          expire_data_after_sign_in!
+          respond_with resource, location: after_inactive_sign_up_path_for(resource)
+        end
+      else
+        clean_up_passwords resource
+        set_minimum_password_length
+        respond_with resource
+      end
+
     else
-      super
+
+      flash.now[:sign_up_failed] = "入力内容を確認してください"
+      render :new
+
     end
+
+    # resource = User.new(customize_sign_up_params)
+    # if User.find_by(params[:user][:email])
+    #   flash.now[:sign_up_failed] = "すでに使用されているメールアドレスです"
+    #   render :new
+    #   return
+    # elsif resource.invalid?
+    #   flash.now[:sign_up_failed] = "入力内容を確認してください"
+    #   render :new
+    #   return
+    # else
+    #   super
+    # end
   end
 
   # GET /resource/edit

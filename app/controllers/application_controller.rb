@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_search
+  before_action :unread_notification_exists?
 
   def after_sign_in_path_for(resource)
 		root_path
@@ -11,10 +12,20 @@ class ApplicationController < ActionController::Base
   	root_path
   end
 
-  # ransack用
   def set_search
     @search = Article.ransack(params[:q])
     @articles = @search.result.page(params[:page]).reverse_order
+  end
+
+  def unread_notification_exists?
+    if user_signed_in?
+      if @unread_notifications = current_user.notifications.where(read: false)
+        if @unread_notifications.count > 0
+          flash[:unread_notification] = "未読の通知が#{@unread_notifications.count}件あります"
+          @flash_notification = flash[:unread_notification]
+        end
+      end
+    end
   end
 
   def authenticate_user

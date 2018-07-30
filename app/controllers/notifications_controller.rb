@@ -25,4 +25,13 @@ class NotificationsController < ApplicationController
 		end
   end
 
+  def update_notification
+  	@unread_notifications = current_user.notifications.where(read: false)
+  	@unread_notifications.each do |notification|
+  		notification.update(read: true)
+  	end
+  	flash.now[:notification] = "通知を全て既読にしました"
+  	@flash_notification = flash.now[:notification]
+  end
+
 end

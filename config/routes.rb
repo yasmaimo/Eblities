@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'notifications/link_through'
-
   resources 'uploads', only: [:create, :destroy]
 
   # root
@@ -126,6 +124,10 @@ Rails.application.routes.draw do
 
   # notifications
   resources :notifications
+
+  get 'notifications/link_through'
+
+  patch 'update_notification', to: 'notifications#update_notification', as: "update_notification"
 
   get 'notifications', to: 'notifications#index'
 

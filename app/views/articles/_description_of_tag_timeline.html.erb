@@ -1,0 +1,27 @@
+<h5 class="text-center mt-2">
+  <%= link_to "タグタイムライン", tag_timeline_path, class: "border-bottom" %>
+</h5>
+
+<div class="px-2">
+  タグタイムラインでは、あなたが登録しているタグの最新記事を見ることができます。
+</div>
+<p class="text-center mt-2">
+  <a class="text-secondary" data-toggle="collapse" href="#collapseTagtimelineSm" role="button" aria-expanded="false" aria-controls="collapseTagtimelineSm">
+    もっと詳しく!
+  </a>
+</p>
+<div class="collapse p-2" id="collapseTagtimelineSm">
+
+  <p>
+    "<%= link_to "タグを探す", tags_path %>"であなたの興味のある分野をタグとして登録できます。"<%= link_to "マイページ", user_path(current_user) %>"でもタグを登録することができます。登録後、あなたの登録したタグの最新記事がタグタイムラインに表示されます。
+  </p>
+
+  <ul>
+    <span>タグは他にも・・・</span>
+    <li>記事と関連のある分野として、記事にタグを登録することもできます。</li>
+    <li>記事にタグを登録すると、他のユーザーがその記事を見つけやすくなります。</li>
+  </ul>
+
+  記事にも積極的にタグを登録しましょう！
+
+</div>
