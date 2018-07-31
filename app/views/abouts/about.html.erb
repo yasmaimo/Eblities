@@ -1,6 +1,6 @@
 <div class="container-fluid">
 	<div class="row justify-content-center">
-		<div class="col-12 favorite-bg-color text-white align" style="min-height: 250px; margin-top: -25px;">
+		<div class="col-12 favorite-bg-color text-white d-md-block d-none" style="min-height: 250px; margin-top: -25px;">
 
 			<div class="row text-center h-100 align-items-center">
 
@@ -19,11 +19,31 @@
 
 		</div>
 
-		<div class="col-12 bg-white text-dark align" style="min-height: 250px;">
+		<div class="col-12 favorite-bg-color text-white d-md-none" style="min-height: 250px; margin-top: -25px;">
+
+			<div class="row text-center h-100 align-items-center">
+
+				<div class="col-lg-12 col-12 my-5">
+					<h1 style="letter-spacing: 0.7em; font-size: 18px;">エブリティーズ</h1>
+					<h1 style="letter-spacing: 0.2em; font-size: 50px;">Eblities</h1>
+					<h5 style="letter-spacing: 0.1em; font-size: 13px;">
+						知りたいことがきっと見つかる。
+					</h5>
+					<p style="letter-spacing: 0.1em; font-size: 12px;">
+						クリエイターの知識をシェアするサイト。
+					</p>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="col-12 bg-white text-dark" style="min-height: 250px;">
 
 			<div class="row text-center h-100 my-5 justify-content-center">
 				<div class="col-lg-8 col-12">
-					<h1 style="letter-spacing: 0.1em;">About Eblities</h1>
+					<h1 class="d-md-block d-none" style="letter-spacing: 0.1em;">About Eblities</h1>
+					<h2 class="d-md-none" style="letter-spacing: 0.05em;">About Eblities</h2>
 					<div>
 						Eblitiesは作曲家、イラストレーター、CGデザイナーなど、ありとあらゆるクリエイターの創作活動に役立つ知識をシェアするサイト = Everyone's(みんなの) abilities(能力) をシェアするサイトです。創作に関する技術的な事、実践的な方法論、基礎知識、予備知識などを記事として投稿する事、記事を閲覧する事を主な目的としています。
 					</div>
@@ -40,9 +60,9 @@
 
 			<div class="row text-center h-100 my-5 justify-content-center">
 
-				<p><h3 class="col-12">記事を作成・閲覧する為の便利な機能</h3></p>
+				<p><h3 class="col-12">記事を作成・閲覧するための便利な機能</h3></p>
 
-				<div class="col-4 mt-4">
+				<div class="col-lg-4 col-12 mt-4">
 
 					<h4>自由度の高い記事の作成</h4>
 					<%= fa_icon('edit 5x') %>
@@ -54,7 +74,7 @@
 
 				</div>
 
-				<div class="col-8 mt-4">
+				<div class="col-lg-8 col-12 mt-4">
 					<div class="row">
 
 						<div class="my-3 col-lg-6">
@@ -102,7 +122,7 @@
 
 				<p><h3 class="col-12">2つのタイムライン</h3></p>
 
-				<div class="col-6">
+				<div class="col-lg-6 col-12">
 
 					<h4>ユーザータイムライン</h4>
 					<span class="post-color"><%= fa_icon('users 5x') %></span>
@@ -112,7 +132,7 @@
 
 				</div>
 
-				<div class="col-6">
+				<div class="col-lg-6 col-12">
 
 					<h4>タグタイムライン</h4>
 					<span class="text-primary"><%= fa_icon('tags 5x') %></span>
@@ -141,27 +161,27 @@
 					<p style="letter-spacing: 0.1em;">SNSログイン</p>
 				</div>
 
-				<div class="my-3 col-lg-4">
+				<div class="my-3 col-lg-4 col-12">
 					<p><%= fa_icon('unlock-alt 2x') %></p>
 					<p style="letter-spacing: 0.1em;">二段階認証</p>
 				</div>
 
-				<div class="my-3 col-lg-4">
+				<div class="my-3 col-lg-4 col-12">
 					<p><%= fa_icon('bell 2x') %></p>
 					<p style="letter-spacing: 0.1em;">通知機能</p>
 				</div>
 
-				<div class="col-lg-4">
+				<div class="col-lg-4 col-12">
 					<p><%= fa_icon('bars 2x') %></p>
 					<p style="letter-spacing: 0.1em;">直感的なナビゲーション</p>
 				</div>
 
-				<div class="col-lg-4">
+				<div class="col-lg-4 col-12">
 					<p><%= fa_icon('list-ol 2x') %></p>
 					<p style="letter-spacing: 0.1em;">タグランキング</p>
 				</div>
 
-				<div class="col-lg-4">
+				<div class="col-lg-4 col-12">
 					<p><%= fa_icon('list-ol 2x') %></p>
 					<p style="letter-spacing: 0.1em;">ユーザーランキング</p>
 				</div>

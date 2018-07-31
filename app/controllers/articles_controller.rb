@@ -84,6 +84,7 @@ class ArticlesController < ApplicationController
       @draft.save
       tagging_draft
       @article.destroy
+      subtract_five_point
       flash[:flash_message] = "下書きとして投稿を取り下げました"
       redirect_to user_drafts_path(current_user)
     elsif params[:back]

@@ -2,7 +2,7 @@
 
 	<%= link_to article_keeps_path(article), style: "text-decoration: none;" , method: :delete, id: "keep_link", remote: true do %>
 
-		<span class="list-group-item list-group-item-action nav-font bg-danger text-white mb-2">
+		<span class="list-group-item list-group-item-action nav-font text-white mb-2" style="background-color: #40e0d0;">
 			<div class="font-weight-bold d-md-none d-block">
 				<%= article.keeps.count %>
 			</div>

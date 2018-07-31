@@ -12,9 +12,7 @@
 
   <body>
     <header class="sticky-top">
-      <% if admin_signed_in? %>
-        <%= render 'layouts/header_admin' %>
-      <% elsif  user_signed_in? %>
+      <% if  user_signed_in? %>
         <%= render 'layouts/header_user', search: @search %>
         <div class="container-fluid">
 		      <div class="row small">
