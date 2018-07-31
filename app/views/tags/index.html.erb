@@ -46,7 +46,7 @@
 
 				    <tbody class="page" id="all-tags">
 
-				    	<%= render partial: 'tags/tags', locals: {tags: @tags, new_tag: @tag, user: @user} %>
+				    	<%= render partial: 'tags/tags', locals: {tags: @tags, new_tag: @new_tag, user: @user} %>
 
 				    </tbody>
 				  </table>
@@ -74,7 +74,57 @@
 			<div class="row">
 				<div class="col-12 d-lg-block d-none">
 
-					<%= render 'tags/description_of_tags_index' %>
+					<div class="border rounded small bg-white mb-lg-0 mb-3">
+
+						<h5 class="text-center mt-2">
+							<%= link_to "タグ一覧", tags_path, class: "border-bottom" %>
+						</h5>
+
+						<div class="px-2">
+							投稿されている記事のタグの一覧です。あなたの関心のあるタグを見つけましょう。新しく自分でタグを登録することもできます。
+						</div>
+						<p class="text-center mt-2">
+						  <a class="text-secondary" data-toggle="collapse" href="#collapseTags" role="button" aria-expanded="false" aria-controls="collapseTags">
+						    タグとは？
+						  </a>
+						</p>
+						<div class="collapse p-2" id="collapseTags">
+
+					    <p>
+					    	タグとは記事に関係のある分野、もしくはあなたの関心のある分野を表します。エブリティーズには、クリエイティブな事に関係があればどんな分野の記事を投稿しても大丈夫です。積極的にタグを登録しましょう！
+					    </p>
+
+					  	<ul>
+					  		<span>記事にタグを登録すると・・・</span>
+					  		<li>タグタイムラインにあなたの記事が表示されます</li>
+					  		<li>タグ検索からあなたの記事を見つけられるようになります</li>
+					  	</ul>
+
+					  	<ul>
+					  		<span>ユーザー情報にタグを登録すると・・・</span>
+					  		<li>同じタグを登録しているユーザーを見つけたり、他のユーザーがあなたを見つけられたりできるようになります。</li>
+					  		<li>登録しているタグの最新記事が見られるタグタイムライン機能が使えるようになります。</li>
+					  	</ul>
+
+					    <p class="text-white">
+					      <span class="text-dark">例 :</span>
+					      <span class="badge d-inline tag-color">音楽</span>
+					      <span class="badge d-inline tag-color">DTM</span>
+					      <span class="badge d-inline tag-color">イラスト</span>
+					      <span class="badge d-inline tag-color">CG</span>
+					      <span class="badge d-inline tag-color">基礎知識</span>
+					    </p>
+
+						</div>
+					</div>
+
+					<% if user_signed_in? %>
+
+						<div class="d-lg-none text-center">
+							<a href="#link">共通のタグユーザーを見る</a>
+						</div>
+
+					<% end %>
 
 				</div>
 
@@ -88,7 +138,7 @@
 						  </div>
 						  <div class="card-body">
 						  	<% @taggings = Tagging.where(taggable_type: "User", taggable_id: @user.id) %>
-						  	<%= render partial: 'taggings/tagging', locals: {taggings: @taggings, tag: @tag, user: @user} %>
+						  	<%= render partial: 'taggings/tagging', locals: {taggings: @taggings, new_tag: @new_tag, user: @user} %>
 
 						  </div>
 						</div>
@@ -111,10 +161,6 @@
 					</div>
 
 				<% end %>
-
-			</div>
-
-			<div class="row">
 
 				<div class="col-12">
 

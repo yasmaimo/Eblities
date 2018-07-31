@@ -14,8 +14,47 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    super
-    Notification.create(user_id: current_user.id, notified_type: "サインアップ")
+    build_resource(sign_up_params)
+
+    if resource.save
+
+      yield resource if block_given?
+      if resource.persisted?
+        if resource.active_for_authentication?
+          sign_up(resource_name, resource)
+          flash[:flash_message] = "ご登録ありがとうございます！Eblitiesからあなたへのご挨拶を送りました。右上の通知ボタンからご覧いただけます。"
+          Notification.create(user_id: current_user.id, notified_type: "サインアップ")
+          respond_with resource, location: after_sign_up_path_for(resource)
+        else
+          set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
+          expire_data_after_sign_in!
+          respond_with resource, location: after_inactive_sign_up_path_for(resource)
+        end
+      else
+        clean_up_passwords resource
+        set_minimum_password_length
+        respond_with resource
+      end
+
+    else
+
+      flash.now[:sign_up_failed] = "入力内容を確認してください"
+      render :new
+
+    end
+
+    # resource = User.new(customize_sign_up_params)
+    # if User.find_by(params[:user][:email])
+    #   flash.now[:sign_up_failed] = "すでに使用されているメールアドレスです"
+    #   render :new
+    #   return
+    # elsif resource.invalid?
+    #   flash.now[:sign_up_failed] = "入力内容を確認してください"
+    #   render :new
+    #   return
+    # else
+    #   super
+    # end
   end
 
   # GET /resource/edit
@@ -65,6 +104,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   private
+
   def customize_sign_up_params
     devise_parameter_sanitizer.permit :sign_up, keys: [:user_name, :email, :password, :password_confirmation, :remember_me]
   end
@@ -74,7 +114,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     self.resource = resource_class.new sign_up_params
     resource.validate
     unless verify_recaptcha(model: resource)
+      flash.now[:verify_failed] = "reCAPTCHA認証に失敗しました"
       respond_with_navigational(resource) { render :new }
     end
   end
+
 end

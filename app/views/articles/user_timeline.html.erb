@@ -9,6 +9,12 @@
 
 		<div class="col-lg-7 col-sm-11 content-margin">
 
+			<div class="border rounded small bg-white d-lg-none mb-lg-0 mb-3">
+
+				<%= render 'articles/description_of_user_timeline' %>
+
+			</div>
+
 			<% if current_user.followings.present? %>
 
 			  <table class="table bg-white">
@@ -66,7 +72,7 @@
 
 					    		<% user = User.find(post.posted_by_id) %>
 
-									<tr><!-- ここでeach -->
+									<tr>
 									  <td>
 									    <div class="card">
 									      <div class="card-header" style="position: relative;">
@@ -141,101 +147,12 @@
 
 									      <div class="card-body">
 
-									        <div class="row justify-content-center">
-
-									          <%= render 'articles/timeline_bar', post: post %>
-
-									          <div style="width: 92%; margin: 0 5px;">
-
-													    <div class="card card-size">
-
-													      <%= attachment_image_tag post.article, :image, fallback: "no_image.jpg", class: "img-trim"  %>
-													      <div class="card-img-overlay article-bg-index" style="">
-													        <div>
-													          <div class="row">
-
-													            <div cålass="col-12 ranking-table align-self-center">
-													              <%= attachment_image_tag post.article.user, :image, fallback: "no_image.jpg", class: "mx-1 card-img", style: "max-height: 40px; max-width: 40px;"%>
-													              <span>
-													                <%= link_to post.article.user.user_name, user_path(post.article.user_id), class: "text-border-black border-bottom border-secondary text-white" %>
-													              </span>
-													            </div>
-
-													          </div>
-													        </div>
-
-													        <div class="card-body">
-
-													          <div class="row">
-													            <div class="col-12">
-													              <span>
-													                <%= link_to post.article.title, article_path(post.article), class: "text-border text-white border-bottom border-secondary d-sm-inline d-none" %>
-													                <%= link_to post.article.title.truncate(30), article_path(post.article), class: "text-border text-white border-bottom border-secondary d-sm-none" %>
-													              </span>
-													            </div>
-
-
-													            <div class="text-light" style="position: absolute; bottom: 0; right: 0; padding: 5px 5px; margin: 5px 5px; background-color: rgba(0, 0, 0, 0.4); letter-spacing: 0.4px;">
-												                <% if post.article.favorited_by?(current_user) %>
-
-												                  <span class="mx-1 favorite-color">
-												                    <%= fa_icon("thumbs-up") %><%= post.article.favorites.count %>
-												                  </span>
-
-												                <% else %>
-
-												                  <span class="mx-1">
-												                    <%= fa_icon("thumbs-up") %><%= post.article.favorites.count %>
-												                  </span>
-
-												                <% end %>
-
-												                <% if post.article.kept_by?(current_user) %>
-
-												                  <span class="mx-1 keep-color"">
-												                    <%= fa_icon("folder-open") %><%= post.article.keeps.count %>
-												                  </span>
-
-												                <% else %>
-
-												                  <span class="mx-1">
-												                    <%= fa_icon("folder-open") %><%= post.article.keeps.count %>
-												                  </span>
-
-												                <% end %>
-
-												                <% if post.article.comments.where(user_id: current_user.id).exists? %>
-
-												                  <span class="mx-1 comment-color">
-												                    <%= fa_icon("comments") %><%= post.article.comments.count %>
-												                  </span>
-
-												                <% else %>
-
-												                  <span class="mx-1">
-												                    <%= fa_icon("comments") %><%= post.article.comments.count %>
-												                  </span>
-
-												                <% end %>
-													            </div>
-
-													          </div>
-
-
-													        </div>
-													      </div>
-													    </div>
-
-									          </div>
-
-									          <%= render 'articles/timeline_bar', post: post %>
-
-									        </div>
+									      	<%= render 'articles/including_article', article: post.article, post: post %>
 
 									      </div>
 									    </div>
 									  </td>
-									</tr><!-- eachを終了 -->
+									</tr>
 
 								<% end %>
 							<% end %>
@@ -266,7 +183,7 @@
 
 	  <div class="col-lg-3 col-sm-11 content-margin">
 
-			<div class="border rounded small bg-white">
+			<div class="border rounded small bg-white d-lg-block d-none">
 
 				<h5 class="text-center mt-2">
 					<%= link_to "ユーザータイムライン", user_timeline_path, class: "border-bottom" %>
@@ -276,24 +193,25 @@
 					ユーザータイムラインでは、あなたがフォローしているユーザーの投稿、イイね、キープ、コメントした記事を見ることができます。
 				</div>
 				<p class="text-center mt-2">
-				  <a class="text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+				  <a class="text-secondary" data-toggle="collapse" href="#collapseUsertimeline" role="button" aria-expanded="false" aria-controls="collapseUsertimeline">
 				    もっと詳しく!
 				  </a>
 				</p>
-				<div class="collapse p-2" id="collapseExample">
+				<div class="collapse p-2" id="collapseUsertimeline">
 
-			    <p>
-			    	"<%= link_to "最新記事", articles_path %>"や"<%= link_to "タグを探す", tags_path %>"で良い記事を投稿しているユーザーを見つけたり、
-			    	"<%= link_to "ユーザーを探す", users_path %>"で興味のあるユーザーを見つけたらフォローしてみましょう。あなたのユーザータイムラインにフォローしているユーザーの投稿、イイね、キープ、コメントした記事が表示されます。
-			    </p>
+				  <p>
+				  	"<%= link_to "最新記事", articles_path %>"や"<%= link_to "タグを探す", tags_path %>"で良い記事を投稿しているユーザーを見つけたり、
+				  	"<%= link_to "ユーザーを探す", users_path %>"で興味のあるユーザーを見つけたらフォローしてみましょう。あなたのユーザータイムラインにフォローしているユーザーの投稿、イイね、キープ、コメントした記事が表示されます。
+				  </p>
 
-		    	<ul>
-		    		<span>あなたがフォローされると・・・</span>
-		    		<li>2EP入手できます。</li>
-		    		<li>フォロワー(あなたをフォローしているユーザー)のタイムラインにあなたの投稿、イイね、キープ、コメントした記事が表示されるので、あなたの記事が多くの人に読んでもらえるかもしれません。</li>
-		    	</ul>
+					<ul>
+						<span>あなたがフォローされると・・・</span>
+						<li>2EP入手できます。</li>
+						<li>フォロワー(あなたをフォローしているユーザー)のタイムラインにあなたの投稿、イイね、キープ、コメントした記事が表示されるので、あなたの記事が多くの人に読んでもらえるかもしれません。</li>
+					</ul>
 
 				</div>
+
 			</div>
 
 			<table class="table bg-white mt-3">

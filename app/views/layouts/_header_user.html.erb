@@ -8,8 +8,8 @@
       クリエイターの知識をシェアするサイト
     </span>
 
-    <span class="nav-item ml-auto my-2 d-lg-none mr-3">
-      <%= render 'notifications/notification_dropdown' %>
+    <span class="nav-item ml-auto my-2 d-lg-none mr-3" id="notification_dropdown_sm">
+      <%= render 'notifications/notification_dropdown_sm' %>
     </span>
 
     <button class="navbar-toggler text-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,7 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-      <%= search_form_for @search do |f| %>
+      <%= search_form_for search do |f| %>
         <div class="form-inline my-2 my-lg-0 ml-lg-3 justify-content-center">
           <% if controller.controller_name == "articles" && controller.action_name == "index" %>
             <%= f.text_field :title_or_body_cont, class: "col-sm-9 col-xs-12 form-control", placeholder: '記事を検索' %>
@@ -31,10 +31,9 @@
       <% end %>
 
       <ul class="navbar-nav ml-auto text-right">
-        <li class="nav-item dropdown my-2 d-lg-block d-none">
+        <li class="nav-item dropdown my-2 d-lg-block d-none" id="notification_dropdown">
           <%= render 'notifications/notification_dropdown' %>
         </li>
-        
 
         <li class="nav-item my-2">
           <%= link_to "マイページ", user_path(current_user), class: "nav-link text-white nav-font" %>

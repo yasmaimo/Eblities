@@ -1,4 +1,4 @@
-<%= form_for(tag, remote: true) do |f| %>
+<%= form_for(new_tag, remote: true) do |f| %>
   <%= f.label :tag_list, "追加したいタグを入力", class: "small" %><br>
   <%= text_field_tag 'user[tag_list]', user.tag_list.join(','), class: "col", "data-role" => "tagsinput", value: nil %>
 	<%= f.submit "タグを追加する", class: "btn btn-secondary btn-sm mt-3" %>

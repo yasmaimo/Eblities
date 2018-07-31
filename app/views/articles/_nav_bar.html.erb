@@ -1,10 +1,7 @@
-<% c_name = controller.controller_name %>
-<% a_name = controller.action_name %>
-
 <div class="list-group left-sidebar-link d-lg-block d-none">
 
 	<%= link_to users_path do %>
-		<% if c_name == "users" || c_name == "drafts" %>
+		<% if controller_name == "users" || controller_name == "drafts" %>
 			<span class="list-group-item list-group-item-action nav-font mb-2 bg-danger text-white">
 		<% else %>
 			<span class="list-group-item list-group-item-action nav-font mb-2">
@@ -13,7 +10,7 @@
 			</span>
 	<% end %>
 
-	<% if c_name == "users" && a_name != "index" %>
+	<% if controller_name == "users" && action_name != "index" %>
 		<div class="text-center text-secondary mb-3">
 			<span><%= fa_icon "arrow-down" %></span><br>
 			<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 40px; max-width: 40px;" %><br>
@@ -23,7 +20,7 @@
 		</div>
 	<% end %>
 
-	<% if c_name == "drafts" %>
+	<% if controller_name == "drafts" %>
 		<div class="text-center text-secondary mb-3">
 			<span><%= fa_icon "arrow-down" %></span><br>
 			<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 40px; max-width: 40px;" %><br>
@@ -34,7 +31,7 @@
 	<% end %>
 
 	<%= link_to tags_path do %>
-		<% if c_name == "tags" %>
+		<% if controller_name == "tags" %>
 			<span class="list-group-item list-group-item-action nav-font mb-2 bg-primary text-white">
 		<% else %>
 			<span class="list-group-item list-group-item-action nav-font mb-2">
@@ -43,7 +40,7 @@
 			</span>
 	<% end %>
 
-	<% if c_name == "tags" && a_name == "show" %>
+	<% if controller_name == "tags" && action_name == "show" %>
 		<div class="text-center text-secondary mb-3">
 			<span><%= fa_icon "arrow-down" %></span><br>
 			<span>

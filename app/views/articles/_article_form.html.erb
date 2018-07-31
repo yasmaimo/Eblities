@@ -24,7 +24,7 @@
 <div class="row">
   <div class="col-lg-6 col-12 my-3">
 
-    <%= text_field_tag 'article[tag_list]', article.tag_list.join(','), class: "form-control", "data-role" => "tagsinput" %>
+    <%= text_field_tag "#{article_type}[tag_list]", article.tag_list.join(','), class: "form-control", "data-role" => "tagsinput" %>
 
   </div>
 
@@ -45,13 +45,13 @@
 <p class="text-center small text-white mt-3 title-color">タイトル（70文字まで）</p>
 
 <div>
-  <%= f.input :title, label: false, placeholder: "タイトル", error: "タイトルを入力してください" %>
+  <%= f.input :title, label: false, placeholder: "タイトル", error: "70文字までのタイトルを入力してください" %>
 </div>
 
 <p class="text-center small text-white mt-3 title-color">本文（10,000文字まで）</p>
 
 <div>
-  <%= f.input :body, label: false, as: :summernote, error: "本文を入力してください"  %>
+  <%= f.input :body, label: false, as: :summernote, error: "10,000文字までの本文を入力してください"  %>
 </div>
 
 <div class="text-center my-2">
@@ -64,6 +64,8 @@
 </div>
 
 <div class="form-actions text-center">
+
   <%= f.submit "確認画面へ進む", class: "btn btn-primary btn-sm", name: "confirm_article" %>
-  <%= f.submit "下書きとして保存する", class: "btn border text-dark btn-sm" , name: "create_draft" %>
+  <%= f.submit "#{submit_label}", class: "btn border text-dark btn-sm" , name: "#{submit_name}" %>
+
 </div>

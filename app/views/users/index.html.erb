@@ -80,7 +80,54 @@
 		<div class="col-lg-3 col-sm-11 content-margin">
 
 			<span class="d-lg-block d-none">
-				<%= render 'description_of_users_index' %>
+
+				<div class="border rounded small mb-3 bg-white">
+					<h5 class="text-center mt-2">
+						<%= link_to "ユーザー一覧", users_path, class: "border-bottom" %>
+					</h5>
+					<div class="px-2">
+						登録しているユーザーの一覧です。現在<%= User.count %>名のユーザーがいます。ユーザーをフォローするとイイことがあるかも？
+					</div>
+					<p class="text-center mt-2">
+					  <a class="text-secondary" data-toggle="collapse" href="#collapseUsers" role="button" aria-expanded="false" aria-controls="collapseUsers">
+					    フォローって？イイことって？
+					  </a>
+					</p>
+					<div class="collapse p-2" id="collapseUsers">
+
+				    <p>
+				    	ユーザーをフォローすると、ユーザータイムライン機能が使えるようになります。ユーザータイムラインには下記のイイことがあります。
+				    </p>
+
+				  	<ul>
+				  		<span>フォローしたユーザーの・・・</span>
+				  		<li>投稿した記事を見る</li>
+				  		<li>イイねした記事を見る</li>
+				  		<li>キープした記事を見る</li>
+				  		<li>コメントした記事を見る</li>
+				  	</ul>
+
+						<ul>
+							<span>あなたがフォローされると・・・</span>
+							<li>2EP入手できます。</li>
+							<li>フォロワー(あなたをフォローしているユーザー)のタイムラインにあなたの投稿、イイね、キープ、コメントした記事が表示されるので、あなたの記事が多くの人に読んでもらえるかもしれません。</li>
+						</ul>
+
+				    <p>
+				    	興味のあるユーザーをフォローすれば、あなたにとって有益な記事を見つけやすくなります。積極的にフォローしましょう！
+				    </p>
+
+					</div>
+				</div>
+
+				<% if user_signed_in? %>
+
+					<div class="d-lg-none text-center">
+						<a href="#link">最近あなたと繋がりがあったユーザーを見る</a>
+					</div>
+
+				<% end %>
+
 			</span>
 
 		  <% if user_signed_in? %>

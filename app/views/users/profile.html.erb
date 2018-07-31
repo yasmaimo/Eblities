@@ -1,7 +1,16 @@
 <div class="container">
 	<div class="row justify-content-center">
 
-		<%= render 'users/setting_sidebar' %>
+		<div class="col-12 text-center text-success animated flash">
+			<%= flash[:profile_updated] %>
+		</div>
+
+		<div class="col-12 text-center text-danger animated shake">
+			<%= flash[:profile_update_failed] %>
+		</div>
+
+
+		<%= render 'users/setting_sidebar', user: @user %>
 
 		<div class="col-lg-10 col-sm-12 content-margin">
 
@@ -16,7 +25,7 @@
 	        </div>
 	      </div>
 
-	      <%= form_for @user do |f| %>
+	      <%= simple_form_for @user do |f| %>
 
 		      <div class="card-body">
 
@@ -33,14 +42,14 @@
 		          		ユーザーネーム(16文字以内)
 		          	</span><br>
 		          	<span>
-		          		<%= f.text_field :user_name, class: "font-weight-bold text-dark" %>
+		          		<%= f.input :user_name, label: false, class: "font-weight-bold text-dark", error: "2~16文字のユーザー名を入力してください" %>
 		          	</span><br>
-		          	<p class="my-3"></p>
+
 		          	<span class="small text-secondary">
 		          		メールアドレス
 		          	</span><br>
 		          	<span>
-		          		<%= f.text_field :email, class: "font-weight-bold text-dark" %>
+		          		<%= f.input :email, label: false, class: "font-weight-bold text-dark", error: "すでに使用されているメールアドレスか、無効なメールアドレスです" %>
 		          	</span><br>
 		          </div>
 
@@ -56,16 +65,16 @@
 		          		自分のブログ、WEBサイト
 		          	</span><br>
 		          	<span>
-		          		<%= f.text_field :web_site_url, placeholder: "URL", class: "w-100" %>
+		          		<%= f.input :web_site_url, label: false, placeholder: "URL", class: "w-100" %>
 		          	</span><br>
 		          </div>
 
-		          <div class="col-12 mt-4">
+		          <div class="col-12">
 		          	<span class="small text-secondary">
 		          		自己紹介(150文字以内)
 		          	</span><br>
 		          	<span>
-		          		<%= f.text_area :introduction, class: "w-100" %>
+		          		<%= f.input :introduction, as: :text, label: false , class: "w-100" %>
 		          	</span><br>
 		          </div>
 

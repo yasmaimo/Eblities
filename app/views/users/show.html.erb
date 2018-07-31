@@ -1,6 +1,10 @@
 <div class="container-fluid">
 	<div class="row justify-content-center">
 
+		<div class="col-12 text-center text-danger animated flash">
+			<%= flash[:article_deleted] %>
+		</div>
+
 		<div class="left-sidebar col-lg-2 d-none d-lg-block">
 
 			<%= render 'articles/nav_bar' %>
@@ -9,7 +13,7 @@
 
 		<div class="col-lg-7 col-sm-11">
 
-			<%= render 'users/nav_bar' %>
+			<%= render 'users/nav_bar', user: @user %>
 
 	    <%= search_form_for @search_user_article, url: user_path do |f| %>
 	      <div class="form-inline my-lg-0 my-2">
@@ -65,7 +69,7 @@
 
 		</div>
 
-		<%= render partial: 'users/info_sidebar', locals: {taggings: @taggings, tag: @tag, user: @user} %>
+		<%= render partial: 'users/info_sidebar', locals: {taggings: @taggings, new_tag: @new_tag, user: @user} %>
 
 	</div>
 </div>

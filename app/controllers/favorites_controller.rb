@@ -8,6 +8,8 @@ class FavoritesController < ApplicationController
 		add_one_point
 		create_notification
 		create_post
+    flash.now[:flash_message] = "この記事を#{"イイね"}しました"
+    @flash_message = flash.now[:flash_message]
   end
 
   def destroy
@@ -16,7 +18,13 @@ class FavoritesController < ApplicationController
 		subtract_one_point
 		destroy_notification
 		destroy_post
+    flash.now[:flash_message] = "この記事の#{"イイね"}を取り消しました"
+    @flash_message = flash.now[:flash_message]
   end
+
+
+
+
 
 	private
 

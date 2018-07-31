@@ -4,11 +4,15 @@
   </div>
   <div class="card-body">
 
-    <div class="text-center" id="tag-mark-of-<%= tag.id %>">
+  	<% if user_signed_in? %>
 
-      <%= render partial: 'tags/tag_mark', locals: {tag: tag} %>
+	    <div class="text-center" id="tag-mark-of-<%= tag.id %>">
 
-    </div>
+	      <%= render partial: 'tags/tag_mark', locals: {tag: tag} %>
+
+	    </div>
+
+	  <% end %>
 
   	<div class="small">
   		タグ : <%= link_to tag.name, tag_path(tag), class: "text-dark berder border-bottom" %>が登録されている記事の一覧です。
@@ -49,11 +53,15 @@
 			</tbody>
 		</table>
 
-    <div class="text-center" id="tag-button-of-<%= tag.id %>">
+		<% if user_signed_in? %>
 
-      <%= render partial: 'tags/tag_button', locals: {tag: tag, new_tag: new_tag} %>
+	    <div class="text-center" id="tag-button-of-<%= tag.id %>">
 
-    </div>
+	      <%= render partial: 'tags/tag_button', locals: {tag: tag, new_tag: new_tag} %>
+
+	    </div>
+
+	  <% end %>
 
   </div>
 </div>

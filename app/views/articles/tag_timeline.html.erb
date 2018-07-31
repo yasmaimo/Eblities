@@ -9,6 +9,12 @@
 
 		<div class="col-lg-7 col-sm-11 content-margin">
 
+			<div class="border rounded small bg-white d-lg-none mb-lg-0 mb-3">
+
+				<%= render 'articles/description_of_tag_timeline' %>
+
+			</div>
+
 			<% if current_user.tag_list.present? %>
 
 			  <table class="table bg-white">
@@ -27,162 +33,9 @@
 
 			    <tbody>
 
-            <% current_user.taggings.each do |tagging| %>
+            <% current_user.taggings.page(params[:q]).each do |tagging| %>
 
-            	<% tag = tagging.tag %>
-              <% tagging_articles = Tagging.where(tag_id: tag.id, taggable_type: "Article") %>
-              <% tagging_users = Tagging.where(tag_id: tag.id, taggable_type: "User") %>
-
-              <tr class="tag"><!-- ここでeach -->
-                <td>
-                  <div class="card">
-                    <div class="card-header">
-                      <div class="row">
-
-                        <div class="col-6 ranking-table">
-                        	<span class="badge tag-color p-1">
-                        		<%= link_to tag.name, tag_path(tag), class: "text-white" %>
-                        	</span>
-
-                          <% if tagging_articles.present? %>
-
-                            <span class="small" style="font-weight: bold; font-size: 14px;">
-                              の最新記事
-                            </span>
-
-                          <% else %>
-
-                            <span class="small" style="font-weight: bold; font-size: 14px;">
-                              の記事はまだありません
-                            </span>
-
-                          <% end %>
-
-                        </div>
-
-                        <div class="col-6 small text-secondary text-right align-self-center">
-
-                        	<span>
-                        		<%= fa_icon("pencil") %><%= tagging_articles.count %>件の記事
-                        	</span>
-
-                          <br>
-
-                          <%= fa_icon("users") %>
-                        	<span id="tagging-users-count-of-<%= tag.id %>">
-                            <%= render partial: 'tags/tagging_users_count', locals: {tagging_users: tagging_users} %>
-                        	</span>
-                          名が登録
-
-                        </div>
-
-                      </div>
-                    </div>
-
-                    <% tagging_articles.last(1).each do |tagging_article| %>
-
-                    <div class="card-body">
-
-                      <div class="row justify-content-center">
-
-                        <div class="tag-bar-color" style="width: 2%; height: 200px; ">
-                        </div>
-
-                        <div style="width: 92%; margin: 0 5px;">
-
-                          <div class="card card-size">
-
-                            <%= attachment_image_tag tagging_article.taggable, :image, fallback: "no_image.jpg", class: "img-trim"  %>
-                            <div class="card-img-overlay article-bg-index" style="">
-                              <div>
-                                <div class="row">
-
-                                  <div class="col-12 ranking-table align-self-center">
-                                    <%= attachment_image_tag tagging_article.taggable.user, :image, fallback: "no_image.jpg", class: "mx-1 card-img", style: "max-height: 40px; max-width: 40px;"%>
-                                    <span>
-                                      <%= link_to tagging_article.taggable.user.user_name, user_path(tagging_article.taggable.user_id), class: "text-border-black border-bottom border-secondary text-white" %>
-                                    </span>
-                                  </div>
-
-                                </div>
-                              </div>
-
-                              <div class="card-body">
-
-                                <div class="row">
-                                  <div class="col-12">
-                                    <span>
-                                      <%= link_to tagging_article.taggable.title, article_path(tagging_article.taggable), class: "text-border text-white border-bottom border-secondary d-sm-inline d-none" %>
-                                      <%= link_to tagging_article.taggable.title.truncate(30), article_path(tagging_article.taggable), class: "text-border text-white border-bottom border-secondary d-sm-none" %>
-                                    </span>
-                                  </div>
-
-
-                                  <div class="text-light" style="position: absolute; bottom: 0; right: 0; padding: 5px 5px; margin: 5px 5px; background-color: rgba(0, 0, 0, 0.4); letter-spacing: 0.4px;">
-                                    <% if tagging_article.taggable.favorited_by?(current_user) %>
-
-                                      <span class="mx-1 favorite-color">
-                                        <%= fa_icon("thumbs-up") %><%= tagging_article.taggable.favorites.count %>
-                                      </span>
-
-                                    <% else %>
-
-                                      <span class="mx-1">
-                                        <%= fa_icon("thumbs-up") %><%= tagging_article.taggable.favorites.count %>
-                                      </span>
-
-                                    <% end %>
-
-                                    <% if tagging_article.taggable.kept_by?(current_user) %>
-
-                                      <span class="mx-1 keep-color"">
-                                        <%= fa_icon("folder-open") %><%= tagging_article.taggable.keeps.count %>
-                                      </span>
-
-                                    <% else %>
-
-                                      <span class="mx-1">
-                                        <%= fa_icon("folder-open") %><%= tagging_article.taggable.keeps.count %>
-                                      </span>
-
-                                    <% end %>
-
-                                    <% if tagging_article.taggable.comments.where(user_id: current_user.id).exists? %>
-
-                                      <span class="mx-1 comment-color">
-                                        <%= fa_icon("comments") %><%= tagging_article.taggable.comments.count %>
-                                      </span>
-
-                                    <% else %>
-
-                                      <span class="mx-1">
-                                        <%= fa_icon("comments") %><%= tagging_article.taggable.comments.count %>
-                                      </span>
-
-                                    <% end %>
-                                  </div>
-
-                                </div>
-
-
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-
-                        <div class="tag-bar-color" style="width: 2%; height: 200px; ">
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                    <% end %>
-
-                  </div>
-                </td>
-              </tr><!-- eachを終了 -->
+              <%= render 'tags/tags', tags: Tag.where(id: tagging.tag_id) %>
 
             <% end %>
 
@@ -212,37 +65,37 @@
 
 	  <div class="col-lg-3 col-sm-11 content-margin">
 
+			<div class="border rounded small bg-white d-lg-block d-none">
 
-      <div class="border rounded small bg-white">
+				<h5 class="text-center mt-2">
+				  <%= link_to "タグタイムライン", tag_timeline_path, class: "border-bottom" %>
+				</h5>
 
-        <h5 class="text-center mt-2">
-          <%= link_to "タグタイムライン", tag_timeline_path, class: "border-bottom" %>
-        </h5>
+				<div class="px-2">
+				  タグタイムラインでは、あなたが登録しているタグの最新記事を見ることができます。
+				</div>
+				<p class="text-center mt-2">
+				  <a class="text-secondary" data-toggle="collapse" href="#collapseTagtimeline" role="button" aria-expanded="false" aria-controls="collapseTagtimeline">
+				    もっと詳しく!
+				  </a>
+				</p>
+				<div class="collapse p-2" id="collapseTagtimeline">
 
-        <div class="px-2">
-          タグタイムラインでは、あなたが登録しているタグの最新記事を見ることができます。
-        </div>
-        <p class="text-center mt-2">
-          <a class="text-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            もっと詳しく!
-          </a>
-        </p>
-        <div class="collapse p-2" id="collapseExample">
+				  <p>
+				    "<%= link_to "タグを探す", tags_path %>"であなたの興味のある分野をタグとして登録できます。"<%= link_to "マイページ", user_path(current_user) %>"でもタグを登録することができます。登録後、あなたの登録したタグの最新記事がタグタイムラインに表示されます。
+				  </p>
 
-          <p>
-            "<%= link_to "タグを探す", tags_path %>"であなたの興味のある分野をタグとして登録できます。"<%= link_to "マイページ", user_path(current_user) %>"でもタグを登録することができます。登録後、あなたの登録したタグの最新記事がタグタイムラインに表示されます。
-          </p>
+				  <ul>
+				    <span>タグは他にも・・・</span>
+				    <li>記事と関連のある分野として、記事にタグを登録することもできます。</li>
+				    <li>記事にタグを登録すると、他のユーザーがその記事を見つけやすくなります。</li>
+				  </ul>
 
-          <ul>
-            <span>タグは他にも・・・</span>
-            <li>記事と関連のある分野として、記事にタグを登録することもできます。</li>
-            <li>記事にタグを登録すると、他のユーザーがその記事を見つけやすくなります。</li>
-          </ul>
+				  記事にも積極的にタグを登録しましょう！
 
-          記事にも積極的にタグを登録しましょう！
+				</div>
 
-        </div>
-      </div>
+			</div>
 
 			<table class="table bg-white mt-3">
 

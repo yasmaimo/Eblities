@@ -1,8 +1,35 @@
 <div class="container-fluid">
 	<div class="row justify-content-center">
 
+		<% unless user_signed_in? %>
+
+			<div class="col-12 favorite-bg-color text-white align" style="min-height: 250px; margin-top: -25px;">
+
+				<div class="row text-center h-100 align-items-center">
+
+					<div class="col-lg-6 col-12 mt-lg-0 mt-3">
+						<h1 style="letter-spacing: 1em; font-size: 14px;">エブリティーズ</h1>
+						<h1 style="letter-spacing: 0.3em;">Eblities</h1>
+						<h5 style="letter-spacing: 0.1em;">
+							知りたいことがきっと見つかる。
+						</h5>
+						<p>クリエイターの知識をシェアするサイト。</p>
+					</div>
+
+					<div class="col-lg-6 col-12 mt-lg-0 mt-3">
+						<p><%= link_to "新規登録", new_user_registration_path, class: "btn btn-outline-light" %></p>
+						<p><%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-light" %></p>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		<% end %>
+
 		<div class="col-12 text-center text-success">
-			<%= flash[:succeeded] %>
+
 		</div>
 
 		<div class="left-sidebar col-lg-2">
@@ -12,6 +39,12 @@
 		</div>
 
 		<div class="col-lg-7 col-sm-11 content-margin">
+
+      <div class="border rounded small bg-white d-lg-none mb-lg-0 mb-3">
+
+      	<%= render 'articles/description_of_articles_index' %>
+
+      </div>
 
 			<% if Article.exists? %>
 				<% if @search.result.count > 0 %>
@@ -70,15 +103,9 @@
 
 	  <div class="col-lg-3 col-sm-11 content-margin">
 
-      <div class="border rounded small bg-white">
+      <div class="border rounded small bg-white d-lg-block d-none">
 
-        <h5 class="text-center mt-2">
-          <%= link_to "最新記事", articles_path, class: "border-bottom" %>
-        </h5>
-
-        <div class="px-2 pb-3">
-          このページでは、投稿された最新の記事を見ることができます。
-        </div>
+      	<%= render 'articles/description_of_articles_index' %>
 
       </div>
 

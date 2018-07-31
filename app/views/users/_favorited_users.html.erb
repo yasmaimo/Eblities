@@ -5,7 +5,7 @@
 		    <tr>
 		      <td class="right-sidebar-link">
 		      	<span>
-		      		<%= attachment_image_tag favorite.user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+		      		<%= attachment_image_tag favorite.user, :image, fallback: "no_image.jpg", class: "card-img mx-1", style: "max-height: 40px; max-width: 40px;"%>
 		      		<%= link_to favorite.user.user_name, user_path(favorite.user) %>
 		      	</span><br>
 		      	<span class="small">記事</span>

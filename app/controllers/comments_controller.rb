@@ -13,6 +13,7 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.new(comment_params)
     @comment.article_id = @article.id
     if @comment.invalid?
+      flash.now[:comment_create_failed] = "500文字までのコメントを入力してください"
       render "articles/show", :locals => {:article => @article,
                                           :user => @user,
                                           :users => @users,
@@ -22,8 +23,8 @@ class CommentsController < ApplicationController
     if @comment.save
       create_notification
       create_post
+      flash[:flash_message] = "コメントを投稿しました"
       redirect_to article_path(@article)
-      flash[:succeeded] = "コメントを投稿しました"
     end
   end
 
@@ -35,6 +36,10 @@ class CommentsController < ApplicationController
 
   def destroy
   end
+
+
+
+
 
   private
 

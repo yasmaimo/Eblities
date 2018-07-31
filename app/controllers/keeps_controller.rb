@@ -12,9 +12,11 @@ class KeepsController < ApplicationController
     keep.save
     @article = Article.find(keep.article_id)
     @user = User.find(@article.user_id)
-    add_five_point
+    add_one_point
     create_notification
     create_post
+    flash.now[:flash_message] = "この記事を#{"キープ"}しました"
+    @flash_message = flash.now[:flash_message]
   end
 
   def destroy
@@ -22,10 +24,16 @@ class KeepsController < ApplicationController
     keep.destroy
     @article = Article.find(params[:article_id])
     @user = User.find(@article.user_id)
-    subtract_five_point
+    subtract_one_point
     destroy_notification
     destroy_post
+    flash.now[:flash_message] = "この記事の#{"キープ"}を取り消しました"
+    @flash_message = flash.now[:flash_message]
   end
+
+
+
+
 
   private
 

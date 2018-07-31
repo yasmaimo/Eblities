@@ -3,36 +3,36 @@
 </span>
 
 <div class="col-lg-3 col-sm-11 text-center pt-4 bg-white h-100 content-margin">
-	<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 200px; max-width: 200px;" %>
-	<p class="mt-3"><%= @user.user_name %></p>
-	<% if @user.web_site_url.present? %>
+	<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 200px; max-width: 200px;" %>
+	<p class="mt-3"><%= user.user_name %></p>
+	<% if user.web_site_url.present? %>
 		<p class="small text-secondary mt-2">
 			ウェブサイトを訪問する<br>
-			<%= link_to "#{@user.web_site_url}", "#{@user.web_site_url}" %>
+			<%= link_to "#{user.web_site_url}", "#{user.web_site_url}" %>
 		</p>
 	<% end %>
-	<p class="small my-3"><%= @user.introduction %></p>
+	<p class="small my-3"><%= user.introduction %></p>
 
 	<span class="small">Eblities Point</span><br>
-	<span class="font-weight-bold h5"><%= @user.point %></span>
+	<span class="font-weight-bold h5"><%= user.point %></span>
 	<span class="font-weight-bold h5">EP</span><br>
 
 	<% if user_signed_in? %>
 
-		<span id="relationship-of-<%= @user.id %>">
-			<%= render 'relationships/follow_or_unfollow', user: @user %>
+		<span id="relationship-of-<%= user.id %>">
+			<%= render 'relationships/follow_or_unfollow', user: user %>
 		</span>
 
 	<% end %>
 
 	<div class="mt-4">
 		<span class="small">フォロー</span><br>
-		<span><%= @user.followings.count %></span><br>
+		<span><%= user.followings.count %></span><br>
 		<span class="small">フォロワー</span><br>
-		<span><%= @user.followers.count %></span><br>
+		<span><%= user.followers.count %></span><br>
 	</div>
 
-	<% if @user == current_user %>
+	<% if user == current_user %>
 
 		<%= link_to user_profile_path(current_user) do %>
 			<p class="mt-3 btn btn-secondary btn-sm"><%= fa_icon("cog", text: "プロフィール設定") %></p>
@@ -42,8 +42,8 @@
 
 	<p class="bg-navy text-white mt-3">関心のあるタグ</p>
 
-	<span id="tagging-of-<%= @user.id %>">
-		<%= render partial: 'taggings/tagging', locals: {taggings: taggings, tag: tag, user: user} %>
+	<span id="tagging-of-<%= user.id %>">
+		<%= render partial: 'taggings/tagging', locals: {taggings: taggings, new_tag: new_tag, user: user} %>
 	</span>
 
 	<p class="bg-navy text-white mt-3">実績</p>
@@ -53,7 +53,7 @@
 		<% favorited = 0 %>
 		<% kept = 0 %>
 		<% commented = 0 %>
-		<% @user.articles.each do |article| %>
+		<% user.articles.each do |article| %>
 			<% favorited += article.favorites.count %>
 			<% kept += article.keeps.count %>
 			<% commented += article.comments.count %>
@@ -65,7 +65,7 @@
 					<th scope=row>投稿数</th>
 				</tr>
 				<tr>
-					<td><%= @user.articles.count %></td>
+					<td><%= user.articles.count %></td>
 				</tr>
 				<tr class="thead-light">
 					<th scope=row>イイねされた数</th>
@@ -90,6 +90,8 @@
 	</div>
 
 </div>
+
+<a name="link"></a>
 
 <span id="tags_input_script">
 	<%= render 'layouts/tags_input_script' %>

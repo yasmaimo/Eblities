@@ -1,6 +1,15 @@
 <div class="container-fluid">
 	<div class="row justify-content-center">
 
+		<div class="col-12 text-center text-success animated flash">
+			<%= flash[:article_created] %>
+			<%= flash[:comment_created] %>
+		</div>
+
+		<div class="col-12 text-center text-danger animated shake">
+			<%= flash[:comment_create_failed] %>
+		</div>
+
 		<div class="col-lg-8 col-sm-11 content-margin">
 
       <div class="card">
@@ -122,13 +131,13 @@
 		  <p class="mt-3 text-center bg-navy text-white">コメント</p>
 
       <div class="d-lg-block d-none">
-	  		<%= render 'articles/comment' %>
+	  		<%= render 'articles/comment', article: @article, comment: @comment %>
 			</div>
 	  </div>
 
 	  <div class="d-lg-none d-sm-block col-sm-11">
 
-	  	<%= render 'articles/comment' %>
+	  	<%= render 'articles/comment', article: @article, comment: @comment %>
 
 	  </div>
 

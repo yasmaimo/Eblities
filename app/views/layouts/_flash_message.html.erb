@@ -1,0 +1,18 @@
+<% if flash[:flash_message].present? %>
+
+  <div class="animated fadeInLeft text-white p-3 rounded" id="flash-delete"
+  		 style="position: fixed; bottom: 15px; left: 15px; margin-right: 15px; z-index: 99999; background-color: rgba(0,0,0, 0.5); word-break: break-all;">
+		<%= flash[:flash_message] %>
+  </div>
+
+<% end %>
+
+<script>
+$(function(){
+    $("#flash-delete").on({
+        "click":function(){
+            $(this).addClass("fadeOutLeft");
+        }
+    });
+});
+</script>
