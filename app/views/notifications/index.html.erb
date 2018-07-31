@@ -1,8 +1,15 @@
-<div class="container">
+<div class="container-fluid">
 	<div class="row justify-content-center">
-		<div class="col-md-8 col-12" id="notifications">
 
-			<p class="text-center mt-3 font-weight-bold"><%= current_user.user_name %>さんの通知一覧</p>
+		<div class="left-sidebar col-lg-2">
+
+			<%= render 'articles/nav_bar' %>
+
+		</div>
+
+		<div class="col-md-10 col-12" id="notifications">
+
+			<p class="bg-navy rounded border text-white text-center font-weight-bold content-margin py-2"><%= current_user.user_name %>さんの通知一覧</p>
 
 			<% @notifications.each do |notification| %>
 
@@ -18,27 +25,80 @@
 						<% end %>
 
 							<% if "#{notification.notified_type}" == "サインアップ" %>
+								<div class="row justify-content-center">
 
-								<div class="text-center">
-									<p class="h5">
-										ようこそEblitiesへ！
-									</p>
+									<div class="text-center col-lg-8">
+										<p class="h5">
+											ようこそEblitiesへ！
+										</p>
 
-									<p class="mx-4">
-										ご登録ありがとうございます。Eblitiesは作曲家やデザイナーなど、様々な分野のクリエイターが知識を共有するサイトです。これからどうぞよろしくお願いします。サイトの使い方を<%= link_to "こちらのページ", helps_path %>にてご説明させていただきます。
-									</p>
+										<p class="mx-4">
+											ご登録ありがとうございます。Eblitiesは作曲家やデザイナーなど、様々な分野のクリエイターが知識を共有するサイトです。これからどうぞよろしくお願いします。
+										</p>
 
-									<p>
-										プロフィール登録がお済みでない方は<br>
-										<%= link_to "プロフィール設定", user_profile_path(current_user) %><br>
-										で登録しましょう。
-									</p>
+										<p>
+											とりあえず記事を探したい場合は画面上部の検索フォームから検索ができます。
+										</p>
 
-									<p>
-										アカウントのセキュリティを高めるために<br>
-										<%= link_to "二段階認証の設定", user_two_factor_authentication_path(current_user) %><br>
-										をオススメしています。
-									</p>
+										<p>
+											まずは<%= link_to "タグを探す", tags_path %>であなたのタグリストに興味のあるタグを登録するのがオススメです。タグリストを作成すると<%= link_to "タグタイムライン", tag_timeline_path %>が使用できるようになり、気になるタグの最新記事をチェックできるようになります。
+										</p>
+
+										<p>
+											気になるユーザーがいたらフォローしてみましょう。ユーザーをフォローすると<%= link_to "ユーザータイムライン", tag_timeline_path %>にて、そのユーザーの投稿、イイね、キープ、コメントした記事を見ることができます。
+										</p>
+
+										<p>
+											イケてる記事を見つけたらイイねボタンを押して記事を評価しましょう。
+										  <div class="btn border" id="favorite-demo"">
+										  	<%= fa_icon('thumbs-up 2x') %>
+										  </div>
+										</p>
+
+										<p>
+											後で読みたい記事、気に入った記事を保存するには、キープボタンを押します。<%= link_to "キープ一覧", keeps_path %>でキープした記事を見ることができます。
+										  <div class="btn border" id="keep-demo"">
+										  	<%= fa_icon('folder-open 2x') %>
+										  </div>
+										</p>
+
+										<p>
+											EPとは？(Eblities Pointとは？)
+										</p>
+
+										<p>
+											ユーザーがEP(Eblities Point)を貯めると、積極的にEblitiesを利用しているかがわかります。ポイントが多く貯まる最も大きな要因は、良い記事を書いて多くのイイね、キープをしてもらうことですので、EPの多いユーザーほど積極的であると言えます。ポイントの多いユーザーはランキングTOP10に表示されます。
+											<ul class="list-group">
+												<li class="list-group-item">記事を投稿する +5EP</li>
+											  <li class="list-group-item">フォローされる +2EP</li>
+											  <li class="list-group-item">イイねされる +1EP</li>
+											  <li class="list-group-item">キープされる +1EP</li>
+											  <li class="list-group-item text-secondary">*イベントが取り消されるとその分減算されます。</li>
+											</ul>
+										</p>
+
+										<p>
+											プロフィール登録がお済みでない方は<br>
+											<%= link_to "プロフィール設定", user_profile_path(current_user) %><br>
+											で登録しましょう。
+										</p>
+
+										<p>
+											アカウントのセキュリティを高めるために<br>
+											<%= link_to "二段階認証の設定", user_two_factor_authentication_path(current_user) %><br>
+											をオススメしています。
+										</p>
+
+										<p>
+											ご案内は以上となります。主要なページの右上にも機能の説明が書いてありますので、機能をもう一度確認したい場合は是非ご活用ください。
+										</p>
+
+										<p>
+											<%= link_to "TOP画面へ", root_path %>
+										</p>
+
+									</div>
+
 								</div>
 
 							<% elsif "#{notification.notified_type}" == "キープ" %>
@@ -80,3 +140,18 @@
 		</div>
 	</div>
 </div>
+
+<script>
+$(function(){
+    $("#favorite-demo").on({
+        "click":function(){
+            $(this).addClass("favorite-bg-color text-white");
+        }
+    });
+    $("#keep-demo").on({
+        "click":function(){
+            $(this).addClass("keep-bg-color text-white");
+        }
+    });
+});
+</script>

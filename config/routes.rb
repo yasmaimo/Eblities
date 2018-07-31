@@ -26,15 +26,13 @@ Rails.application.routes.draw do
   resource :two_factor_auth, only: [:new, :create, :destroy]
 
   # admins
-  resources :admins, only: [ :index, :create, :edit, :show, :update]
+  # resources :admins, only: [ :index, :create, :edit, :show, :update]
 
-  get 'admins/:id/password', to: 'admins#password', as: 'admin_password_setting'
+  # get 'admins/:id/password', to: 'admins#password', as: 'admin_password_setting'
 
-  get 'admins/:id/profile', to: 'admins#profile', as: 'admin_profile'
+  # get 'admins/:id/profile', to: 'admins#profile', as: 'admin_profile'
 
-  get 'admins/:id/two_factor_authentication', to: 'admins#two_factor_authentication', as: 'admin_two_factor_authentication'
-
-  get 'admins/:id/two_factor_authentication_setting', to: 'admins#two_factor_authentication_setting', as: 'admins_two_factor_authentication_setting'
+  # get 'admins/:id/two_factor_authentication', to: 'admins#two_factor_authentication', as: 'admin_two_factor_authentication'
 
   # users
   resources :users, only: [ :index, :create, :edit, :show, :update] do
@@ -67,8 +65,6 @@ Rails.application.routes.draw do
 
   get 'users/:id/two_factor_authentication', to: 'users#two_factor_authentication', as: 'user_two_factor_authentication'
 
-  get 'users/:id/two_factor_authentication_setting', to: 'users#two_factor_authentication_setting', as: 'user_two_factor_authentication_setting'
-
   get 'users/:id/confirm_unsubscribe', to: 'users#confirm_unsubscribe', as: 'confirm_unsubscribe'
 
   patch 'users/:id/unsubscribe', to: 'users#unsubscribe', as: 'unsubscribe'
@@ -79,7 +75,7 @@ Rails.application.routes.draw do
   # articles
   resources :articles do
     resources :comments, only: [ :index, :create, :show, :update, :destroy]
-    resource :images, only: [:create, :destroy]
+    # resource :images, only: [:create, :destroy]
     resource :favorites, only: [:create, :destroy]
     resource :keeps, only: [:create, :destroy]
     collection do
@@ -97,7 +93,7 @@ Rails.application.routes.draw do
   resources :keeps, only: [:index]
 
   # tags
-  resources :tags, only: [ :index, :create, :show, :update] do
+  resources :tags, only: [ :index, :create, :show ] do
     collection do
       post 'add'
     end
@@ -107,17 +103,20 @@ Rails.application.routes.draw do
   resources :taggings, only: [ :destroy]
 
   # contacts
-  resources :contacts, only: [ :index, :create, :new, :show, :update]
+  # resources :contacts, only: [ :index, :create, :new, :show, :update]
 
-  get 'contacts/confirm', to: 'contacts#confirm', as: 'confirm_contact'
+  # get 'contacts/confirm', to: 'contacts#confirm', as: 'confirm_contact'
 
-  get 'contacts/sent', to: 'contacts#sent', as: 'sent_contact'
+  # get 'contacts/sent', to: 'contacts#sent', as: 'sent_contact'
 
   # terms
-  get 'terms', to: 'terms#index', as: 'terms'
+  # get 'terms', to: 'terms#index', as: 'terms'
 
   # help
-  get 'help', to: 'helps#index', as: 'helps'
+  # get 'help', to: 'helps#index', as: 'helps'
+
+  # about
+  get 'about', to: 'abouts#about', as: 'about'
 
   # posts
   resources :posts
