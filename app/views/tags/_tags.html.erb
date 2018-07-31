@@ -1,0 +1,82 @@
+<% tags.each do |tag| %>
+
+  <% tagging_articles = Tagging.where(tag_id: tag.id, taggable_type: "Article") %>
+  <% tagging_users = Tagging.where(tag_id: tag.id, taggable_type: "User") %>
+
+  <tr class="tag">
+    <td>
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+
+            <div class="col-6 ranking-table">
+            	<span class="badge tag-color p-1">
+            		<%= link_to tag.name, tag_path(tag), class: "text-white" %>
+            	</span>
+
+              <% if tagging_articles.present? %>
+
+                <span class="small tag-title-font">
+                  の最新記事
+                </span>
+
+              <% else %>
+
+                <span class="small tag-title-font">
+                  の記事はまだありません
+                </span>
+
+              <% end %>
+
+            </div>
+
+            <div class="col-6 small text-secondary text-right align-self-center">
+
+            	<span>
+            		<%= fa_icon("pencil") %><%= tagging_articles.count %>件の記事
+            	</span>
+
+              <br>
+
+              <%= fa_icon("users") %>
+            	<span id="tagging-users-count-of-<%= tag.id %>">
+                <%= render partial: 'tags/tagging_users_count', locals: {tagging_users: tagging_users} %>
+            	</span>
+              名が登録
+
+            </div>
+
+            <% if controller_name == "tags" && user_signed_in? %>
+
+              <div class="col-6" id="tag-button-of-<%= tag.id %>">
+
+                <%= render partial: 'tags/tag_button', locals: {tag: tag, new_tag: new_tag} %>
+
+              </div>
+
+              <div class="col-6 text-right" id="tag-mark-of-<%= tag.id %>">
+
+                <%= render partial: 'tags/tag_mark', locals: {tag: tag} %>
+
+              </div>
+
+            <% end %>
+
+          </div>
+        </div>
+
+        <% tagging_articles.last(1).each do |tagging_article| %>
+
+          <div class="card-body">
+
+            <%= render 'articles/including_article', article: tagging_article.taggable %>
+
+          </div>
+
+        <% end %>
+
+      </div>
+    </td>
+  </tr>
+
+<% end %>

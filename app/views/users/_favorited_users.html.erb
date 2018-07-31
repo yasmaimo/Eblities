@@ -1,0 +1,25 @@
+<table class="table table-sm bg-white card-body">
+	<tbody>
+	  <% Favorite.where.not(user_id: current_user).reverse_order.limit(5).each do |favorite| %>
+	  	<% if Article.exists?(id: favorite.article_id, user_id: current_user) %>
+		    <tr>
+		      <td class="right-sidebar-link">
+		      	<span>
+		      		<%= attachment_image_tag favorite.user, :image, fallback: "no_image.jpg", class: "card-img mx-1", style: "max-height: 40px; max-width: 40px;"%>
+		      		<%= link_to favorite.user.user_name, user_path(favorite.user) %>
+		      	</span><br>
+		      	<span class="small">記事</span>
+		      	<span>
+		      		<%= link_to favorite.article.title, article_path(favorite.article), class: "text-secondary" %>
+	      		</span>
+
+	      		<span id="relationship-of-favorited-<%= favorite.user_id %>">
+		    			<%= render 'relationships/follow_or_unfollow', user: favorite.user %>
+		    		</span>
+
+		      </td>
+		    </tr>
+	    <% end %>
+	  <% end %>
+	</tbody>
+</table>

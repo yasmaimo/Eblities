@@ -11,5 +11,12 @@
 // about supported directives.
 //
 //= require rails-ujs
+//= require jquery3
+//= require popper
+//= require bootstrap
+//= require tagsinput
+//= require summernote/summernote-bs4.min
+//= require summernote/lang/summernote-ja-JP
+//= require summernote-init
 //= require turbolinks
 //= require_tree .

@@ -1,0 +1,10 @@
+<ul class="list-group list-group-flush" id="delete-link">
+	<% taggings.each do |tagging| %>
+	  <li class="list-group-item">
+	  	<%= link_to tagging_path(tagging.id), method: :delete, id: "delete-link", remote: true do %>
+	  		<%= fa_icon("times", class: "text-secondary") %>
+	  	<% end %>
+	  	<span class="badge d-inline tag-color text-white"><%= tagging.tag.name %></span>
+	  </li>
+	<% end %>
+</ul>

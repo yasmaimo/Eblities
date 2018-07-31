@@ -1,0 +1,25 @@
+<table class="table table-sm bg-white card-body">
+	<tbody>
+	  <% Keep.where.not(user_id: current_user).reverse_order.limit(5).each do |keep| %>
+	  	<% if Article.exists?(id: keep.article_id, user_id: current_user) %>
+		    <tr>
+		      <td class="right-sidebar-link">
+		      	<span>
+		      		<%= attachment_image_tag keep.user, :image, fallback: "no_image.jpg", class: "card-img mx-1", style: "max-height: 40px; max-width: 40px;"%>
+		      		<%= link_to keep.user.user_name, user_path(keep.user) %>
+		      	</span><br>
+		      	<span class="small">記事</span>
+		      	<span>
+		      		<%= link_to keep.article.title, article_path(keep.article), class: "text-secondary" %>
+	      		</span>
+
+	      		<span id="relationship-of-kept-<%= keep.user_id %>">
+		      		<%= render 'relationships/follow_or_unfollow', user: keep.user %>
+		      	</span>
+
+		      </td>
+		    </tr>
+		  <% end %>
+	  <% end %>
+	</tbody>
+</table>

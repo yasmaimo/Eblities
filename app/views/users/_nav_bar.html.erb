@@ -1,0 +1,179 @@
+<div class="d-lg-block d-none content-margin">
+	<ul class="nav nav-tabs">
+
+	  <li class="nav-item">
+			<%= link_to user_path(user) do %>
+
+				<% if controller.action_name == "show" %>
+					<span class="nav-link active tab-font bg-danger text-white">
+				<% else %>
+					<span class="nav-link tab-font bg-white text-secondary border">
+				<% end %>
+
+						<%= fa_icon("book", text: "投稿履歴") %>
+					</span>
+			<% end %>
+	  </li>
+
+	  <% if user == current_user %>
+		  <li class="nav-item">
+				<%= link_to user_drafts_path(user) do %>
+
+					<% if controller.action_name == "index" %>
+						<span class="nav-link active tab-font bg-danger text-white">
+					<% else %>
+						<span class="nav-link tab-font bg-white text-secondary border">
+					<% end %>
+
+							<%= fa_icon("sticky-note", text: "下書き") %>
+						</span>
+				<% end %>
+		  </li>
+		<% end %>
+
+	  <li class="nav-item">
+			<%= link_to favorites_path(user) do %>
+
+					<% if controller.action_name == "favorites" %>
+						<span class="nav-link active tab-font bg-danger text-white">
+					<% else %>
+						<span class="nav-link tab-font bg-white text-secondary border">
+					<% end %>
+
+						<%= fa_icon("thumbs-up", text: "イイね") %>
+					</span>
+			<% end %>
+	  </li>
+
+	  <li class="nav-item">
+			<%= link_to comments_path(user) do %>
+
+					<% if controller.action_name == "comments" %>
+						<span class="nav-link active tab-font bg-danger text-white">
+					<% else %>
+						<span class="nav-link tab-font bg-white text-secondary border">
+					<% end %>
+
+						<%= fa_icon("comment", text: "コメント") %>
+					</span>
+			<% end %>
+	  </li>
+
+	  <li class="nav-item">
+			<%= link_to followings_path(user) do %>
+
+					<% if controller.action_name == "followings" %>
+						<span class="nav-link active tab-font bg-danger text-white">
+					<% else %>
+						<span class="nav-link tab-font bg-white text-secondary border">
+					<% end %>
+
+						<%= fa_icon("angle-double-right", text: "フォロー") %>
+					</span>
+			<% end %>
+	  </li>
+
+	  <li class="nav-item">
+			<%= link_to followers_path(user) do %>
+
+					<% if controller.action_name == "followers" %>
+						<span class="nav-link active tab-font bg-danger text-white">
+					<% else %>
+						<span class="nav-link tab-font bg-white text-secondary border">
+					<% end %>
+
+						<%= fa_icon("angle-double-left", text: "フォロワー") %>
+					</span>
+			<% end %>
+	  </li>
+
+	</ul>
+</div>
+
+<div class="d-lg-none text-center">
+
+	<div>
+
+		<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 40px; max-width: 40px;" %>
+
+		<%= @user.user_name %>
+
+	</div>
+
+	<% if user_signed_in? %>
+
+		<div class="my-2">
+			<a href="#link">ユーザーの詳細を見る</a>
+		</div>
+
+	<% end %>
+
+	<%= link_to user_path(user) do %>
+		<% if controller.action_name == "show" %>
+			<p class="col-8 btn btn-danger text-white my-2">
+		<% else %>
+			<p class="col-8 btn btn-outline-secondary my-2">
+		<% end %>
+
+				<%= fa_icon("book", text: "投稿履歴") %>
+			</p>
+	<% end %>
+
+	<% if user == current_user %>
+		<%= link_to user_drafts_path(user) do %>
+			<% if controller.action_name == "index" %>
+				<p class="col-8 btn btn-danger text-white mb-2">
+			<% else %>
+				<p class="col-8 btn btn-outline-secondary mb-2">
+			<% end %>
+
+					<%= fa_icon("sticky-note", text: "下書き一覧") %>
+				</p>
+		<% end %>
+	<% end %>
+
+	<%= link_to favorites_path(user) do %>
+			<% if controller.action_name == "favorites" %>
+				<p class="col-8 btn btn-danger text-white mb-2">
+			<% else %>
+				<p class="col-8 btn btn-outline-secondary mb-2">
+			<% end %>
+
+				<%= fa_icon("thumbs-up", text: "イイね") %>
+			</p>
+	<% end %>
+
+	<%= link_to comments_path(user) do %>
+			<% if controller.action_name == "comments" %>
+				<p class="col-8 btn btn-danger text-white">
+			<% else %>
+				<p class="col-8 btn btn-outline-secondary">
+			<% end %>
+
+				<%= fa_icon("comment", text: "コメント") %>
+			</p>
+	<% end %>
+
+	<%= link_to followings_path(user) do %>
+			<% if controller.action_name == "followings" %>
+				<p class="col-8 btn btn-danger text-white">
+			<% else %>
+				<p class="col-8 btn btn-outline-secondary">
+			<% end %>
+
+				<%= fa_icon("angle-double-right", text: "フォロー") %>
+			</p>
+	<% end %>
+
+	<%= link_to followers_path(user) do %>
+			<% if controller.action_name == "followers" %>
+				<p class="col-8 btn btn-danger text-white">
+			<% else %>
+				<p class="col-8 btn btn-outline-secondary">
+			<% end %>
+
+				<%= fa_icon("angle-double-left", text: "フォロワー") %>
+			</p>
+	<% end %>
+
+</div>

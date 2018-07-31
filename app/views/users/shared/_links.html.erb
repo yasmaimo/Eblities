@@ -1,0 +1,41 @@
+<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
+<% end -%>
+
+<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+  <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
+<% end -%>
+
+<%- if devise_mapping.omniauthable? %>
+  <%- resource_class.omniauth_providers.each do |provider| %>
+
+ 		<% if "#{OmniAuth::Utils.camelize(provider)}" == "Facebook" -%>
+	    <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+	    	<span class="btn text-white w-100" style="background-color: #3B5998;">
+		    	<%= fa_icon("facebook", text: "Facebookアカウントでログイン") %>
+	    	</span>
+	    <% end %>
+	  <% end %>
+
+	  <p class="my-2"></p>
+
+ 		<% if "#{OmniAuth::Utils.camelize(provider)}" == "Twitter" -%>
+	    <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+	    	<span class="btn text-white w-100" style="background-color: #1DA1F2;">
+		    	<%= fa_icon("twitter", text: "Twitterアカウントでログイン") %>
+	    	</span>
+	    <% end %>
+	  <% end %>
+
+	  <p class="my-2"></p>
+
+ 		<% if "#{OmniAuth::Utils.camelize(provider)}" == "GoogleOauth2" -%>
+	    <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+	    	<span class="btn text-white w-100" style="background-color: #DB4437;">
+		    	<%= fa_icon("google", text: "Googleアカウントでログイン") %>
+	    	</span>
+	    <% end %>
+	  <% end %>
+
+  <% end -%>
+<% end -%>

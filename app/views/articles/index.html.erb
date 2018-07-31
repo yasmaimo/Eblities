@@ -1,0 +1,127 @@
+<div class="container-fluid">
+	<div class="row justify-content-center">
+
+		<% unless user_signed_in? %>
+
+			<div class="col-12 favorite-bg-color text-white align" style="min-height: 250px; margin-top: -25px;">
+
+				<div class="row text-center h-100 align-items-center">
+
+					<div class="col-lg-6 col-12 mt-lg-0 mt-3">
+						<h1 style="letter-spacing: 1em; font-size: 14px;">エブリティーズ</h1>
+						<h1 style="letter-spacing: 0.3em;">Eblities</h1>
+						<h5 style="letter-spacing: 0.1em;">
+							知りたいことがきっと見つかる。
+						</h5>
+						<p>クリエイターの知識をシェアするサイト。</p>
+					</div>
+
+					<div class="col-lg-6 col-12 mt-lg-0 mt-3">
+						<p><%= link_to "新規登録", new_user_registration_path, class: "btn btn-outline-light" %></p>
+						<p><%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-light" %></p>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		<% end %>
+
+		<div class="col-12 text-center text-success">
+
+		</div>
+
+		<div class="left-sidebar col-lg-2">
+
+			<%= render 'articles/nav_bar' %>
+
+		</div>
+
+		<div class="col-lg-7 col-sm-11 content-margin">
+
+      <div class="border rounded small bg-white d-lg-none mb-lg-0 mb-3">
+
+      	<%= render 'articles/description_of_articles_index' %>
+
+      </div>
+
+			<% if Article.exists? %>
+				<% if @search.result.count > 0 %>
+
+				  <table class="table bg-white" id="articles">
+					  <thead>
+					    <tr>
+					    	<th>
+				    			<span><%= @articles.count %>件の記事</span>
+					    	</th>
+					    </tr>
+					  </thead>
+
+		    		<% if params[:q].present? %>
+		    			<% if params[:q][:title_or_body_cont] != "" %>
+			    			<p class="text-center font-weight-bold my-3">"<%= params[:q][:title_or_body_cont] %>"の検索結果</p>
+		    			<% end %>
+		    		<% end %>
+
+				    <tbody class="page" id="all-articles" >
+
+				    	<%= render 'articles/articles', articles: @articles %>
+
+				    </tbody>
+				  </table>
+
+			  <% elsif @search.result.count == 0 %>
+
+			  	<p class="text-center font-weight-bold mt-3">"<%= params[:q][:title_or_body_cont] %>"を含む記事はありません</p>
+
+	        <p class="text-center mt-2">
+	          <%= link_to "記事一覧へ戻る", articles_path, class: "border-bottom" %>
+	        </p>
+
+			 	<% end %>
+
+	    <% else %>
+
+			  <table class="table bg-white">
+				  <thead>
+				    <tr>
+				    	<th class="text-center">
+			    			<span>記事がありません</span>
+				    	</th>
+				    </tr>
+				  </thead>
+				</table>
+
+	    <% end %>
+
+	    <div class="row justify-content-center">
+	    		<p class="col-12"><%= paginate @articles %></p>
+	    </div>
+
+	  </div>
+
+	  <div class="col-lg-3 col-sm-11 content-margin">
+
+      <div class="border rounded small bg-white d-lg-block d-none">
+
+      	<%= render 'articles/description_of_articles_index' %>
+
+      </div>
+
+			<table class="table bg-white mt-3">
+
+				<%= render 'articles/user_ranking' %>
+
+			</table>
+
+			<table class="table bg-white">
+
+				<%= render 'articles/tag_ranking' %>
+
+			</table>
+
+		</div>
+
+	</div>
+</div>

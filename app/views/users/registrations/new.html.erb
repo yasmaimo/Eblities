@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="row justify-content-center">
+
+    <div class="col-12 text-center text-danger animated shake">
+      <%= flash[:sign_up_failed] %>
+    </div>
+
+    <p class="col-12 h2 font-weight-bold text-center mt-5">新規登録</p>
+
+    <div class="col-lg-4 col-sm-9 text-lg-left text-center">
+
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+        <div>
+          <%= f.label :ユーザーネーム, class: "small text-secondary" %>
+          <span class="small text-secondary">2~16文字まで</span><br/>
+          <%= f.input :user_name, autocomplete: "off", value: "", label: false, error: "2~16文字までのユーザー名を入力してください", class: "w-100" %>
+        </div>
+
+        <div>
+          <%= f.label :メールアドレス, class: "small text-secondary" %><br />
+          <%= f.input :email, autocomplete: "email", label: false, error: "すでに使用されているメールアドレスか、無効なメールアドレスです", class: "w-100" %>
+        </div>
+
+        <div>
+          <%= f.label :パスワード, class: "small text-secondary" %>
+          <span class="small text-secondary">6~16文字まで</span><br/>
+          <%= f.input :password, autocomplete: "off", label: false, error: "6~16文字までのパスワードを入力してください", class: "w-100" %>
+        </div>
+
+        <div>
+          <%= f.label :パスワード再入力, class: "small text-secondary" %><br />
+          <%= f.input :password_confirmation, autocomplete: "off", label: false, error: "入力に誤りがあります", class: "w-100" %>
+        </div>
+
+        <div class="d-flex justify-content-center mt-2">
+          <%= recaptcha_tags callback: 'recaptchaCallbackFunction'%>
+        </div>
+
+        <div class="col-12 text-center text-danger animated flash">
+          <%= flash[:verify_failed] %>
+        </div>
+
+        <div class="text-center">
+          <%= f.submit "新規登録", class: "btn btn-success my-2" %>
+        </div>
+      <% end %>
+
+    </div>
+
+    <div class="col-lg-4 col-sm-9 align-self-center">
+
+      <%- if devise_mapping.omniauthable? %>
+        <%- resource_class.omniauth_providers.each do |provider| %>
+
+          <% if "#{OmniAuth::Utils.camelize(provider)}" == "Facebook" -%>
+            <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+              <span class="btn text-white w-100" style="background-color: #3B5998;">
+                <%= fa_icon("facebook", text: "Facebookアカウントで登録") %>
+              </span>
+            <% end %>
+          <% end %>
+
+          <p class="my-2"></p>
+
+          <% if "#{OmniAuth::Utils.camelize(provider)}" == "Twitter" -%>
+            <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+              <span class="btn text-white w-100" style="background-color: #1DA1F2;">
+                <%= fa_icon("twitter", text: "Twitterアカウントで登録") %>
+              </span>
+            <% end %>
+          <% end %>
+
+          <p class="my-2"></p>
+
+          <% if "#{OmniAuth::Utils.camelize(provider)}" == "GoogleOauth2" -%>
+            <%= link_to omniauth_authorize_path(resource_name, provider) do %>
+              <span class="btn text-white w-100" style="background-color: #DB4437;">
+                <%= fa_icon("google", text: "Googleアカウントで登録") %>
+              </span>
+            <% end %>
+          <% end %>
+
+        <% end -%>
+      <% end -%>
+
+    </div>
+
+    <div class="col-12 text-center my-2">
+
+      <%= link_to "既存のアカウントでログインする", new_session_path(resource_name), class: "text-secondary" %><br />
+
+    </div>
+
+  </div>
+</div>
+
+
+
+

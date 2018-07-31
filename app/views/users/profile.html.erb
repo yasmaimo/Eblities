@@ -1,0 +1,99 @@
+<div class="container">
+	<div class="row justify-content-center">
+
+		<div class="col-12 text-center text-success animated flash">
+			<%= flash[:profile_updated] %>
+		</div>
+
+		<div class="col-12 text-center text-danger animated shake">
+			<%= flash[:profile_update_failed] %>
+		</div>
+
+
+		<%= render 'users/setting_sidebar', user: @user %>
+
+		<div class="col-lg-10 col-sm-12 content-margin">
+
+			<div class="card">
+	      <div class="card-header">
+	        <div class="row">
+
+	          <div class="col-12">
+	          	プロフィール設定
+	          </div>
+
+	        </div>
+	      </div>
+
+	      <%= simple_form_for @user do |f| %>
+
+		      <div class="card-body">
+
+		        <div class="row">
+
+		          <div class="col-lg-6 col-sm-12 text-center">
+		          	<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", style: "max-height: 200px; max-width: 200px;"%>
+		          	<p class="mt-4 small text-secondary">プロフィール画像変更</p>
+		          	<%= f.attachment_field :image, class: "small" %>
+		          </div>
+
+		          <div class="col-lg-6 col-sm-12 align-self-center">
+		          	<span class="small text-secondary">
+		          		ユーザーネーム(16文字以内)
+		          	</span><br>
+		          	<span>
+		          		<%= f.input :user_name, label: false, class: "font-weight-bold text-dark", error: "2~16文字のユーザー名を入力してください" %>
+		          	</span><br>
+
+		          	<span class="small text-secondary">
+		          		メールアドレス
+		          	</span><br>
+		          	<span>
+		          		<%= f.input :email, label: false, class: "font-weight-bold text-dark", error: "すでに使用されているメールアドレスか、無効なメールアドレスです" %>
+		          	</span><br>
+		          </div>
+
+		        </div>
+
+		        <div class="row">
+		        	<p class="col-12 text-center text-secondary mt-5">--- 以下の入力は任意です ---</p>
+
+		        	<p class="col-12 text-center small">登録すると公開されますのでご注意ください</p>
+
+		          <div class="col-12">
+		          	<span class="small text-secondary">
+		          		自分のブログ、WEBサイト
+		          	</span><br>
+		          	<span>
+		          		<%= f.input :web_site_url, label: false, placeholder: "URL", class: "w-100" %>
+		          	</span><br>
+		          </div>
+
+		          <div class="col-12">
+		          	<span class="small text-secondary">
+		          		自己紹介(150文字以内)
+		          	</span><br>
+		          	<span>
+		          		<%= f.input :introduction, as: :text, label: false , class: "w-100" %>
+		          	</span><br>
+		          </div>
+
+		          <div class="col-12 mt-3 text-center">
+		          	<%= f.submit "登録・変更", class: "btn btn-primary btn-sm" %>
+		          </div>
+
+		          <div class="col-12 mt-3 text-center">
+		          	<%= link_to "退会する", confirm_unsubscribe_path, class: "text-secondary small" %>
+		          </div>
+
+		        </div>
+
+		      </div>
+
+		    <% end %>
+
+	    </div>
+
+	  </div>
+	</div>
+</div>

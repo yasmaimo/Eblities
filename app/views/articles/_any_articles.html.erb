@@ -1,0 +1,127 @@
+<% any_elements.each do |any| %>
+
+  <tr class="article">
+    <td>
+
+      <div class="card card-size">
+
+        <%= attachment_image_tag any.article, :image, fallback: "no_image.jpg", class: "img-trim"  %>
+        <div class="card-img-overlay article-bg-index">
+          <div>
+            <div class="row">
+
+              <div cålass="col-12 ranking-table align-self-center">
+                <%= attachment_image_tag any.article.user, :image, fallback: "no_image.jpg", class: "mx-1 card-img", style: "max-height: 40px; max-width: 40px;"%>
+                <span>
+                  <%= link_to any.article.user.user_name, user_path(any.article.user_id), class: "text-border-black border-bottom border-secondary text-white" %>
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="card-body">
+
+            <div class="row">
+              <div class="col-12">
+                <span>
+                  <%= link_to any.article.title, article_path(any.article), class: "text-border text-white border-bottom border-secondary d-sm-inline d-none" %>
+                  <%= link_to any.article.title.truncate(30), article_path(any.article), class: "text-border text-white border-bottom border-secondary d-sm-none" %>
+                </span>
+              </div>
+
+
+              <div class="text-light article-info">
+                <span class="mx-1" >
+                  <%= any.article.created_at.strftime('%Y/%m/%d') %>
+                </span>
+
+                <% if user_signed_in? %>
+
+                  <% if any.article.favorited_by?(current_user) %>
+
+                    <span class="mx-1" style="color: #ffa500;">
+                      <%= fa_icon("thumbs-up") %><%= any.article.favorites.count %>
+                    </span>
+
+                  <% else %>
+
+                    <span class="mx-1">
+                      <%= fa_icon("thumbs-up") %><%= any.article.favorites.count %>
+                    </span>
+
+                  <% end %>
+
+                  <% if any.article.kept_by?(current_user) %>
+
+                    <span class="mx-1" style="color: #40e0d0;">
+                      <%= fa_icon("folder-open") %><%= any.article.keeps.count %>
+                    </span>
+
+                  <% else %>
+
+                    <span class="mx-1">
+                      <%= fa_icon("folder-open") %><%= any.article.keeps.count %>
+                    </span>
+
+                  <% end %>
+
+                  <% if any.article.comments.where(user_id: current_user.id).exists? %>
+
+                    <span class="mx-1" style="color: #90ee90;">
+                      <%= fa_icon("comments") %><%= any.article.comments.count %>
+                    </span>
+
+                  <% else %>
+
+                    <span class="mx-1">
+                      <%= fa_icon("comments") %><%= any.article.comments.count %>
+                    </span>
+
+                  <% end %>
+
+                <% else %>
+
+                  <span class="mx-1">
+                    <%= fa_icon("thumbs-up") %><%= any.article.favorites.count %>
+                  </span>
+
+                  <span class="mx-1">
+                    <%= fa_icon("folder-open") %><%= any.article.keeps.count %>
+                  </span>
+
+                  <span class="mx-1">
+                    <%= fa_icon("comments") %><%= any.article.comments.count %>
+                  </span>
+
+                <% end %>
+
+              </div>
+
+              <div class="text-light article-edit-button">
+
+                <% if user_signed_in? %>
+
+                  <% if any.article.user == current_user %>
+
+                    <%= link_to edit_article_path(any.article) do %>
+                      <span class="text-white">
+                        <%= fa_icon("edit 2x") %>
+                      </span>
+                    <% end %>
+
+                  <% end %>
+
+                <% end %>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+
+<% end %>

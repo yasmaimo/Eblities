@@ -1,0 +1,33 @@
+<% if article.kept_by?(current_user) %>
+
+	<%= link_to article_keeps_path(article), style: "text-decoration: none;" , method: :delete, id: "keep_link", remote: true do %>
+
+		<span class="list-group-item list-group-item-action nav-font text-white mb-2" style="background-color: #40e0d0;">
+			<div class="font-weight-bold d-md-none d-block">
+				<%= article.keeps.count %>
+			</div>
+			<span class="h5"><%= fa_icon("folder-open") %></span>
+			<span class="font-weight-bold d-md-inline d-none">
+				<%= article.keeps.count %>
+			</span>
+		</span>
+
+	<% end %>
+
+<% else %>
+
+	<%= link_to article_keeps_path(article), style: "text-decoration: none;" , method: :post, id: "keep_link", remote: true do %>
+
+		<span class="list-group-item list-group-item-action nav-font mb-2">
+			<div class="font-weight-bold d-md-none d-block">
+				<%= article.keeps.count %>
+			</div>
+			<span class="h5"><%= fa_icon("folder-open") %></span>
+			<span class="font-weight-bold d-md-inline d-none">
+				<%= article.keeps.count %>
+			</span>
+		</span>
+
+	<% end %>
+
+<% end %>

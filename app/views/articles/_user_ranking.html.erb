@@ -1,0 +1,42 @@
+<% rank = 1 %>
+
+<thead>
+  <tr>
+    <th>人気ユーザー</th>
+    <th class="small text-right">
+        <a class="text-secondary" data-toggle="collapse" href="#collapseUsers" role="button" aria-expanded="false" aria-controls="collapseUsers">
+          <u>EPとは?</u>
+        </a>
+    </th>
+  </tr>
+  <tr>
+    <td colspan="2" class="small collapse" id="collapseUsers">
+      EP(Eblities Point)とは、ユーザーがどのくらい積極的にEblitiesを利用しているか測るためのポイントです。ポイントが最も多く貯まる要因は、良い記事を書いて多くのイイね、キープをしてもらうことですので、EPの多いユーザーほど積極的であると言えます。最もポイントの多いユーザーの上位10名はユーザーランキングに表示されます。EPは下記のイベントにより加算されます。
+      <ul class="list-group">
+        <li class="list-group-item">記事を投稿する +5EP</li>
+        <li class="list-group-item">フォローされる +2EP</li>
+        <li class="list-group-item">イイねされる +1EP</li>
+        <li class="list-group-item">キープされる +1EP</li>
+        <li class="list-group-item text-secondary">*イベントが取り消されるとその分減算されます。</li>
+      </ul>
+    </td>
+  </tr>
+</thead>
+<tbody>
+  <% @users.order("point DESC").limit(10).each do |user| %>
+    <tr>
+      <td>
+      	<span class="mr-1 font-weight-bold"><%= rank %></span>
+      	<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: "mx-1 card-img", style: "max-height: 40px; max-width: 40px;"%>
+      	<span class="small"><%= link_to user.user_name, user_path(user) %></span>
+      </td>
+      <td class="text-right">
+      	<span class="font-weight-bold"><%= user.point %></span><br>
+      	<span class="small text-secondary">
+      		EP
+      	</span>
+      </td>
+    </tr>
+    <% rank += 1 %>
+  <% end %>
+</tbody>

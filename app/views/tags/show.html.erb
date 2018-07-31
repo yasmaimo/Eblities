@@ -1,0 +1,122 @@
+<div class="container-fluid">
+	<div class="row justify-content-center">
+
+		<div class="left-sidebar col-lg-2 d-none d-lg-block">
+
+			<%= render 'articles/nav_bar' %>
+
+		</div>
+
+		<div class="d-lg-none col-sm-11 content-margin">
+
+			<%= render partial: 'tags/description_of_tags_show_sm',
+								 locals: {tag: @find_tag,
+													new_tag: @new_tag,
+													tagging_users: @tagging_users,
+													tagging_articles: @tagging_articles,
+													new_tag: @new_tag} %>
+
+		</div>
+
+		<div class="col-lg-7 col-sm-11 content-margin">
+
+	    <%= search_form_for @search_tag_article, url: tag_path do |f| %>
+	      <div class="form-inline mb-2">
+	        <%= f.text_field :title_or_body_cont, class: "col-sm-10 col-xs-12 form-control", placeholder: "#{@find_tag.name}の記事を検索" %>
+	        <%= f.button fa_icon("search"), class: 'col-sm-2 col-xs-12 btn btn-outline-dark my-lg-0 my-2'%>
+	      </div>
+	    <% end %>
+
+			<% if Article.tagged_with("#{@find_tag.name}").exists? %>
+				<% if @search_tag_article.result.count > 0 %>
+
+				  <table class="table bg-white" id="articles">
+					  <thead>
+					    <tr>
+					    	<th>
+				    			<span>
+				    				<%= link_to @find_tag.name, tag_path(@find_tag), class: "text-white rounded px-1 tag-color" %>
+				    			</span>がタグ付けされた記事一覧 :
+					      	<span id="tagging-articles-count">
+						      	<%= render partial: 'tags/tagging_articles_count', locals: {tagging_articles: @tagging_articles} %>件
+						      </span>
+					    	</th>
+					    </tr>
+					  </thead>
+
+		    		<% if params[:q].present? %>
+		    			<% if params[:q][:title_or_body_cont] != "" %>
+			    			<p class="text-center font-weight-bold my-3">"<%= params[:q][:title_or_body_cont] %>"の検索結果</p>
+		    			<% end %>
+		    		<% end %>
+
+				    <tbody class="page" id="tag-articles">
+
+				    	<%= render partial: 'articles/articles', locals: {articles: @tag_articles} %>
+
+					  </tbody>
+					</table>
+
+			  <% elsif @search_tag_article.result.count == 0 %>
+			  	<p class="text-center">
+			  		<span class="">
+			  			<%= link_to @find_tag.name, tag_path(@find_tag), class: "text-white rounded px-1 tag-color" %> がタグ付けされた記事を検索
+		  			</span>
+			  	</p>
+			  	<p class="text-center font-weight-bold mt-3">
+			  		"<%= params[:q][:title_or_body_cont] %>"を含む記事はありません
+			  	</p>
+
+			 	<% end %>
+
+	    <% else %>
+
+				<p class="text-center font-weight-bold"><span class="text-white rounded px-1 tag-color"><%= @find_tag.name %></span> がタグ付けされた記事はありません</p>
+
+	    <% end %>
+
+	    <div class="row justify-content-center">
+	    		<p class="col-12"><%= paginate @tag_articles %></p>
+	    </div>
+
+	  </div>
+
+		<div class="col-lg-3 col-sm-11 content-margin">
+			<div class="row">
+				<div class="col-12 d-lg-block d-none">
+
+					<%= render partial: 'tags/description_of_tags_show',
+										 locals: {tag: @find_tag,
+															new_tag: @new_tag,
+															tagging_users: @tagging_users,
+															tagging_articles: @tagging_articles,
+															new_tag: @new_tag} %>
+
+				</div>
+
+		    <% if user_signed_in? %>
+
+		    	<a name="link"></a>
+
+					<div class="col-12">
+						<div class="card mb-3">
+
+						  <div class="card-header text-center font-weight-bold">
+						  	"<%= @find_tag.name %>"に関心を持つ他のユーザー
+						  </div>
+						  <div class="card-body" id="tag-users">
+
+								<%= render partial: 'tags/tag_users',locals: {tag: @find_tag} %>
+
+						  </div>
+						</div>
+
+					</div>
+
+				<% end %>
+
+			</div>
+
+	  </div>
+	</div>
+</div>

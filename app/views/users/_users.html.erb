@@ -1,0 +1,57 @@
+<tr class="user">
+  <td>
+
+    <% if user == current_user %>
+      <div class="card border border-info">
+    <% else %>
+      <div class="card">
+    <% end %>
+
+      <div class="card-header">
+        <div class="row">
+
+          <div class="col-6 ranking-table align-self-center">
+          	<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: "mx-1 card-img", style: "max-height: 40px; max-width: 40px;"%>
+          	<span class="text-secondary">
+          		<%= link_to user.user_name, user_path(user) %>
+          	</span>
+          </div>
+
+          <div class="col-6 small text-secondary text-right align-self-center">
+
+            <span id="relationship-of-<%= user.id %>">
+              <%= render 'relationships/follow_or_unfollow', user: user %>
+            </span>
+
+            <span class="mx-1 d-md-inline d-none">
+              <%= fa_icon("paperclip") %><%= user.articles.count %>個の記事
+            </span>
+
+          	<span class="mx-1 d-md-none">
+          		<%= fa_icon("paperclip") %><%= user.articles.count %>個
+          	</span>
+
+          	<span class="mx-1">
+          		<%= user.point %> EP
+          	</span>
+
+          </div>
+
+        </div>
+      </div>
+
+      <% if user.introduction.present? %>
+
+        <div class="card-body">
+
+        	<span class="small text-dark">
+        		<%= user.introduction %>
+        	</span>
+
+        </div>
+
+      <% end %>
+
+    </div>
+  </td>
+</tr>

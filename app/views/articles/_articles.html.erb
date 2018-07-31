@@ -1,0 +1,171 @@
+<% articles.each do |article| %>
+
+  <tr class="article">
+    <td>
+
+      <div class="card card-size">
+
+        <%= attachment_image_tag article, :image, fallback: "no_image.jpg", class: "img-trim"  %>
+        <div class="card-img-overlay article-bg-index">
+          <div>
+            <div class="row">
+
+              <div class="col-12 ranking-table align-self-center">
+                <%= attachment_image_tag article.user, :image, fallback: "no_image.jpg", class: "mx-1 card-img", style: "max-height: 40px; max-width: 40px;"%>
+                <span>
+                  <%= link_to article.user.user_name, user_path(article.user_id), class: "text-border-black border-bottom border-secondary text-white" %>
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="card-body">
+
+            <div class="row">
+              <div class="col-12">
+                <span>
+
+                  <% if controller_name == "drafts" %>
+
+                    <%= link_to article.title, user_draft_path(id: article), class: "text-border text-white border-bottom border-secondary d-sm-inline d-none" %>
+                    <%= link_to article.title.truncate(30), user_draft_path(id: article), class: "text-border text-white border-bottom border-secondary d-sm-none" %>
+
+                  <% else %>
+
+                    <%= link_to article.title, article_path(article), class: "text-border text-white border-bottom border-secondary d-sm-inline d-none" %>
+                    <%= link_to article.title.truncate(30), article_path(article), class: "text-border text-white border-bottom border-secondary d-sm-none" %>
+
+                  <% end %>
+
+                </span>
+              </div>
+
+              <div class="text-light" style="position: absolute; bottom: 32px; left: 0; margin: 0 0 5px 5px;  padding: 0 0 5px 5px;">
+                <% article.taggings.each do |tagging| %>
+                  <%= link_to tagging.tag.name, tag_path(tagging.tag), class: "badge badge-primary" %>
+                <% end %>
+              </div>
+
+              <div class="text-light article-info">
+                <span class="mx-1" >
+                  <%= article.created_at.strftime('%Y/%m/%d') %>
+                </span>
+
+                <% if controller_name != "drafts" %>
+
+                  <% if user_signed_in? %>
+
+                    <% if article.favorited_by?(current_user) %>
+
+                      <span class="mx-1" style="color: #ffa500;">
+                        <%= fa_icon("thumbs-up") %><%= article.favorites.count %>
+                      </span>
+
+                    <% else %>
+
+                      <span class="mx-1">
+                        <%= fa_icon("thumbs-up") %><%= article.favorites.count %>
+                      </span>
+
+                    <% end %>
+
+                    <% if article.kept_by?(current_user) %>
+
+                      <span class="mx-1" style="color: #40e0d0;">
+                        <%= fa_icon("folder-open") %><%= article.keeps.count %>
+                      </span>
+
+                    <% else %>
+
+                      <span class="mx-1">
+                        <%= fa_icon("folder-open") %><%= article.keeps.count %>
+                      </span>
+
+                    <% end %>
+
+                    <% if article.comments.where(user_id: current_user.id).exists? %>
+
+                      <span class="mx-1" style="color: #90ee90;">
+                        <%= fa_icon("comments") %><%= article.comments.count %>
+                      </span>
+
+                    <% else %>
+
+                      <span class="mx-1">
+                        <%= fa_icon("comments") %><%= article.comments.count %>
+                      </span>
+
+                    <% end %>
+
+                  <% else %>
+
+                    <span class="mx-1">
+                      <%= fa_icon("thumbs-up") %><%= article.favorites.count %>
+                    </span>
+
+                    <span class="mx-1">
+                      <%= fa_icon("folder-open") %><%= article.keeps.count %>
+                    </span>
+
+                    <span class="mx-1">
+                      <%= fa_icon("comments") %><%= article.comments.count %>
+                    </span>
+
+                  <% end %>
+
+                <% end %>
+
+              </div>
+
+              <div class="text-light article-edit-button">
+
+                <% if user_signed_in? %>
+
+                  <% if article.user == current_user %>
+
+                    <% if controller_name == "drafts" %>
+
+                      <%= link_to user_draft_path(id: article) do %>
+                        <span class="text-white">
+                          <%= fa_icon("edit 2x") %>
+                        </span>
+                      <% end %>
+
+                      <%= link_to user_draft_path(id: article), method: :delete, "data-confirm" => "下書き : #{article.title} を削除しますか？" do %>
+                        <span class="text-white">
+                          <%= fa_icon("trash 2x") %>
+                        </span>
+                      <% end %>
+
+                    <% elsif controller_name == "users" && action_name == "show" %>
+
+                      <%= link_to edit_article_path(article) do %>
+                        <span class="text-white">
+                          <%= fa_icon("edit 2x") %>
+                        </span>
+                      <% end %>
+
+                      <%= link_to article_path(article), method: :delete, "data-confirm" => "投稿 : #{article.title} を削除しますか？" do %>
+                        <span class="text-white">
+                          <%= fa_icon("trash 2x") %>
+                        </span>
+                      <% end %>
+
+                    <% end %>
+
+                  <% end %>
+
+                <% end %>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+
+<% end %>

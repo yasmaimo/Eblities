@@ -1,0 +1,161 @@
+<div class="container-fluid">
+	<div class="row justify-content-center">
+
+		<div class="col-12 text-center text-success animated flash">
+			<%= flash[:article_created] %>
+			<%= flash[:comment_created] %>
+		</div>
+
+		<div class="col-12 text-center text-danger animated shake">
+			<%= flash[:comment_create_failed] %>
+		</div>
+
+		<div class="col-lg-8 col-sm-11 content-margin">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+
+            <div class="col-6 ranking-table align-self-center">
+            	<%= attachment_image_tag @article.user, :image, fallback: "no_image.jpg", class: "card-img mx-1", style: "max-height: 40px; max-width: 40px;" %>
+            	<span class="text-secondary">
+            		<%= link_to @user.user_name, user_path(@user) %>
+            	</span>
+            </div>
+
+            <div class="col-6 small text-secondary text-right align-self-center">
+            	<span class="mx-1" >
+            		<%= @article.created_at.strftime('%Y/%m/%d') %>
+            	</span><br>
+
+            	<span class="mx-1">
+            		<%= fa_icon("comments") %><%= @article.comments.count %>
+            	</span>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card-body">
+
+					<div class="card card-size">
+
+			      <%= attachment_image_tag @article, :image, fallback: "no_image.jpg", class: "img-trim"  %>
+			      <div class="card-img-overlay article-bg-index">
+
+		          <div class="row">
+		            <div class="col-12">
+		            	<h1 class="font-weight-bold text-border text-white h3 mt-1">
+		            		<%= @article.title %>
+		            	</h1>
+		            </div>
+		          </div>
+
+							<div class="row w-100 justify-content-end" style="position: absolute; bottom: 0;">
+
+                <% if user_signed_in? %>
+                	<% if @article.user_id != current_user.id %>
+
+                    <div class="col-3 text-center" id="favorite-of-<%= @article.id %>">
+                      <%= render partial: 'favorites/favorite', locals: { article: @article } %>
+                    </div>
+
+                    <div class="col-3 text-center" id="keep-of-<%= @article.id %>">
+											<%= render partial: 'keeps/keep', locals: { article: @article } %>
+                    </div>
+
+                  <% end %>
+
+                <% else %>
+
+                  <span class="mx-1">
+                    <%= fa_icon("thumbs-up") %><%= @article.favorites.count %>
+                  </span>
+
+                  <span class="mx-1">
+                    <%= fa_icon("folder-open") %><%= @article.keeps.count %>
+                  </span>
+
+                  <span class="mx-1">
+                    <%= fa_icon("comments") %><%= @article.comments.count %>
+                  </span>
+
+                <% end %>
+
+              </div>
+
+			        <div class="my-3">
+				        <% @taggings.each do |tagging| %>
+				        	<span class="badge tag-color p-1">
+				        		<%= link_to tagging.tag.name, tag_path(tagging.tag), class: "text-white" %>
+			        		</span>
+				        <% end %>
+			        </div>
+
+			      </div>
+			    </div>
+
+	        <p class="title-border mt-2"></p>
+	        <div class="col-sm-12 mt-4" style="overflow: scroll;">
+	            <%= raw @article.body %>
+	        </div>
+
+	      </div>
+
+      </div>
+
+      <p class="mt-3 text-center bg-navy text-white">投稿者プロフィール</p>
+
+		  <div class="row mt-3">
+		  	<div class="col-4 align-self-center">
+		  		<%= attachment_image_tag @article.user, :image, fallback: "no_image.jpg", class: "m-3 card-img", style: "max-height: 150px; max-width: 150px;" %>
+		  	</div>
+		  	<div class="col-8 mt-3">
+
+		  		<span>
+		  			<%= link_to @article.user.user_name, user_path(@article.user) %>
+	  			</span><br>
+		  		<span class="small"><%= @article.user.introduction %></span><br>
+
+		  		<% if @article.user.web_site_url.present? %>
+			  		<p class="small text-secondary mt-2">
+			  			ウェブサイトを訪問する<br>
+			  			<%= link_to "#{@user.web_site_url}", "#{@user.web_site_url}" %>
+		  			</p>
+		  		<% end %>
+
+		  	</div>
+		  </div>
+
+		  <p class="mt-3 text-center bg-navy text-white">コメント</p>
+
+      <div class="d-lg-block d-none">
+	  		<%= render 'articles/comment', article: @article, comment: @comment %>
+			</div>
+	  </div>
+
+	  <div class="d-lg-none d-sm-block col-sm-11">
+
+	  	<%= render 'articles/comment', article: @article, comment: @comment %>
+
+	  </div>
+
+	  <div class="col-lg-3 col-sm-11 content-margin">
+
+				<table class="table bg-white">
+
+					<%= render 'articles/user_ranking' %>
+
+				</table>
+
+				<table class="table bg-white">
+
+					<%= render 'articles/tag_ranking' %>
+
+				</table>
+
+		</div>
+
+	</div>
+</div>

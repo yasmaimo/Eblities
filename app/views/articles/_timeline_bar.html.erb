@@ -1,0 +1,30 @@
+<% if action_name == "user_timeline" %>
+
+	<% if post.posted_type == "投稿" %>
+
+		<div class="post-bg-color vertical-bar">
+		</div>
+
+	<% elsif post.posted_type == "イイね" %>
+
+		<div class="favorite-bg-color vertical-bar">
+		</div>
+
+	<% elsif post.posted_type == "キープ" %>
+
+		<div class="keep-bg-color vertical-bar">
+		</div>
+
+	<% elsif post.posted_type == "コメント" %>
+
+		<div class="comment-bg-color vertical-bar">
+		</div>
+
+	<% end %>
+
+<% else %>
+
+  <div class="tag-bar-color vertical-bar">
+  </div>
+
+<% end %>

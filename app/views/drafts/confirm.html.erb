@@ -1,0 +1,9 @@
+<%= simple_form_for(@draft , url: {action: 'update'}) do |f| %>
+
+	<%= render 'articles/confirm',  article: @draft,
+																	f: f,
+	                                article_type: "draft",
+	                                submit_label: "下書きとして保存する",
+	                                submit_name: "update_draft"  %>
+
+<% end %>

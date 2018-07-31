@@ -1,0 +1,39 @@
+<% rank = 1 %>
+
+<thead>
+  <tr>
+    <th>人気タグ</th>
+    <th class="small text-right">
+        <a class="text-secondary" data-toggle="collapse" href="#collapseTagRanking" role="button" aria-expanded="false" aria-controls="collapseTagRanking">
+          <u>詳細</u>
+        </a>
+    </th>
+  </tr>
+  <tr>
+    <td colspan="2" class="small collapse" id="collapseTagRanking">
+      最も記事に登録されたタグの上位10件を表示しています。ユーザーへのタグ登録、下書きへのタグ登録はカウントされません。
+    </td>
+  </tr>
+</thead>
+<tbody>
+  <% Tag.order("taggings_count DESC").limit(10).each do |tag| %>
+    <% if tag.taggings_count > 0 %>
+      <tr>
+        <td class="right-sidebar-link">
+        	<span class="mr-1 font-weight-bold"><%= rank %></span>
+          <span class="badge tag-color p-1">
+            <%= link_to tag.name, tag_path(tag), class: "text-white" %>
+          </span>
+        </td>
+        <td class="text-right">
+        	<span class="font-weight-bold"><%= tag.taggings_count %></span><br>
+        	<span class="small text-secondary">
+        		articles
+        	</span>
+        </td>
+      </tr>
+      <% rank += 1 %>
+    <% end %>
+  <% end %>
+
+</tbody>

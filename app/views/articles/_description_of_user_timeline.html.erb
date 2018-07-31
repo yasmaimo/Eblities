@@ -1,0 +1,26 @@
+<h5 class="text-center mt-2">
+	<%= link_to "ユーザータイムライン", user_timeline_path, class: "border-bottom" %>
+</h5>
+
+<div class="px-2">
+	ユーザータイムラインでは、あなたがフォローしているユーザーの投稿、イイね、キープ、コメントした記事を見ることができます。
+</div>
+<p class="text-center mt-2">
+  <a class="text-secondary" data-toggle="collapse" href="#collapseUsertimelineSm" role="button" aria-expanded="false" aria-controls="collapseUsertimelineSm">
+    もっと詳しく!
+  </a>
+</p>
+<div class="collapse p-2" id="collapseUsertimelineSm">
+
+  <p>
+  	"<%= link_to "最新記事", articles_path %>"や"<%= link_to "タグを探す", tags_path %>"で良い記事を投稿しているユーザーを見つけたり、
+  	"<%= link_to "ユーザーを探す", users_path %>"で興味のあるユーザーを見つけたらフォローしてみましょう。あなたのユーザータイムラインにフォローしているユーザーの投稿、イイね、キープ、コメントした記事が表示されます。
+  </p>
+
+	<ul>
+		<span>あなたがフォローされると・・・</span>
+		<li>2EP入手できます。</li>
+		<li>フォロワー(あなたをフォローしているユーザー)のタイムラインにあなたの投稿、イイね、キープ、コメントした記事が表示されるので、あなたの記事が多くの人に読んでもらえるかもしれません。</li>
+	</ul>
+
+</div>

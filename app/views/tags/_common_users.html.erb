@@ -1,0 +1,29 @@
+<table class="table table-sm bg-white card-body">
+	<tbody>
+	  <% current_user.find_related_tags.order("RANDOM()").limit(10).each do |user| %>
+	    <tr>
+	      <td class="right-sidebar-link">
+	      	<p>
+	      		<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+	      		<%= link_to user.user_name, user_path(user) %>
+	      	</p>
+	      	<span class="small">あなたと共通のタグ</span>
+	      	<% Tagging.where(taggable_type: "User", taggable_id: user).each do |tagging| %>
+	      		<% Tagging.where(taggable_type: "User", taggable_id: current_user).each do |my_tagging| %>
+	      			<% if tagging.tag.name == my_tagging.tag.name %>
+				        <span class="badge tag-color p-1">
+				        	<%= link_to tagging.tag.name, tag_path(tagging.tag.id),class: "text-white" %>
+			        	</span>
+			        <% end %>
+			      <% end %>
+		      <% end %>
+
+		      <span id="relationship-of-<%= user.id %>">
+			      <%= render 'relationships/follow_or_unfollow', user: user %>
+			    </span>
+
+	      </td>
+	    </tr>
+	  <% end %>
+	</tbody>
+</table>

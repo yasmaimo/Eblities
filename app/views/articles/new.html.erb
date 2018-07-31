@@ -1,0 +1,29 @@
+<%= render 'layouts/tags_input_style' %>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12">
+
+      <div class="col-12 text-center text-danger animated shake">
+        <%= flash[:invalid_article] %>
+      </div>
+
+      <p class="text-center my-3">
+        <span class="bg-navy text-white p-2 rounded">記事作成</span>
+      </p>
+
+      <%= simple_form_for(@article, url: {action: 'confirm'}) do |f| %>
+
+        <%= render 'articles/article_form', article: @article,
+                                            f: f,
+                                            article_type: "article",
+                                            submit_label: "下書きとして保存する",
+                                            submit_name: "create_draft" %>
+
+      <% end %>
+
+      </div>
+  </div>
+</div>
+
+<%= render 'layouts/tags_input_script' %>

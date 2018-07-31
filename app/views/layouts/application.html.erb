@@ -1,14 +1,300 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>KitWith</title>
+    <title>Eblities</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
   <body>
-    <%= yield %>
+    <header class="sticky-top">
+      <% if  user_signed_in? %>
+        <%= render 'layouts/header_user', search: @search %>
+        <div class="container-fluid">
+		      <div class="row small">
+
+		      	<% if controller_name == "articles" && action_name == "index" %>
+			      	<div class="col-3 d-lg-block d-none text-center border border-bottom-0" style="background-color: rgba(235, 145, 0, 0.7);">
+			      <% else %>
+			      	<div class="col-3 d-lg-block d-none text-center nav-no-select">
+			      <% end %>
+			      		<%= link_to "最新記事", articles_path, class: "text-white" %>
+			      	</div>
+
+		      	<% if controller_name == "articles" && action_name == "user_timeline" %>
+			      	<div class="col-3 d-lg-block d-none text-center border border-bottom-0" style="background-color: rgba(240, 30, 30, 0.7);">
+			      <% else %>
+			      	<div class="col-3 d-lg-block d-none text-center nav-no-select">
+			      <% end %>
+			      		<%= link_to "ユーザータイムライン", user_timeline_path, class: "text-white" %>
+			      	</div>
+
+			      <% if controller_name == "articles" && action_name == "tag_timeline" %>
+			      	<div class="col-3 d-lg-block d-none text-center border border-bottom-0" style="background-color: rgba(30, 144, 255, 0.7);">
+			      <% else %>
+			      	<div class="col-3 d-lg-block d-none text-center nav-no-select">
+			      <% end %>
+			      		<%= link_to "タグタイムライン", tag_timeline_path, class: "text-white" %>
+			      	</div>
+
+			      <% if controller_name == "keeps" && action_name == "index" %>
+			      	<div class="col-3 d-lg-block d-none text-center border border-bottom-0" style="background-color: rgba(90, 185, 144, 0.7);">
+			      <% else %>
+			      	<div class="col-3 d-lg-block d-none text-center nav-no-select">
+			      <% end %>
+			      		<%= link_to "キープ一覧", keeps_path, class: "text-white" %>
+			      	</div>
+
+		      	<div class="col-12 d-lg-none">
+			      	<div class="row">
+
+						    <% if controller_name == "users" && action_name == "index" ||
+						    			controller_name == "tags" && action_name == "index" ||
+						    			controller_name == "articles" && action_name == "new" %>
+
+							    <button class="col-6 bg-primary text-white" type="button" data-toggle="collapse" data-target="#quickMenu" aria-controls="quickMenu" aria-expanded="false" aria-label="Toggle navigation">
+							    	<%= fa_icon('arrow-right') %>
+							      <span class="ml-2">メニュー</span>
+							    </button>
+
+							  <% else %>
+
+							    <button class="col-6 bg-secondary text-white" type="button" data-toggle="collapse" data-target="#quickMenu" aria-controls="quickMenu" aria-expanded="false" aria-label="Toggle navigation">
+							      メニュー
+							    </button>
+
+							  <% end %>
+
+						    <% if controller_name == "articles" && action_name == "index" ||
+								    	controller_name == "articles" && action_name == "user_timeline" ||
+								    	controller_name == "articles" && action_name == "tag_timeline" ||
+						    			controller_name == "keeps" %>
+
+							    <button class="col-6 bg-primary text-white" type="button" data-toggle="collapse" data-target="#articleMenu" aria-controls="articleMenu" aria-expanded="false" aria-label="Toggle navigation">
+							    	<%= fa_icon('arrow-right') %>
+							      <span class="ml-2">記事を見る</span>
+							    </button>
+
+							  <% else %>
+
+							    <button class="col-6 bg-secondary text-white" type="button" data-toggle="collapse" data-target="#articleMenu" aria-controls="articleMenu" aria-expanded="false" aria-label="Toggle navigation">
+										記事を見る
+							    </button>
+
+							  <% end %>
+
+						    <div class="collapse navbar-collapse" id="quickMenu">
+
+						    	<ul class="navbar-nav" style="background-color: rgba(0,0,0, 0.5); ">
+
+						    		<% if controller_name == "users" && action_name == "index" %>
+
+							        <li class="pl-3 py-2" style="background-color: rgba(240, 30, 30, 0.7);">
+							          <%= link_to users_path do %>
+							          	<span class="nav-link text-white nav-font">
+									          <%= fa_icon('arrow-right') %>
+									          <span class="ml-2">ユーザーを探す</span>
+									        </span>
+								        <% end %>
+							        </li>
+
+						        <% else %>
+
+							        <li class="pl-3 py-2">
+							          <%= link_to "ユーザーを探す", users_path, class: "nav-link text-white nav-font" %>
+							        </li>
+
+							      <% end %>
+
+						    		<% if controller_name == "tags" && action_name == "index" %>
+
+							        <li class="pl-3 py-2" style="background-color: rgba(30, 144, 255, 0.7);">
+							          <%= link_to tags_path do %>
+							          	<span class="nav-link text-white nav-font">
+									          <%= fa_icon('arrow-right') %>
+									          <span class="ml-2">タグを探す</span>
+									        </span>
+								        <% end %>
+							        </li>
+
+						        <% else %>
+
+							        <li class="pl-3 py-2">
+							          <%= link_to "タグを探す", tags_path, class: "nav-link text-white nav-font" %>
+							        </li>
+
+							      <% end %>
+
+						    		<% if controller_name == "articles" && action_name == "new" %>
+
+							        <li class="pl-3 py-2" style="background-color: rgba(235, 145, 0, 0.7);">
+							          <%= link_to new_article_path do %>
+							          	<span class="nav-link text-white nav-font">
+									          <%= fa_icon('arrow-right') %>
+									          <span class="ml-2">記事作成</span>
+									        </span>
+								        <% end %>
+							        </li>
+
+						        <% else %>
+
+							        <li class="pl-3 py-2">
+							          <%= link_to "記事作成", new_article_path, class: "nav-link text-white nav-font" %>
+							        </li>
+
+							      <% end %>
+
+						    	</ul>
+
+						    </div>
+
+						    <div class="collapse navbar-collapse text-right" id="articleMenu">
+
+						    	<ul class="navbar-nav"  style="background-color: rgba(0,0,0, 0.5);" >
+
+						    		<% if controller_name == "articles" && action_name == "index" %>
+
+							        <li class="pr-3 py-2" style="background-color: rgba(235, 145, 0, 0.7);">
+							          <%= link_to articles_path do %>
+							          	<span class="nav-link text-white nav-font">
+									          <%= fa_icon('arrow-right') %>
+									          <span class="ml-2">最新記事</span>
+									        </span>
+								        <% end %>
+							        </li>
+
+						        <% else %>
+
+							        <li class="pr-3 py-2">
+							        	<%= link_to "最新記事", articles_path, class: "nav-link text-white nav-font" %>
+							        </li>
+
+						        <% end %>
+
+						    		<% if controller_name == "articles" && action_name == "user_timeline" %>
+
+							        <li class="pr-3 py-2" style="background-color: rgba(240, 30, 30, 0.7);">
+							          <%= link_to user_timeline_path do %>
+							          	<span class="nav-link text-white nav-font">
+									          <%= fa_icon('arrow-right') %>
+									          <span class="ml-2">ユーザータイムライン</span>
+									        </span>
+								        <% end %>
+							        </li>
+
+						        <% else %>
+
+							        <li class="pr-3 py-2">
+							          <%= link_to "ユーザータイムライン", user_timeline_path, class: "nav-link text-white nav-font" %>
+							        </li>
+
+							      <% end %>
+
+						    		<% if controller_name == "articles" && action_name == "tag_timeline" %>
+
+							        <li class="pr-3 py-2" style="background-color: rgba(30, 144, 255, 0.7);">
+							          <%= link_to tag_timeline_path do %>
+							          	<span class="nav-link text-white nav-font">
+									          <%= fa_icon('arrow-right') %>
+									          <span class="ml-2">タグタイムライン</span>
+									        </span>
+								        <% end %>
+							        </li>
+
+						        <% else %>
+
+							        <li class="pr-3 py-2">
+							          <%= link_to "タグタイムライン", tag_timeline_path, class: "nav-link text-white nav-font" %>
+							        </li>
+
+						        <% end %>
+
+						    		<% if controller_name == "keeps" && action_name == "index" %>
+
+							        <li class="pr-3 py-2" style="background-color: rgba(90, 185, 144, 0.7);">
+							          <%= link_to tag_timeline_path do %>
+							          	<span class="nav-link text-white nav-font">
+									          <%= fa_icon('arrow-right') %>
+									          <span class="ml-2">キープ一覧</span>
+									        </span>
+								        <% end %>
+							        </li>
+
+						        <% else %>
+
+							        <li class="pr-3 py-2">
+							          <%= link_to "キープ一覧", keeps_path, class: "nav-link text-white nav-font" %>
+							        </li>
+
+							      <% end %>
+
+						      </ul>
+
+						    </div>
+
+						  </div>
+					  </div>
+
+		      </div>
+	      </div>
+
+      <% else %>
+        <%= render 'layouts/header_guest' %>
+      <% end %>
+
+    </header>
+
+    <span id="flash-message">
+	    <%= render 'layouts/flash_message', flash_message: @flash_message %>
+    </span>
+
+    <% if user_signed_in? %>
+
+	    <span id="flash-notification">
+		    <%= render 'layouts/flash_notification', flash_notification: @flash_notification,
+		    																				 unread_notifications: @unread_notifications %>
+	    </span>
+
+	  <% end %>
+
+    <div class="main-content">
+	    <%= yield %>
+	  </div>
+
+		<footer>
+			<nav class="navbar navbar-expand-sm navbar-light">
+			  <%= link_to "Eblities", root_path, class: "h3 logo text-secondary", style: "text-decoration: none;"%>
+
+
+			  <div class="navbar navbar-light ml-auto">
+
+			    <ul class="navbar-nav">
+			      <li class="nav-item">
+			      	<%= link_to "Eblitiesとは?", about_path, class: "nav-link text-secondary nav-font" %>
+			      </li>
+<%
+=begin
+%>
+			      <li class="nav-item">
+			      	<%= link_to "利用規約", terms_path, class: "nav-link text-secondary nav-font" %>
+			      </li>
+			      <li class="nav-item">
+			      	<%= link_to "お問い合わせ", new_contact_path, class: "nav-link text-secondary nav-font" %>
+			      </li>
+<%
+=end
+%>
+			    </ul>
+
+			  </div>
+
+			</nav>
+		</footer>
+
   </body>
+
 </html>

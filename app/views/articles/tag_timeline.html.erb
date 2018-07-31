@@ -1,0 +1,109 @@
+<div class="container-fluid">
+	<div class="row justify-content-center">
+
+		<div class="left-sidebar col-lg-2 d-none d-lg-block">
+
+			<%= render 'articles/nav_bar' %>
+
+		</div>
+
+		<div class="col-lg-7 col-sm-11 content-margin">
+
+			<div class="border rounded small bg-white d-lg-none mb-lg-0 mb-3">
+
+				<%= render 'articles/description_of_tag_timeline' %>
+
+			</div>
+
+			<% if current_user.tag_list.present? %>
+
+			  <table class="table bg-white">
+
+				  <thead>
+				    <tr>
+				    	<th>
+					    	<div class="row">
+					    		<div class="col-12">
+					    			<span><%= current_user.taggings.count %>種類のタグを登録中</span>
+					    		</div>
+					    	</div>
+				    	</th>
+				    </tr>
+				  </thead>
+
+			    <tbody>
+
+            <% current_user.taggings.page(params[:q]).each do |tagging| %>
+
+              <%= render 'tags/tags', tags: Tag.where(id: tagging.tag_id) %>
+
+            <% end %>
+
+			    </tbody>
+
+			  </table>
+
+	    <% else %>
+
+			  <table class="table bg-white">
+				  <thead>
+				    <tr>
+				    	<th>
+			    			<span>タグタイムライン</span>
+				    	</th>
+				    </tr>
+				  </thead>
+				</table>
+
+				<p class="text-center font-weight-bold">
+					関心のあるタグを登録していません
+				</p>
+
+	    <% end %>
+
+	  </div>
+
+	  <div class="col-lg-3 col-sm-11 content-margin">
+
+			<div class="border rounded small bg-white d-lg-block d-none">
+
+				<h5 class="text-center mt-2">
+				  <%= link_to "タグタイムライン", tag_timeline_path, class: "border-bottom" %>
+				</h5>
+
+				<div class="px-2">
+				  タグタイムラインでは、あなたが登録しているタグの最新記事を見ることができます。
+				</div>
+				<p class="text-center mt-2">
+				  <a class="text-secondary" data-toggle="collapse" href="#collapseTagtimeline" role="button" aria-expanded="false" aria-controls="collapseTagtimeline">
+				    もっと詳しく!
+				  </a>
+				</p>
+				<div class="collapse p-2" id="collapseTagtimeline">
+
+				  <p>
+				    "<%= link_to "タグを探す", tags_path %>"であなたの興味のある分野をタグとして登録できます。"<%= link_to "マイページ", user_path(current_user) %>"でもタグを登録することができます。登録後、あなたの登録したタグの最新記事がタグタイムラインに表示されます。
+				  </p>
+
+				  <ul>
+				    <span>タグは他にも・・・</span>
+				    <li>記事と関連のある分野として、記事にタグを登録することもできます。</li>
+				    <li>記事にタグを登録すると、他のユーザーがその記事を見つけやすくなります。</li>
+				  </ul>
+
+				  記事にも積極的にタグを登録しましょう！
+
+				</div>
+
+			</div>
+
+			<table class="table bg-white mt-3">
+
+				<%= render 'articles/tag_ranking' %>
+
+			</table>
+
+		</div>
+
+	</div>
+</div>

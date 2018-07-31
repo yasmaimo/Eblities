@@ -1,0 +1,62 @@
+<div class="list-group left-sidebar-link d-lg-block d-none">
+
+	<%= link_to users_path do %>
+		<% if controller_name == "users" || controller_name == "drafts" %>
+			<span class="list-group-item list-group-item-action nav-font mb-2 bg-danger text-white">
+		<% else %>
+			<span class="list-group-item list-group-item-action nav-font mb-2">
+		<% end %>
+				<%= fa_icon("users", text: "ユーザーを探す") %>
+			</span>
+	<% end %>
+
+	<% if controller_name == "users" && action_name != "index" %>
+		<div class="text-center text-secondary mb-3">
+			<span><%= fa_icon "arrow-down" %></span><br>
+			<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 40px; max-width: 40px;" %><br>
+			<span>
+				<%= link_to User.find(params[:id]).user_name.truncate(13), user_path(params[:id]), class: "small" %>
+			</span>
+		</div>
+	<% end %>
+
+	<% if controller_name == "drafts" %>
+		<div class="text-center text-secondary mb-3">
+			<span><%= fa_icon "arrow-down" %></span><br>
+			<%= attachment_image_tag @user, :image, fallback: "no_image.jpg", class: "card-img", style: "max-height: 40px; max-width: 40px;" %><br>
+			<span>
+				<%= link_to User.find(params[:user_id]).user_name.truncate(13), user_path(params[:user_id]), class: "small" %>
+			</span>
+		</div>
+	<% end %>
+
+	<%= link_to tags_path do %>
+		<% if controller_name == "tags" %>
+			<span class="list-group-item list-group-item-action nav-font mb-2 bg-primary text-white">
+		<% else %>
+			<span class="list-group-item list-group-item-action nav-font mb-2">
+		<% end %>
+				<%= fa_icon("tags", text: "タグを探す") %><br>
+			</span>
+	<% end %>
+
+	<% if controller_name == "tags" && action_name == "show" %>
+		<div class="text-center text-secondary mb-3">
+			<span><%= fa_icon "arrow-down" %></span><br>
+			<span>
+				<%= link_to Tag.find(params[:id]).name.truncate(13), tag_path(params[:id]), class: "text-white rounded px-1 tag-color small" %>
+			</span>
+		</div>
+	<% end %>
+
+	<% if user_signed_in? %>
+
+		<%= link_to new_article_path do %>
+				<span class="list-group-item list-group-item-action nav-font mb-2">
+					<%= fa_icon("pencil", text: "記事作成") %>
+				</span>
+		<% end %>
+
+	<% end %>
+
+</div>

@@ -1,0 +1,75 @@
+<div class="container-fluid">
+	<div class="row justify-content-center">
+
+		<div class="left-sidebar col-lg-2 d-none d-lg-block">
+
+			<%= render 'articles/nav_bar' %>
+
+		</div>
+
+		<div class="col-lg-7 col-sm-11">
+
+			<%= render 'users/nav_bar', user: @user %>
+
+	    <%= search_form_for @search_following, url: followings_path do |f| %>
+	      <div class="form-inline my-lg-0 my-2">
+	        <%= f.text_field :user_name_cont, class: "col-sm-10 col-xs-12 form-control", placeholder: @user.user_name + 'さんのフォローユーザーを検索'  %>
+	        <%= f.button fa_icon("search"), class: 'col-sm-2 col-xs-12 btn btn-outline-dark my-lg-0 my-2'%>
+	      </div>
+	    <% end %>
+
+			<% if @user.followings.present? %>
+				<% if @search_following.result.count > 0 %>
+
+				  <table class="table bg-white" id="followers">
+					  <thead>
+					    <tr>
+					    	<th>
+						    	<div class="row">
+						    		<div class="col-12">
+						    			<span><%= @search_following.result.count %>人のフォローユーザー</span>
+						    		</div>
+						    	</div>
+					    	</th>
+					    </tr>
+					  </thead>
+
+		    		<% if params[:q].present? %>
+		    			<% if params[:q][:user_name_cont] != "" %>
+			    			<p class="text-center font-weight-bold my-3">"<%= params[:q][:user_name_cont] %>"の検索結果</p>
+		    			<% end %>
+		    		<% end %>
+
+				    <tbody class="page">
+
+				    	<% @followings.each do |user| %>
+
+				    		<%= render 'users/users', user: user %>
+
+					    <% end %>
+
+				    </tbody>
+				  </table>
+
+			  <% elsif @search_following.result.count == 0 %>
+
+			  	<p class="text-center font-weight-bold mt-3">"<%= params[:q][:user_name_cont] %>"を含むフォローユーザーはいません</p>
+
+			 	<% end %>
+
+	    <% else %>
+
+				<p class="text-center font-weight-bold mt-3"><%= @user.user_name %>さんは誰もフォローしていません</p>
+
+	    <% end %>
+
+	    <div class="row justify-content-center">
+	    		<p class="col-12"><%= paginate @followings %></p>
+	    </div>
+
+		</div>
+
+		<%= render partial: 'users/info_sidebar', locals: {taggings: @taggings, new_tag: @new_tag, user: @user} %>
+
+	</div>
+</div>

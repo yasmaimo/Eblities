@@ -1,0 +1,226 @@
+<div class="container-fluid">
+	<div class="row justify-content-center">
+
+		<div class="left-sidebar col-lg-2 d-none d-lg-block">
+
+			<%= render 'articles/nav_bar' %>
+
+		</div>
+
+		<div class="col-lg-7 col-sm-11 content-margin">
+
+			<div class="border rounded small bg-white d-lg-none mb-lg-0 mb-3">
+
+				<%= render 'articles/description_of_user_timeline' %>
+
+			</div>
+
+			<% if current_user.followings.present? %>
+
+			  <table class="table bg-white">
+				  <thead>
+				    <tr>
+				    	<th>
+					    	<div class="row">
+					    		<div class="col-12">
+					    			<span>フォロー<%= current_user.followings.count %></span>
+					    			/
+					    			<span>フォロワー<%= current_user.followers.count %></span>
+					    		</div>
+					    	</div>
+				    	</th>
+				    </tr>
+				    <tr>
+				    	<td>
+				    		<div class="row">
+				    			<div class="col-12 text-center mb-2">
+				    				絞り込み
+				    			</div>
+				    			<div class="col-md-3 col-6">
+								    <%= search_form_for @search_post, url: user_timeline_path do |f| %>
+								        <%= f.hidden_field :posted_type_eq, value: '投稿' %>
+								        <%= f.button "投稿", class: "btn btn-default post-bg-color text-white w-100" %>
+								    <% end %>
+				    			</div>
+				    			<div class="col-md-3 col-6">
+								    <%= search_form_for @search_post, url: user_timeline_path do |f| %>
+								        <%= f.hidden_field :posted_type_eq, value: 'イイね' %>
+								        <%= f.button "イイね", class: "btn btn-default favorite-bg-color text-white w-100" %>
+								    <% end %>
+				    			</div>
+				    			<div class="col-md-3 col-6 mt-md-0 mt-3">
+								    <%= search_form_for @search_post, url: user_timeline_path do |f| %>
+								        <%= f.hidden_field :posted_type_eq, value: 'キープ' %>
+								        <%= f.button "キープ", class: "btn btn-default keep-bg-color text-white w-100" %>
+								    <% end %>
+				    			</div>
+				    			<divc class="col-md-3 col-6 mt-md-0 mt-3">
+								    <%= search_form_for @search_post, url: user_timeline_path do |f| %>
+								        <%= f.hidden_field :posted_type_eq, value: 'コメント' %>
+								        <%= f.button "コメント", class: "btn btn-default comment-bg-color text-white w-100" %>
+								    <% end %>
+				    			</div>
+				    		</div>
+				    	</td>
+				    </tr>
+				  </thead>
+
+			    <tbody>
+			    	<% @posts.each do |post| %>
+				    	<% if Relationship.find_by(following_id: post.posted_by_id) %>
+				    		<% if post.posted_by_id != current_user.id && post.user_id != current_user.id %>
+
+					    		<% user = User.find(post.posted_by_id) %>
+
+									<tr>
+									  <td>
+									    <div class="card">
+									      <div class="card-header" style="position: relative;">
+									        <div class="row">
+
+									          <div class="col-12 ranking-table">
+									          	<%= attachment_image_tag user, :image, fallback: "no_image.jpg", class: " mx-1", style: "max-height: 40px; max-width: 40px;"%>
+
+									          	<span>
+									          		<%= link_to user.user_name, user_path(user) %>
+									          	</span>
+
+									          	<span class="small text-dark" style="font-weight: bold; font-size: 14px;">
+									          		<% if post.posted_type == "投稿" %>
+
+										          		<%= "さんが記事を" %>
+										          		<span class="post-color">
+										          			<%= "#{post.posted_type}" %>
+									          			</span>
+									          			<%= "しました" %>
+
+									          		<% elsif post.posted_type == "イイね" %>
+
+										          		<%= "さんが記事に" %>
+										          		<span class="favorite-color">
+										          			<%= "#{post.posted_type}" %>
+									          			</span>
+									          			<%= "をしました" %>
+
+									          		<% elsif post.posted_type == "キープ" %>
+
+										          		<%= "さんが記事を" %>
+										          		<span class="keep-color">
+										          			<%= "#{post.posted_type}" %>
+									          			</span>
+									          			<%= "しました" %>
+
+
+									          		<% elsif post.posted_type == "コメント" %>
+
+										          		<%= "さんが記事に" %>
+										          		<span class="comment-color">
+										          			<%= "#{post.posted_type}" %>
+									          			</span>
+									          			<%= "しました" %>
+
+										          	<% end %>
+									          	</span>
+									          </div>
+
+									          <div class="col-12 small text-secondary text-right" style="position: absolute; top: 0;" >
+									          	<span>
+									          		posted by : <%= user.user_name %>
+									          	</span>
+
+									          	<span class="ml-1">
+									          		<%= post.user.point %>EP
+									          	</span>
+
+									          </div>
+
+									          <div class="col-12 small text-secondary text-right" style="position: absolute; bottom: 0;" >
+
+									          	<span>
+									          		<%= post.created_at.strftime('%Y/%m/%d %R') %>
+									          	</span>
+
+									          </div>
+
+									        </div>
+									      </div>
+
+									      <div class="card-body">
+
+									      	<%= render 'articles/including_article', article: post.article, post: post %>
+
+									      </div>
+									    </div>
+									  </td>
+									</tr>
+
+								<% end %>
+							<% end %>
+						<% end %>
+
+			    </tbody>
+			  </table>
+
+	    <% else %>
+
+			  <table class="table bg-white">
+				  <thead>
+				    <tr>
+				    	<th class="text-center">
+			    			<span>ユーザータイムライン</span>
+				    	</th>
+				    </tr>
+				  </thead>
+				</table>
+
+				<p class="text-center font-weight-bold">
+					フォロー中のユーザーがいません
+				</p>
+
+	    <% end %>
+
+	  </div>
+
+	  <div class="col-lg-3 col-sm-11 content-margin">
+
+			<div class="border rounded small bg-white d-lg-block d-none">
+
+				<h5 class="text-center mt-2">
+					<%= link_to "ユーザータイムライン", user_timeline_path, class: "border-bottom" %>
+				</h5>
+
+				<div class="px-2">
+					ユーザータイムラインでは、あなたがフォローしているユーザーの投稿、イイね、キープ、コメントした記事を見ることができます。
+				</div>
+				<p class="text-center mt-2">
+				  <a class="text-secondary" data-toggle="collapse" href="#collapseUsertimeline" role="button" aria-expanded="false" aria-controls="collapseUsertimeline">
+				    もっと詳しく!
+				  </a>
+				</p>
+				<div class="collapse p-2" id="collapseUsertimeline">
+
+				  <p>
+				  	"<%= link_to "最新記事", articles_path %>"や"<%= link_to "タグを探す", tags_path %>"で良い記事を投稿しているユーザーを見つけたり、
+				  	"<%= link_to "ユーザーを探す", users_path %>"で興味のあるユーザーを見つけたらフォローしてみましょう。あなたのユーザータイムラインにフォローしているユーザーの投稿、イイね、キープ、コメントした記事が表示されます。
+				  </p>
+
+					<ul>
+						<span>あなたがフォローされると・・・</span>
+						<li>2EP入手できます。</li>
+						<li>フォロワー(あなたをフォローしているユーザー)のタイムラインにあなたの投稿、イイね、キープ、コメントした記事が表示されるので、あなたの記事が多くの人に読んでもらえるかもしれません。</li>
+					</ul>
+
+				</div>
+
+			</div>
+
+			<table class="table bg-white mt-3">
+
+				<%= render 'articles/user_ranking' %>
+
+			</table>
+
+		</div>
+
+	</div>
+</div>

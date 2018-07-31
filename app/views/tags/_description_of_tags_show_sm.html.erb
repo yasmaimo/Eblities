@@ -1,0 +1,75 @@
+<div class="card mb-3">
+  <div class="card-header text-white text-center font-weight-bold" style ="background-color: #125699;">
+  	タグ : <%= link_to tag.name, tag_path(tag), class: "text-white berder border-bottom" %>
+  </div>
+  <div class="card-body">
+
+  	<% if user_signed_in? %>
+
+	    <div class="text-center" id="tag-mark-of-<%= tag.id %>-sm">
+
+	      <%= render partial: 'tags/tag_mark', locals: {tag: tag} %>
+
+	    </div>
+
+	  <% end %>
+
+  	<div class="small">
+  		タグ : <%= link_to tag.name, tag_path(tag), class: "text-dark berder border-bottom" %>が登録されている記事の一覧です。
+  	</div>
+
+		<table class="table table-sm bg-white card-body text-center mt-2">
+			<tbody>
+		    <tr>
+		      <th class="text-center">
+		      	関心を持つユーザー
+		      </th>
+		    </tr>
+		    <tr>
+		      <td>
+		      	<span class="text-secondary"><%= fa_icon("users") %></span>
+
+		      	<span id="tagging-users-count-of-<%= tag.id %>-sm">
+			      	<%= render partial: 'tags/tagging_users_count', locals: {tagging_users: tagging_users} %>
+		      	</span>
+
+		      	<span class="small">名が登録</span>
+		      </td>
+		    </tr>
+		    <tr>
+		      <th class="text-center">
+		      	タグ付けされた記事
+		      </th>
+		    </tr>
+		    <tr>
+		      <td>
+		      	<span class="text-secondary"><%= fa_icon("pencil") %></span>
+		      	<span>
+			      	<%= tagging_articles.count %>
+			      </span>
+		      	<span class="small">件の記事</span>
+		      </td>
+		    </tr>
+			</tbody>
+		</table>
+
+		<% if user_signed_in? %>
+
+	    <div class="text-center" id="tag-button-of-<%= tag.id %>-sm">
+
+	      <%= render partial: 'tags/tag_button', locals: {tag: tag, new_tag: new_tag} %>
+
+	    </div>
+
+	  <% end %>
+
+  </div>
+</div>
+
+<% if user_signed_in? %>
+
+	<div class="text-center">
+		<a href="#link">"<%= tag.name %>"に関心を持つ他のユーザーを見る</a>
+	</div>
+
+<% end %>

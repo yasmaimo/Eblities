@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="row text-center">
+    <div class="col-12 font-weight-bold h3 mt-4">
+      <p>
+        退会に関する注意事項
+      </p>
+      <p class="text-info h5">
+        ※必ずお読みください
+      </p>
+    </div>
+  </div>
+
+
+  <div class="row text-center justify-content-center">
+    <div class="col-lg-6 col-12">
+      <p>
+        <%= @user.user_name %>
+        さんが退会する場合、下記の内容をご了承頂く必要があります。
+      </p>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-12">
+      <div class="list-group">
+
+        <span class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">・記事やコメント、アカウント情報について</h5>
+          </div>
+          <p class="mb-1"><%= @user.user_name %> さんに関する情報は全て削除されるため、記事、コメント、アカウント情報は残りません。よって、退会後は二度と元に戻せません。</p>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-12 text-center text-white mt-4">
+
+      <%= form_for(@user, url: {controller: "users", action: "unsubscribe"}, method: :patch, class: "needs-validation") do |f| %>
+
+        <div class="text-dark">
+
+	        <p>
+	          ・上記内容を確認後、チェックを入れてください。
+	        </p>
+		      <p class="flash-message text-danger text-center">
+		        <%= flash[:failed] %>
+		      </p>
+
+	        <span>
+	          <%= f.check_box :status, checked: 1, unchecked: 0 %>
+	          <%= label_tag :status, 'チェック', class: "text-dark" %>
+	        </span>
+
+	      </div>
+
+	      <p class="mt-4">
+	        <%= f.submit "退会する", "data-confirm" => "本当に退会しますか？この操作は取り消せません。", class: "btn btn-danger" %>
+	      </p>
+
+      <% end %>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    var forms = document.getElementsByClassName('needs-validation');
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
