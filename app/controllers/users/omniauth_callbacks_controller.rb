@@ -24,13 +24,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       if @user.otp_required_for_login == true
         authenticate_with_two_factor
       else
-        flash[:sign_in_succeeded] = "ログインしました"
+        flash[:flash_message] = "ログインしました"
         sign_in_and_redirect @user, event: :authentication
         # set_flash_message(:notice, :success, kind: "#{provider}".capitalize) if is_navigational_format?
       end
     else
       session["devise.#{provider}_data"] = request.env["omniauth.auth"].except("extra")
-      flash[:sign_up_succeeded] = "登録が完了しました。ようこそEblitiesへ！"
+      flash[:flash_message] = "ご登録ありがとうございます！Eblitiesからあなたへのご挨拶を送りました。右上の通知ボタンからご覧いただけます。"
+      Notification.create(user_id: current_user.id, notified_type: "サインアップ")
       redirect_to new_user_registration_url
     end
   end
