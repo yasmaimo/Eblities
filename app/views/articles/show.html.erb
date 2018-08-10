@@ -118,6 +118,10 @@
 	  			</span><br>
 		  		<span class="small"><%= @article.user.introduction %></span><br>
 
+		  		<span id="relationship-of-<%= @user.id %>">
+		  			<%= render 'relationships/follow_or_unfollow', user: @user %>
+		  		</span>
+
 		  		<% if @article.user.web_site_url.present? %>
 			  		<p class="small text-secondary mt-2">
 			  			ウェブサイトを訪問する<br>
@@ -143,7 +147,7 @@
 
 	  <div class="col-lg-3 col-sm-11 content-margin">
 
-				<table class="table bg-white">
+				<table class="table bg-white" id="user-ranking">
 
 					<%= render 'articles/user_ranking' %>
 

@@ -18,7 +18,8 @@
                                             f: f,
                                             article_type: "article",
                                             submit_label: "下書きとして投稿を取り下げる",
-                                            submit_name: "create_draft" %>
+                                            submit_name: "create_draft",
+                                            submit_confirm: "下書きとして投稿を取り下げると、この記事に対するイイねとキープとコメントが削除され、あなたのEPが減ります。\n投稿の取り下げ -5EP\nイイねの削除 -#{@article.favorites.count}EP\nキープの削除 -#{@article.keeps.count}EP\n本当に下書きとして投稿を取り下げますか？" %>
 
       <% end %>
 

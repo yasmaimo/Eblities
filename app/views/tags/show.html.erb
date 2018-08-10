@@ -36,10 +36,8 @@
 					    	<th>
 				    			<span>
 				    				<%= link_to @find_tag.name, tag_path(@find_tag), class: "text-white rounded px-1 tag-color" %>
-				    			</span>がタグ付けされた記事一覧 :
-					      	<span id="tagging-articles-count">
-						      	<%= render partial: 'tags/tagging_articles_count', locals: {tagging_articles: @tagging_articles} %>件
-						      </span>
+				    				がタグ付けされた記事一覧 : <%= @search_tag_article.result.count %>件
+				    			</span>
 					    	</th>
 					    </tr>
 					  </thead>

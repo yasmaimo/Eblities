@@ -16,7 +16,7 @@
 					<%= form_for(resource, as: resource_name, url: session_path(resource_name), method: :post) do |f| %>
 					  <div class="field">
 					    <%= f.label :コードを入力 %><br />
-					    <%= f.text_field :otp_attempt %>
+					    <%= f.text_field :otp_attempt, autofocus: true %>
 					  </div>
 
 					  <div class="actions">

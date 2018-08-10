@@ -23,7 +23,7 @@
   </tr>
 </thead>
 <tbody>
-  <% @users.order("point DESC").limit(10).each do |user| %>
+  <% User.order("point DESC").limit(10).each do |user| %>
     <tr>
       <td>
       	<span class="mr-1 font-weight-bold"><%= rank %></span>
