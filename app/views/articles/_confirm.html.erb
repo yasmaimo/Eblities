@@ -71,7 +71,7 @@
 		    <%= f.submit "修正する", name: "back", class: "list-group-item list-group-item-action nav-font mb-2" %>
 
 
-		    <%= f.submit "#{submit_label}", name: "#{submit_name}", class: "list-group-item list-group-item-action nav-font mb-2" %>
+		    <%= f.submit "#{submit_label}", name: "#{submit_name}", class: "list-group-item list-group-item-action nav-font mb-2", "data-confirm" => "#{submit_confirm}" %>
 
 			</div>
 	  </div>
@@ -87,7 +87,7 @@
 		  </p>
 
 		  <p>
-		  	<%= f.submit "#{submit_label}", name: "#{submit_name}", class: "col btn btn-sm text-secondary border" %>
+		  	<%= f.submit "#{submit_label}", name: "#{submit_name}", class: "col btn btn-sm text-secondary border", "data-confirm" => "#{submit_confirm}" %>
 		  </p>
 
 		</div>

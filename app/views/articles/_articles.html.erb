@@ -146,7 +146,7 @@
                         </span>
                       <% end %>
 
-                      <%= link_to article_path(article), method: :delete, "data-confirm" => "投稿 : #{article.title} を削除しますか？" do %>
+                      <%= link_to article_path(article), method: :delete, "data-confirm" => "投稿 : #{article.title} を削除するとあなたのEPが減ります\n投稿の削除 -5EP\nイイねの削除 -#{article.favorites.count}EP\nキープの削除 -#{article.keeps.count}EP\n本当に投稿を削除しますか？" do %>
                         <span class="text-white">
                           <%= fa_icon("trash 2x") %>
                         </span>

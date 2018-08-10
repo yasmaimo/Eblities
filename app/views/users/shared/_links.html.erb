@@ -8,7 +8,9 @@
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-
+<%
+=begin
+%>
  		<% if "#{OmniAuth::Utils.camelize(provider)}" == "Facebook" -%>
 	    <%= link_to omniauth_authorize_path(resource_name, provider) do %>
 	    	<span class="btn text-white w-100" style="background-color: #3B5998;">
@@ -16,7 +18,9 @@
 	    	</span>
 	    <% end %>
 	  <% end %>
-
+<%
+=end
+%>
 	  <p class="my-2"></p>
 
  		<% if "#{OmniAuth::Utils.camelize(provider)}" == "Twitter" -%>

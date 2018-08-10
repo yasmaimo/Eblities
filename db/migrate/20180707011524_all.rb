@@ -10,7 +10,7 @@ class All < ActiveRecord::Migration[5.1]
     create_table :articles do |t|
 			t.integer		:user_id,   		index: true
 			t.string		:title,   			index: true
-			t.text			:body, 	  			index: true
+			t.text			:body
       t.string    :image_id
       t.timestamps
     end
@@ -38,7 +38,7 @@ class All < ActiveRecord::Migration[5.1]
     create_table :drafts do |t|
 			t.integer		:user_id,   		index: true
 			t.string		:title,   			index: true
-			t.text			:body, 	  			index: true
+			t.text			:body
       t.string    :image_id
       t.timestamps
     end
@@ -52,7 +52,7 @@ class All < ActiveRecord::Migration[5.1]
     create_table :contacts do |t|
 			t.string		:title,			  	null: false, index: true
 			t.string		:email,			  	null: false, index: true
-			t.text			:contact,			 	null: false, index: true
+			t.text			:contact,			 	null: false
 			t.string		:status,			 	null: false, index: true
       t.timestamps
     end
