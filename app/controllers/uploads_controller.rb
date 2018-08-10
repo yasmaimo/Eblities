@@ -1,5 +1,7 @@
 class UploadsController < ApplicationController
 
+  protect_from_forgery :except => [:create]
+
   def create
     @upload = Upload.new(upload_params)
     @upload.save

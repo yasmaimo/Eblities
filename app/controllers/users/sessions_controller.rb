@@ -18,7 +18,7 @@ class Users::SessionsController < Devise::SessionsController
       flash[:flash_message] = "ログインしました"
       respond_with resource, location: after_sign_in_path_for(resource)
     else
-      flash[:sign_in_failed] = "メールアドレスかパスワードが違います"
+      flash[:sign_in_failed] = "ログインに失敗しました"
       redirect_to new_user_session_path
     end
   end
@@ -55,7 +55,7 @@ class Users::SessionsController < Devise::SessionsController
         render 'users/sessions/two_factor' and return
       end
     elsif user_params[:otp_attempt].present? && session[:otp_user_id]
-      if user.validate_and_consume_otp!(user_params[:otp_attempt])
+      if valid_otp_attempt?(user)
         session.delete(:otp_user_id)
         flash[:flash_message] = "ログインしました"
         sign_in(user) and return
@@ -67,8 +67,8 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def valid_otp_attempt?(user)
-    user.validate_and_consume_otp!(user_params[:otp_attempt]) ||
-    user.invalidate_otp_backup_code!(user_params[:otp_attempt])
+    user.validate_and_consume_otp!(params[:user][:otp_attempt]) ||
+    user.invalidate_otp_backup_code!(params[:user][:otp_attempt])
   end
 
 end

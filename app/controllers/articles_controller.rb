@@ -1,7 +1,5 @@
 class ArticlesController < ApplicationController
 
-  before_action :user_ranking
-  before_action :tag_ranking
   before_action :authenticate_user, except: [:index, :show]
   before_action :find_article, only: [:edit, :show, :confirm_edit, :update, :destroy]
   before_action :judge_user_id, only: [:edit, :confirm_edit, :update, :destroy]
@@ -84,7 +82,7 @@ class ArticlesController < ApplicationController
       @draft.save
       tagging_draft
       @article.destroy
-      subtract_five_point
+      subtract_any_point
       flash[:flash_message] = "下書きとして投稿を取り下げました"
       redirect_to user_drafts_path(current_user)
     elsif params[:back]
@@ -95,7 +93,7 @@ class ArticlesController < ApplicationController
   def destroy
     destroy_post
     @article.destroy
-    subtract_five_point
+    subtract_any_point
     flash[:flash_message] = "記事を削除しました"
     redirect_to user_path(@article.user_id)
   end
@@ -118,14 +116,6 @@ class ArticlesController < ApplicationController
     unless @article.user_id == current_user.id
       redirect_to root_path(current_user)
     end
-  end
-
-  def user_ranking
-    @users = User.all
-  end
-
-  def tag_ranking
-    @tags = Tag.all
   end
 
   def new_article

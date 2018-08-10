@@ -43,9 +43,9 @@ class ApplicationController < ActionController::Base
     current_user.update(point: ep)
   end
 
-  def subtract_five_point
+  def subtract_any_point
     ep = current_user.point
-    ep -= 5
+    ep = ep - 5 - @article.favorites.count - @article.keeps.count
     current_user.update(point: ep)
   end
 
