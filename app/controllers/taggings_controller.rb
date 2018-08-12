@@ -14,6 +14,9 @@ class TaggingsController < ApplicationController
     @tagging_articles = Tagging.where(tag_id: @find_tag.id, taggable_type: "Article")
     @tagging_users = Tagging.where(tag_id: @find_tag.id, taggable_type: "User")
     tagging.destroy
+    # unless tagging.tag.taggings.exists?
+    #   tagging.tag.destroy
+    # end
     flash.now[:flash_message] = "#{@find_tag.name}をあなたのタグリストから削除しました"
     @flash_message = flash.now[:flash_message]
   end

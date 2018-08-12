@@ -55,7 +55,7 @@ Rails.application.routes.draw do
 
   get 'users/:id/followings', to: 'users#followings', as: 'followings'
 
-  get 'users/:id/account', to: 'users#account', as: 'user_account'
+  # get 'users/:id/account', to: 'users#account', as: 'user_account'
 
   get 'users/:id/password', to: 'users#password', as: 'user_password_setting'
 

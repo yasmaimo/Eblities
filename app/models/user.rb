@@ -20,8 +20,8 @@ class User < ApplicationRecord
 
   validates :user_name,
     presence: true,
-    length: { in: 2..16,
-              message: "2~16文字までのユーザーネームを入力してください" }
+    length: { maximum: 16,
+              message: "16文字までのユーザーネームを入力してください" }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email,

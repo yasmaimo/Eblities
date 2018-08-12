@@ -1,3 +1,4 @@
 $("#keep-of-<%= @article.id %>").html("<%= j(render partial: 'keep', locals: { article: @article }) %>")
 $("#user-ranking").html("<%= j(render 'articles/user_ranking') %>")
+$("#eblities-point-of-<%= @user.id %>").html("<%= j(render 'users/point', user: @user) %>")
 $("#flash-message").html("<%= j(render 'layouts/flash_message', flash_message: @flash_message) %>")
