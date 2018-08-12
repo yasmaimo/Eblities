@@ -1,50 +1,50 @@
 <% if controller.controller_name != "omniauth_callbacks" %>
 
-<% if controller.controller_name != "session" && controller.action_name != "create" %>
+  <% if controller.controller_name != "session" && controller.action_name != "create" %>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-    <%= link_to "Eb", root_path, class: "h1 text-white logo", style: "text-decoration: none;"%>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+      <%= link_to "Eb", root_path, class: "h1 text-white logo", style: "text-decoration: none;"%>
 
-    <span class="copy ml-3 text-white">
-      <span class="h5 logo">Eblities</span><br>
-      クリエイターの知識をシェアするサイト
-    </span>
+      <span class="copy ml-3 text-white">
+        <span class="h5 logo">Eblities</span><br>
+        クリエイターの知識をシェアするサイト
+      </span>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-      <%= search_form_for @search do |f| %>
-        <div class="form-inline my-2 my-lg-0 ml-lg-3 justify-content-center">
-          <% if controller.controller_name == "articles" && controller.action_name == "index" %>
-            <%= f.text_field :title_or_body_cont, class: "col-sm-9 col-xs-12 form-control", placeholder: '記事を検索' %>
-          <% else %>
-            <%= f.text_field :title_or_body_cont, class: "col-sm-9 col-xs-12 form-control", placeholder: '記事を検索', value: nil %>
-          <% end %>
-          <%= f.button fa_icon("search"), class: 'col-sm-2 col-xs-12 btn btn-outline-light my-2 ml-sm-2 '%>
-        </div>
-      <% end %>
+        <%= search_form_for @search do |f| %>
+          <div class="form-inline my-2 my-lg-0 ml-lg-3 justify-content-center">
+            <% if controller.controller_name == "articles" && controller.action_name == "index" %>
+              <%= f.text_field :title_or_body_cont, class: "col-sm-9 col-xs-12 form-control", placeholder: '記事を検索' %>
+            <% else %>
+              <%= f.text_field :title_or_body_cont, class: "col-sm-9 col-xs-12 form-control", placeholder: '記事を検索', value: nil %>
+            <% end %>
+            <%= f.button fa_icon("search"), class: 'col-sm-2 col-xs-12 btn btn-outline-light my-2 ml-sm-2 '%>
+          </div>
+        <% end %>
 
-      <ul class="navbar-nav ml-auto text-right">
+        <ul class="navbar-nav ml-auto text-right">
 
-        <li class="nav-item">
-          <%= link_to "Eblitiesとは？", about_path, class: "nav-link text-white nav-font" %>
-        </li>
+          <li class="nav-item">
+            <%= link_to "Eblitiesとは？", about_path, class: "nav-link text-white nav-font" %>
+          </li>
 
-        <li class="nav-item">
-          <%= link_to "新規登録", new_user_registration_path, class: "nav-link text-white nav-font" %>
-        </li>
+          <li class="nav-item">
+            <%= link_to "新規登録", new_user_registration_path, class: "nav-link text-white nav-font" %>
+          </li>
 
-        <li class="nav-item">
-          <%= link_to "ログイン", new_user_session_path, class: "nav-link text-white nav-font" %>
-        </li>
+          <li class="nav-item">
+            <%= link_to "ログイン", new_user_session_path, class: "nav-link text-white nav-font" %>
+          </li>
 
-      </ul>
-    </div>
-  </nav>
+        </ul>
+      </div>
+    </nav>
 
-<% end %>
+  <% end %>
 
 <% end %>

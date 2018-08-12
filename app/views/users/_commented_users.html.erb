@@ -1,7 +1,17 @@
+<% count = 1 %>
+<% each_number = 1 %>
+<% comments = Comment.where.not(user_id: current_user).reverse_order.group(:user_id) %>
+
 <table class="table table-sm bg-white card-body">
 	<tbody>
-	  <% Comment.where.not(user_id: current_user).reverse_order.limit(5).each do |comment| %>
-	  	<% if Article.exists?(id: comment.article_id, user_id: current_user) %>
+	  <% comments.each do |comment| %>
+
+	  	<% if count > 5 %>
+
+	  	 <% break %>
+
+	  	<% elsif comment.article.user == current_user %>
+
 		    <tr>
 		      <td class="right-sidebar-link">
 		      	<span>
@@ -19,7 +29,11 @@
 
 		      </td>
 		    </tr>
+
+		    <% count += 1 %>
+
 		  <% end %>
+
 	  <% end %>
 	</tbody>
 </table>

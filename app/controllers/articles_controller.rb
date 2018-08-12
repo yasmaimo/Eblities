@@ -10,6 +10,13 @@ class ArticlesController < ApplicationController
   end
 
   def confirm
+    params[:article][:tag_list].split(",").each do |tag_name|
+      if Tag.new(name: tag_name).invalid?
+        new_article
+        flash.now[:invalid_article] = "タグ1つにつき14文字までのタグ名を入力してください"
+        render :new and return
+      end
+    end
     if params[:confirm_article]
       new_article
       if @article.invalid?
@@ -32,7 +39,7 @@ class ArticlesController < ApplicationController
       @article.save
       add_five_point
       create_post
-      flash[:flash_message] = "記事を投稿しました"
+      flash[:flash_message] = "記事を投稿しました。編集や削除はマイページで行えます。"
       redirect_to article_path(@article)
     elsif params[:create_draft]
       create_draft
@@ -61,6 +68,12 @@ class ArticlesController < ApplicationController
   def update
     @article.tag_list.add(params[:article][:tag_list], parse: true)
     if params[:confirm_article]
+      params[:article][:tag_list].split(",").each do |tag_name|
+        if Tag.new(name: tag_name).invalid?
+          flash.now[:invalid_article] = "タグ1つにつき14文字までのタグ名を入力してください"
+          render :edit and return
+        end
+      end
       @article.title = article_params[:title]
       @article.body = article_params[:body]
       if @article.invalid?
@@ -75,9 +88,15 @@ class ArticlesController < ApplicationController
       end
     elsif params[:create_article]
       @article.update(article_params)
-      flash[:flash_message] = "記事を投稿しました"
+      flash[:flash_message] = "編集した記事を投稿しました"
       redirect_to article_path(@article)
     elsif params[:create_draft]
+      params[:article][:tag_list].split(",").each do |tag_name|
+        if Tag.new(name: tag_name).invalid?
+          flash.now[:invalid_article] = "タグ1つにつき14文字までのタグ名を入力してください"
+          render :edit and return
+        end
+      end
       @draft = Draft.new(user_id: current_user.id, title: article_params[:title], body: article_params[:body], image: @article.image)
       @draft.save
       tagging_draft
