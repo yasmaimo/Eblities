@@ -32,7 +32,7 @@ class DraftsController < ApplicationController
       end
       add_five_point
       create_post
-      flash[:flash_message] = "記事を投稿しました"
+      flash[:flash_message] = "記事を投稿しました。編集や削除はマイページで行えます。"
       redirect_to article_path(@article)
       @draft.destroy and return
     end
@@ -40,8 +40,13 @@ class DraftsController < ApplicationController
     @draft.body = draft_params[:body]
     if @draft.invalid?
       flash.now[:invalid_article] = "入力内容を確認してください"
-      render :show
-      return
+      render :show and return
+    end
+    params[:draft][:tag_list].split(",").each do |tag_name|
+      if Tag.new(name: tag_name).invalid?
+        flash.now[:invalid_article] = "タグ1つにつき14文字までのタグ名を入力してください"
+        render :show and return
+      end
     end
     @taggings = Tagging.where(taggable_type: "Draft", taggable_id: @draft.id)
     @taggings.destroy_all

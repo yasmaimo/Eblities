@@ -11,7 +11,13 @@ class TagsController < ApplicationController
   end
 
   def create
+    if params[:user][:tag_list].blank?
+      flash.now[:flash_message] = "14文字までのタグ名を入力してください" and return
+    end
     params[:user][:tag_list].split(",").each do |tag_name|
+      if Tag.new(name: tag_name).invalid?
+        flash.now[:flash_message] = "14文字までのタグ名を入力してください" and return
+      end
       if Tag.exists?(name: tag_name)
         tag = Tag.find_by(name: tag_name)
         unless Tagging.exists?(tag_id: tag.id, taggable_type: "User", taggable_id: current_user.id)

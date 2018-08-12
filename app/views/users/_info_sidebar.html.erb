@@ -14,8 +14,7 @@
 	<p class="small my-3"><%= user.introduction %></p>
 
 	<span class="small">Eblities Point</span><br>
-	<span class="font-weight-bold h5"><%= user.point %></span>
-	<span class="font-weight-bold h5">EP</span><br>
+	<span class="font-weight-bold h5" id="eblities-point-of-<%= user.id %>"><%= render 'users/point', user: user %></span><br>
 
 	<% if user_signed_in? %>
 

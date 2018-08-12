@@ -31,8 +31,8 @@
           		<%= fa_icon("paperclip") %><%= user.articles.count %>個
           	</span>
 
-          	<span class="mx-1">
-          		<%= user.point %> EP
+          	<span class="mx-1" id="eblities-point-of-<%= user.id %>">
+          		<%= render 'users/point', user: user %>
           	</span>
 
           </div>

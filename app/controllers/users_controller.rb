@@ -73,6 +73,23 @@ class UsersController < ApplicationController
     elsif status == 1
       notifications = Notification.where(notified_by_id: @user.id)
       notifications.destroy_all
+      @user.favorites.each do |favorite|
+        user = favorite.article.user
+        ep = favorite.article.user.point
+        ep -= 1
+        user.update(point: ep)
+      end
+      @user.keeps.each do |keep|
+        user = keep.article.user
+        ep = keep.article.user.point
+        ep -= 1
+        user.update(point: ep)
+      end
+      @user.followings.each do |following|
+        ep = following.point
+        ep -= 2
+        following.update(point: ep)
+      end
       @user.destroy
       flash[:flash_message] = "退会処理が完了しました。ご利用ありがとうございました。"
       redirect_to root_path

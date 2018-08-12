@@ -15,6 +15,20 @@
               <span class="text-secondary small">
                 <%= comment.created_at.strftime('%Y/%m/%d %R') %>
               </span>
+
+              <% if user_signed_in? %>
+
+                <% if comment.user_id == current_user.id %>
+
+                  <span class="ml-3 text-secondary">
+                    <%= fa_icon("trash") %>
+                    <%= link_to "削除する", article_comment_path(article_id: article, id: comment.id), method: :delete, "data-confirm" => "コメントを削除しますか？", class: "text-secondary small" %>
+                  </span>
+
+                <% end %>
+
+              <% end %>
+
               <div class="mt-1 small text-dark">
                 <%= raw comment.comment %>
               </div>
